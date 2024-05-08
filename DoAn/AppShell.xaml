@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="DoAn.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:DoAn.Views"
+    xmlns:viewmodels="clr-namespace:DoAn.ViewModels"
+    Shell.FlyoutBehavior="Flyout">
+
+    <!--<Shell.BindingContext>
+        <viewmodels:MainViewModel />
+    </Shell.BindingContext>-->
+    
+    <Shell.FlyoutHeader>
+        <Image Source="flyoutheader.png"></Image>
+    </Shell.FlyoutHeader>
+    <ShellContent   
+        Title="LoginView"
+        ContentTemplate="{DataTemplate views:LoginView}"
+        Route="LoginView"
+        Shell.FlyoutBehavior="Disabled"
+        Shell.FlyoutItemIsVisible="False"/>
+
+    <TabBar FlyoutDisplayOptions="AsMultipleItems" >
+
+        <ShellContent   Title="Bảng tin"
+            ContentTemplate="{DataTemplate views:HomeView}"
+            Route="HomeView" />
+        <ShellContent   Title="Danh sách"
+            ContentTemplate="{DataTemplate views:ListView}"
+            Route="ListView"/>
+        <ShellContent   Title="Admin"
+            ContentTemplate="{DataTemplate views:ListView}"
+            Route="Admin"
+            IsVisible="False"/>
+        <ShellContent   Title="Account"
+            ContentTemplate="{DataTemplate views:ListView}"
+            Route="Account"/>
+        <ShellContent   Title="Setting"
+            ContentTemplate="{DataTemplate views:ListView}"
+            Route="Setting"/>
+    </TabBar>
+
+</Shell>

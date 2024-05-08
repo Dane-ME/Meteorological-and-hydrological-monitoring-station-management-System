@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DoAn.Views.LoginView"
+             xmlns:viewmodels="clr-namespace:DoAn.ViewModels">
+    <ContentPage.BindingContext>
+        <viewmodels:LoginViewModels />
+    </ContentPage.BindingContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="27*"/>
+            <RowDefinition Height="27*"/>
+            <RowDefinition Height="46*"/>
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Label FontSize="40">Quản lý Trạm Quan Trắc</Label>
+        </Grid>
+        <VerticalStackLayout Grid.Row="1" Margin="10">
+            <Label Text="Tài khoản"></Label>
+            <Entry Text="{Binding Account, Mode=TwoWay}"></Entry>
+            <Label Text="Mật khẩu"></Label>
+            <Entry Text="{Binding Password, Mode=TwoWay}"></Entry>
+            <Button Text="Login" Command="{Binding LoginButtonCommand}"></Button>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>
