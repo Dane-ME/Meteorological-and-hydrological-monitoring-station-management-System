@@ -21,6 +21,7 @@
             <TextBox x:Name="password"></TextBox>
 
             <Button Content="Register" x:Name="regis"></Button>
+            <Button Content="Connect" x:Name="connect"></Button>
             <Button Content="Listen" x:Name="listen"></Button>
         </StackPanel>
         

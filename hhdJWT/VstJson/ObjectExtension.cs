@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DoAn.ViewModels
+namespace System
 {
-    internal class LoadingViewModel
+    public static class ObjectExtension
     {
+
     }
 }

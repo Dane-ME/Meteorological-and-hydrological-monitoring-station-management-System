@@ -69,22 +69,23 @@ namespace System
             else if (doc.Type == "id") 
             {
                 var token = new TokenModel();
-                if (IsIDStored(doc.AccID))
+                if (IsIDStored(doc.UserID))
                 {
-                    var con = new Response("id", "1", token.CreateToken(doc));
-                    con.SendResponse($"usercontroller/login/{doc.AccID}", doc.AccID);
+                    Document data = DB.User.Find(doc.UserID);
+                    var con = new Response("id", "1", token.CreateToken(doc, data));
+                    con.SendResponse($"dane/login/{doc.UserID}", doc.UserID);
                 }
                 else
                 {
                     var con = new Response("id", "0");
                     //con.SendResponse($"usercontroller/login/{doc.ObjectId}", doc.ObjectId);
-                    Broker.Instance.Send($"usercontroller/login/{doc.AccID}", con.CreateResponse($"{doc.AccID}"));
+                    Broker.Instance.Send($"usercontroller/login/{doc.UserID}", con.CreateResponse($"{doc.UserID}"));
                 }
             }
             else 
             {
                 var con = new Response("noknown", "0");
-                con.SendResponse($"usercontroller/login/{doc.AccID}", doc.AccID);
+                con.SendResponse($"dane/login/{doc.UserID}", doc.UserID);
             };
         }
         public bool IsTokenStored(string objectId)

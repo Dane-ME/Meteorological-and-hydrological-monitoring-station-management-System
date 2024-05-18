@@ -34,18 +34,24 @@ namespace System
     
     class TokenModel :IService.Models.Time
     {
-        public string CreateToken(Document doc)
+        public string CreateToken(Document message, Document data)
         {
-            string id = doc.AccID;
-            DateTime currenttime = DateTime.Now;
-            string token = (id + currenttime.ToString()).ToMD5();
-            Document newToken = new Document() 
+           
+            var format = new Format();
+            format.header("JWT","HS256");
+            format.payload("123","Dang", "ADMIN", $"{message.exp}");
+            format.signature($"{data.Email}", $"{data.EncodePass}", $"{message.exp}");
+            string token = format.CreateJWT();
+            string srkey = format.CreateSecretKey($"{data.Email}", $"{data.EncodePass}", $"{message.exp}");
+
+            Document newToken = new Document()
             {
-                ObjectId = token,
-                AccID = id,
-                Time = CalEndTime(currenttime),
+                ObjectId = format.Header + format.Payload + format.Signature,
+                SecretKey = srkey,
+                Time = message.exp,
             };
             DB.Token.Insert(newToken);
+
             return token;
         }
     }
@@ -53,9 +59,10 @@ namespace System
     {
         public string Token { get => GetString(nameof(Token)); set => Push(nameof(Token), value); }
         //public string DeviceInfo { get => GetString(nameof(DeviceInfo)); set => Push(nameof(DeviceInfo), value); }
+        public string EncodePass { get => GetString(nameof(EncodePass)); set => Push(nameof(EncodePass), value); }
         public string Time { get => GetString(nameof(Time)); set => Push(nameof(Time), value); }
         public string Type { get => GetString(nameof(Type)); set => Push(nameof(Type), value); }
-        public string AccID { get => GetString(nameof(AccID)); set => Push(nameof(AccID), value); }
+        public string UserID { get => GetString(nameof(UserID)); set => Push(nameof(UserID), value); }
 
     }
     public partial class DB

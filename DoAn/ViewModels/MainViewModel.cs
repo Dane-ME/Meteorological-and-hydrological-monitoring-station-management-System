@@ -1,5 +1,4 @@
-﻿using DoAn.Core;
-using DoAn.Views;
+﻿using DoAn.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;

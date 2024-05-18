@@ -18,7 +18,6 @@ namespace IService
             string dir = Environment.CurrentDirectory;
             while (count < 3) { dir = Directory.GetParent(dir).FullName; count++; }
             DB.Start(dir + "/DataBase");
-            Broker.Instance.Connect();
         }
     }
 

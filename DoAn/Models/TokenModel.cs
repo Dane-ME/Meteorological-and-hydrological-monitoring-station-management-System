@@ -11,8 +11,8 @@ namespace System
     {
         //public string? TokenID { get => ObjectId; set => ObjectId = (string?)value; }
         // ObjectID là Token,
-        public string DeviceInfo { get => GetString(nameof(DeviceInfo)); set => Push(nameof(DeviceInfo), value); }
-        public string Time { get => GetString(nameof(Time)); set => Push(nameof(Time), value); }
+        public string Token { get => GetString(nameof(Token)); set => Push(nameof(Token), value); }
+        public string Type { get => GetString(nameof(Type)); set => Push(nameof(Type), value); }
 
     }
 

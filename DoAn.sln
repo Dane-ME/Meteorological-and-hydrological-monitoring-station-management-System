@@ -5,7 +5,9 @@ VisualStudioVersion = 17.9.34622.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DoAn", "DoAn\DoAn.csproj", "{08CB84EF-17E0-4CA6-8AAE-C952A352AC89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IService", "IService\IService.csproj", "{37FA59E2-283F-4563-8AE6-6B162D785214}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IService", "IService\IService.csproj", "{37FA59E2-283F-4563-8AE6-6B162D785214}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "hhdJWT", "hhdJWT\hhdJWT.csproj", "{814D1B14-9566-471F-AD20-9C506B9C54A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,6 +25,10 @@ Global
 		{37FA59E2-283F-4563-8AE6-6B162D785214}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37FA59E2-283F-4563-8AE6-6B162D785214}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37FA59E2-283F-4563-8AE6-6B162D785214}.Release|Any CPU.Build.0 = Release|Any CPU
+		{814D1B14-9566-471F-AD20-9C506B9C54A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{814D1B14-9566-471F-AD20-9C506B9C54A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{814D1B14-9566-471F-AD20-9C506B9C54A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{814D1B14-9566-471F-AD20-9C506B9C54A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

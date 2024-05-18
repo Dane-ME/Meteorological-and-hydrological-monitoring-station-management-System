@@ -15,7 +15,6 @@ namespace System
         public string Name { get => GetString(nameof(Name)); set => Push(nameof(Name), value); }
         public string Email { get => GetString(nameof(Email)); set => Push(nameof(Email), value); }
         public string PhoneNumber { get => GetString(nameof(PhoneNumber)); set => Push(nameof(PhoneNumber), value); }
-        public string Level { get => GetString(nameof(Level)); set => Push(nameof(Level), value); }
     }
     public partial class DB
     {

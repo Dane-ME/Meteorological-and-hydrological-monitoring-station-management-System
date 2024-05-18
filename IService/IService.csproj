@@ -9,12 +9,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="DataBase\MainDB\Collections\Token\ew0KICAidHlwIjogIkpXVCIsDQogICJhbGciOiAiSFMyNTYiDQp9.ew0KICAic3ViIjogIjEyMyIsDQogICJuYW1lIjogIkRhbmciLA0KICAicm9sZSI6ICJBRE1JTiIsDQogICJleHAiOiAiNS84LzIwMjQgODowMTo1MyBQTSINCn0.AUCeoAITr2HREgXkBsY0kFHddAv5Iu1EklvvJJUeiaI=\**" />
+    <EmbeddedResource Remove="DataBase\MainDB\Collections\Token\ew0KICAidHlwIjogIkpXVCIsDQogICJhbGciOiAiSFMyNTYiDQp9.ew0KICAic3ViIjogIjEyMyIsDQogICJuYW1lIjogIkRhbmciLA0KICAicm9sZSI6ICJBRE1JTiIsDQogICJleHAiOiAiNS84LzIwMjQgODowMTo1MyBQTSINCn0.AUCeoAITr2HREgXkBsY0kFHddAv5Iu1EklvvJJUeiaI=\**" />
+    <None Remove="DataBase\MainDB\Collections\Token\ew0KICAidHlwIjogIkpXVCIsDQogICJhbGciOiAiSFMyNTYiDQp9.ew0KICAic3ViIjogIjEyMyIsDQogICJuYW1lIjogIkRhbmciLA0KICAicm9sZSI6ICJBRE1JTiIsDQogICJleHAiOiAiNS84LzIwMjQgODowMTo1MyBQTSINCn0.AUCeoAITr2HREgXkBsY0kFHddAv5Iu1EklvvJJUeiaI=\**" />
+    <Page Remove="DataBase\MainDB\Collections\Token\ew0KICAidHlwIjogIkpXVCIsDQogICJhbGciOiAiSFMyNTYiDQp9.ew0KICAic3ViIjogIjEyMyIsDQogICJuYW1lIjogIkRhbmciLA0KICAicm9sZSI6ICJBRE1JTiIsDQogICJleHAiOiAiNS84LzIwMjQgODowMTo1MyBQTSINCn0.AUCeoAITr2HREgXkBsY0kFHddAv5Iu1EklvvJJUeiaI=\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="DataBase\MainDB\Collections\Token\" />
+    <Folder Include="DataBase\MainDB\Collections\User\" />
     <Folder Include="ViewModels\" />
     <Folder Include="Views\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Security.Cryptography.Algorithms" Version="4.3.1" />
     <PackageReference Include="System.Security.Permissions" Version="8.0.0" />
   </ItemGroup>
 

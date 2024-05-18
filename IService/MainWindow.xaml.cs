@@ -23,24 +23,33 @@ namespace IService
 
             save.Click += (s, e) =>
             {
-                Document topic = new Document() 
-                {
-                    ObjectId = "admin",
-                    ControllerName = controller.Text,
-                    ActionName = action.Text,
-                };
-                DB.Topic.Insert(topic); 
+                //Document topic = new Document() 
+                //{
+                //    ObjectId = "admin",
+                //    ControllerName = controller.Text,
+                //    ActionName = action.Text,
+                //};
+                //DB.Topic.Insert(topic);
+                //Document data = FindToken("25dd720d4dbe5fee654ea5254a4405a1");
+                //string t = data.Email;
             };
 
             regis.Click += (s, e) => 
             {
+                string encode = (password.Text).ToMD5();
                 Document user = new Document() 
                 {
-                    ObjectId = (account.Text + password.Text).ToMD5(),
+                    ObjectId = account.Text,
+                    EncodePass = encode,
+
                 };
                 DB.User.Insert(user);
             };
             var handle = new ManageThread();
+
+            connect.Click += (s, e) => {
+                Broker.Instance.Connect();
+            };
             
             listen.Click += (s, e) => 
             {
@@ -52,11 +61,12 @@ namespace IService
                 //    });
                 //    Thread.Sleep(2000);
                 //}
-                Broker.Instance.Listen("usercontroller/login/ae548e6d46431ede9756b0277872381b", (doc) =>
+                Broker.Instance.Listen("dane/usercontroller/login", (doc) =>
                 {
                     handle.IsItStoredandSendResponse(doc);
                 });
             };
         }
+        public Document FindToken(string id) { return DB.Token.Find(id); }
     }
 }

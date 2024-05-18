@@ -1,5 +1,4 @@
-﻿using DoAn.Core;
-using DoAn.Views;
+﻿using DoAn.Views;
 
 namespace DoAn
 {

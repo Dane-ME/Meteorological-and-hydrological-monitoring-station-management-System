@@ -4,23 +4,38 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:DoAn.Views"
+    xmlns:loading="clr-namespace:DoAn.Views.Loading"
     xmlns:viewmodels="clr-namespace:DoAn.ViewModels"
     Shell.FlyoutBehavior="Flyout">
-
-    <!--<Shell.BindingContext>
-        <viewmodels:MainViewModel />
-    </Shell.BindingContext>-->
     
     <Shell.FlyoutHeader>
         <Image Source="flyoutheader.png"></Image>
     </Shell.FlyoutHeader>
-    <ShellContent   
-        Title="LoginView"
+
+    <ShellContent
+        ContentTemplate="{DataTemplate loading:CheckingNetworkView}"
+        Route="CheckingNetworkView"
+        Shell.FlyoutBehavior="Disabled"
+        Shell.FlyoutItemIsVisible="False"/>
+    <ShellContent
+        ContentTemplate="{DataTemplate loading:LoadingServerView}"
+        Route="LoadingServerView"
+        Shell.FlyoutBehavior="Disabled"
+        Shell.FlyoutItemIsVisible="False"/>
+    
+    <ShellContent
         ContentTemplate="{DataTemplate views:LoginView}"
         Route="LoginView"
         Shell.FlyoutBehavior="Disabled"
         Shell.FlyoutItemIsVisible="False"/>
-
+    
+    <ShellContent   
+        Title="LoadingView"
+        ContentTemplate="{DataTemplate loading:LoadingView}"
+        Route="LoadingView"
+        Shell.FlyoutBehavior="Disabled"
+        Shell.FlyoutItemIsVisible="False"/>
+    
     <TabBar FlyoutDisplayOptions="AsMultipleItems" >
 
         <ShellContent   Title="Bảng tin"
@@ -29,7 +44,7 @@
         <ShellContent   Title="Danh sách"
             ContentTemplate="{DataTemplate views:ListView}"
             Route="ListView"/>
-        <ShellContent   Title="Admin"
+        <!--<ShellContent   Title="Admin"
             ContentTemplate="{DataTemplate views:ListView}"
             Route="Admin"
             IsVisible="False"/>
@@ -38,7 +53,7 @@
             Route="Account"/>
         <ShellContent   Title="Setting"
             ContentTemplate="{DataTemplate views:ListView}"
-            Route="Setting"/>
+            Route="Setting"/>-->
     </TabBar>
 
 </Shell>

@@ -1,4 +1,9 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using DoAn.Models;
+using DoAn.Services;
+using DoAn.ViewModels;
+using DoAn.Views;
+using DoAn.Views.Loading;
+using Microsoft.Extensions.Logging;
 using MQTT;
 using System;
 
@@ -25,7 +30,23 @@ namespace DoAn
             //System.File.Instance.CreateNewDatafolder("app_data", AppDataDir);
             System.File.Instance.CreateNewDatafolder("cache_data", CacheDataDir);
 
-            Broker.Instance.Connect();
+            //Broker.Instance.Connect();
+
+            builder.Services.AddSingleton<AuthService>();
+            builder.Services.AddSingleton<UserModel>();
+
+
+            builder.Services.AddSingleton<LoginViewModel>();
+
+
+            builder.Services.AddTransient<LoadingView>();
+            builder.Services.AddTransient<LoginView>();
+            builder.Services.AddTransient<CheckingNetworkView>();
+            builder.Services.AddTransient<LoadingServerView>();
+            builder.Services.AddTransient<Views.ListView>();
+
+
+            
 
 
             return builder.Build();
