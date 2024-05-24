@@ -41,6 +41,7 @@ namespace DoAn
 
             builder.Services.AddTransient<LoadingView>();
             builder.Services.AddTransient<LoginView>();
+            builder.Services.AddTransient<UserView>();
             builder.Services.AddTransient<CheckingNetworkView>();
             builder.Services.AddTransient<LoadingServerView>();
             builder.Services.AddTransient<Views.ListView>();

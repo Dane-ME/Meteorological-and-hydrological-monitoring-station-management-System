@@ -18,13 +18,13 @@ namespace DoAn.Views.Loading
             bool serverReady = await _authService.IsConnectedToNetworkAsync();
             while (!serverReady)
             {
-                await DisplayAlert("Error", "L?i k?t n?i m?ng", "Th? l?i");
+                await DisplayAlert("Error", "Loi ket noi mang", "Thu lai");
                 serverReady = await _authService.IsConnectedToNetworkAsync();
             }
 
             // User is logged in
             // redirect to main page
-            await Shell.Current.GoToAsync($"//LoginView");
+            await Shell.Current.GoToAsync($"//HomeView");
         }
     }
 }

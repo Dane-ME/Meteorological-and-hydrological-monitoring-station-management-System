@@ -62,6 +62,10 @@ namespace DoAn.Models
                 if (doc.Token !=  null)
                 {
                     this.token = doc.Token;
+                    DB.Token.Insert(new Document 
+                    {
+                        Token = this.token
+                    });
                 }
                 string Payload = this.token.Split('.')[1];
                 var decode = new Format();

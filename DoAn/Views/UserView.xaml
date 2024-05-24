@@ -1,0 +1,18 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DoAn.Views.UserView">
+    <VerticalStackLayout>
+        <StackLayout Orientation="Vertical">
+            <Image WidthRequest="100" HeightRequest="100" Aspect="AspectFill" Source="flyoutheader.png">
+                <Image.Clip>
+                    <EllipseGeometry Center="50,50" RadiusX="50" RadiusY="50"/>
+                </Image.Clip>
+            </Image>
+            <Label 
+                Text="Welcome to .NET MAUI!"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center" />
+            <Button Text="Log out" Command="{Binding LogOutButonCommand}"/>
+        </StackLayout>
+    </VerticalStackLayout>
+</ContentPage>

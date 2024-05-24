@@ -68,7 +68,10 @@ namespace DoAn.Services
         }
         public void Logout()
         {
-            Preferences.Default.Remove(AuthStateKey);
+            foreach(Document obj in DB.Token.SelectAll())
+            {
+                DB.Token.Delete(obj.ObjectId);
+            } 
         }
     }
 }

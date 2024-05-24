@@ -7,6 +7,5 @@
             Text="Welcome to .NET MAUI!"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-        <Button Text="log out"></Button>
     </VerticalStackLayout>
 </ContentPage>

@@ -134,7 +134,6 @@ namespace MQTT
         public void Reconnect()
         {
             _busy = true;
-
             _socket = new Socket(_remoteEP.AddressFamily,
                 SocketType.Stream, ProtocolType.Tcp);
 

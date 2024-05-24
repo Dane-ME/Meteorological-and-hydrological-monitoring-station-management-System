@@ -2,17 +2,6 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DoAn.Views.HomeView"
-             xmlns:viewmodel="clr-namespace:DoAn.ViewModels">
-    <ContentPage.BindingContext>
-        <viewmodel:HomeViewModel/>
-    </ContentPage.BindingContext>
-    <VerticalStackLayout>
-        <Border Margin="20" StrokeThickness="2" Stroke="Purple">
-            <StackLayout Orientation="Vertical">
-                <Label Text="{Binding StationName}" ></Label>
-                <Label Text="{Binding StationId}"></Label>
-                <Label Text="{Binding StationLocal}"></Label>
-            </StackLayout>
-        </Border>
-    </VerticalStackLayout>
+             xmlns:viewmodel="clr-namespace:DoAn.ViewModels"
+             Content="{Binding MainContent}">
 </ContentPage>
