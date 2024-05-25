@@ -21,19 +21,7 @@ namespace IService
         {
             InitializeComponent();
 
-            save.Click += (s, e) =>
-            {
-                //Document topic = new Document() 
-                //{
-                //    ObjectId = "admin",
-                //    ControllerName = controller.Text,
-                //    ActionName = action.Text,
-                //};
-                //DB.Topic.Insert(topic);
-                //Document data = FindToken("25dd720d4dbe5fee654ea5254a4405a1");
-                //string t = data.Email;
-            };
-
+            
             regis.Click += (s, e) => 
             {
                 string encode = (password.Text).ToMD5();

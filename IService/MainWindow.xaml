@@ -7,23 +7,51 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <StackPanel Orientation="Vertical">
-            <Label Content="Controller Name"></Label>
-            <TextBox x:Name="controller"></TextBox>
-            <Label Content="Action Name"></Label>
-            <TextBox x:Name="action"></TextBox>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Border Background="#578fc8">
+            <Label Content="Trung tâm Quan trắc KTTV" Foreground="White" FontSize="20"></Label>
+        </Border>
+        <Border Grid.Row="1" Background="#578fc8">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
 
-            <Button Content="Save" x:Name="save"></Button>
-            
-            <Label Content="Account"></Label>
-            <TextBox x:Name="account"></TextBox>
-            <Label Content="Password"></Label>
-            <TextBox x:Name="password"></TextBox>
+                
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="Tạo tài khoản" x:Name="CreateAccount" Margin="5" Background="AliceBlue"></Button>
+                    <Button Content="Nhập dữ liệu" x:Name="ImportData" Margin="5" Background="AliceBlue"></Button>
+                    <Button Width="60" Margin="5" Background="AliceBlue"></Button>
+                    <Button Width="60" Margin="5" Background="AliceBlue"></Button>
+                    <Button Width="60" Margin="5" Background="AliceBlue"></Button>
+                </StackPanel>
+                <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Content="Connect" x:Name="connect" Margin="5" Background="AliceBlue"></Button>
+                    <Button Content="Listen" x:Name="listen" Margin="5" Background="AliceBlue"></Button>
+                    <TextBlock Width="30" Margin="5"></TextBlock>
 
-            <Button Content="Register" x:Name="regis"></Button>
-            <Button Content="Connect" x:Name="connect"></Button>
-            <Button Content="Listen" x:Name="listen"></Button>
-        </StackPanel>
+                </StackPanel>
+            </Grid> 
+        </Border>
+ 
+        <Border Grid.Row="2" x:Name="MainContent" Background="AliceBlue">
+            <StackPanel Orientation="Vertical">
+
+                <Label Content="Account"></Label>
+                <TextBox x:Name="account"></TextBox>
+                <Label Content="Password"></Label>
+                <TextBox x:Name="password"></TextBox>
+
+                <Button Content="Register" x:Name="regis"></Button>
+
+            </StackPanel>
+        </Border>
         
+
     </Grid>
 </Window>
