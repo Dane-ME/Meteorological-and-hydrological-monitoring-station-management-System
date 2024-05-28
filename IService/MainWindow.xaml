@@ -40,16 +40,7 @@
         </Border>
  
         <Border Grid.Row="2" x:Name="MainContent" Background="AliceBlue">
-            <StackPanel Orientation="Vertical">
-
-                <Label Content="Account"></Label>
-                <TextBox x:Name="account"></TextBox>
-                <Label Content="Password"></Label>
-                <TextBox x:Name="password"></TextBox>
-
-                <Button Content="Register" x:Name="regis"></Button>
-
-            </StackPanel>
+            
         </Border>
         
 

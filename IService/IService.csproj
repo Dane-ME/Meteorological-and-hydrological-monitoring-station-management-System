@@ -16,10 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="DataBase\MainDB\Collections\Station\" />
     <Folder Include="DataBase\MainDB\Collections\Token\" />
     <Folder Include="DataBase\MainDB\Collections\User\" />
-    <Folder Include="ViewModels\" />
-    <Folder Include="Views\" />
   </ItemGroup>
 
   <ItemGroup>

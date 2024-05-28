@@ -1,4 +1,5 @@
-﻿using MQTT;
+﻿using IService.Views;
+using MQTT;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,19 +21,19 @@ namespace IService
         public MainWindow()
         {
             InitializeComponent();
-
-            
-            regis.Click += (s, e) => 
+            CreateAccount.Click += (s, e) =>
             {
-                string encode = (password.Text).ToMD5();
-                Document user = new Document() 
-                {
-                    ObjectId = account.Text,
-                    EncodePass = encode,
-
-                };
-                DB.User.Insert(user);
+                UIElement uIElement = new RegisterView();
+                MainContent.Child = uIElement;
             };
+
+            ImportData.Click += (s, e) => 
+            {
+                UIElement uIElement = new ImportView();
+                MainContent.Child = uIElement;
+            };
+            
+            
             var handle = new ManageThread();
 
             connect.Click += (s, e) => {
@@ -41,14 +42,6 @@ namespace IService
             
             listen.Click += (s, e) => 
             {
-                //while (true)
-                //{
-                //    Broker.Instance.Listen("usercontroller/login/083155f7262837582f1c4c9c5d103155", (doc) =>
-                //    {
-                //        handle.IsItStoredandSendResponse(doc);
-                //    });
-                //    Thread.Sleep(2000);
-                //}
                 Broker.Instance.Listen("dane/usercontroller/login", (doc) =>
                 {
                     handle.IsItStoredandSendResponse(doc);
