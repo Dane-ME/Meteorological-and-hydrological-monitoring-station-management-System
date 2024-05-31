@@ -1,31 +1,31 @@
+using DoAn.Models;
 using DoAn.Services;
+using DoAn.ViewModels;
 
-namespace DoAn.Views.Loading;
-
-public partial class LoadingView : ContentPage
+namespace DoAn.Views.Loading
 {
-    private readonly AuthService _authService;
-
-    public LoadingView(AuthService authService)
+    public partial class LoadingView : ContentPage
     {
-        InitializeComponent();
-        _authService = authService;
-    }
-    protected async override void OnNavigatedTo(NavigatedToEventArgs args)
-    {
-        base.OnNavigatedTo(args);
-        int count = 0;
-        bool serverReady = await Service.Instance.IsLoginAsync();
-        while (!serverReady || count < 2)
+        private readonly StationModel _stationModel;
+        public LoadingView( StationModel stationModel)
         {
-            serverReady = await Service.Instance.IsLoginAsync();
-            count++;
+            InitializeComponent();
+            _stationModel = stationModel;
+            BindingContext = new LoadingViewModel(_stationModel);
         }
-        if (serverReady)
+        protected async override void OnNavigatedTo(NavigatedToEventArgs args)
         {
+            base.OnNavigatedTo(args);
+            //string action = Service.Instance.objectrequested;
+            int count = 0;
+            bool isloadeddata = await _stationModel.IsLoadedData();
+            while (!isloadeddata || count < 2)
+            {
+                isloadeddata = await _stationModel.IsLoadedData();
+                count++;
+            }
             await Shell.Current.GoToAsync($"//HomeView");
         }
-        else { await Shell.Current.GoToAsync($"//LoginView"); }
-        
     }
 }
+

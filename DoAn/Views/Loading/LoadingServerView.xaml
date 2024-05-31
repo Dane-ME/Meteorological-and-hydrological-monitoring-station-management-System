@@ -5,7 +5,7 @@
              Title="LoadingServerView"
              Shell.NavBarIsVisible="False">
     <VerticalStackLayout HorizontalOptions="Center"
-                 VerticalOptions="Center">
+                         VerticalOptions="Center">
         <ActivityIndicator IsRunning="True"></ActivityIndicator>
         <Label Text="Checking"></Label>
     </VerticalStackLayout>

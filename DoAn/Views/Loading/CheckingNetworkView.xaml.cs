@@ -10,7 +10,6 @@ namespace DoAn.Views.Loading
             InitializeComponent();
             _authService = authService;
         }
-
         protected async override void OnNavigatedTo(NavigatedToEventArgs args)
         {
             base.OnNavigatedTo(args);
@@ -21,10 +20,7 @@ namespace DoAn.Views.Loading
                 await DisplayAlert("Error", "Loi ket noi mang", "Thu lai");
                 serverReady = await _authService.IsConnectedToNetworkAsync();
             }
-
-            // User is logged in
-            // redirect to main page
-            await Shell.Current.GoToAsync($"//HomeView");
+            await Shell.Current.GoToAsync($"//LoadingView");
         }
     }
 }

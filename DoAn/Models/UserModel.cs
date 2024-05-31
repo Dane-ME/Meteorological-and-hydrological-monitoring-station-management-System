@@ -53,7 +53,8 @@ namespace DoAn.Models
                 Pass = this.Password
             });
             getToken(this.Account);
-
+            _authService.Token = this.token;
+            _authService.Account = this.Account;
         }
         public void getToken(string userid)
         {

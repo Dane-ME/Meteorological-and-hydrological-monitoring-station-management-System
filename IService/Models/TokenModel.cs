@@ -32,7 +32,7 @@ namespace IService.Models
 namespace System
 {
     
-    class TokenModel :IService.Models.Time
+    class TokenModel : IService.Models.Time
     {
         public string CreateToken(Document message, Document data)
         {

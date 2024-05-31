@@ -17,7 +17,10 @@ namespace DoAn.Services
 {
     public class AuthService
     {
-        public bool LoginState;
+        public bool LoginState { get; set; }
+        public bool isLoaded { get; set; }
+        public string Token { get; set; }
+        public string Account { get; set; }
         private const string AuthStateKey = "AuthState";
         public async Task<bool> IsAuthenticatedAsync()
         {
@@ -38,10 +41,14 @@ namespace DoAn.Services
             if (networkState == NetworkAccess.Internet) { await Task.Delay(1000); return true; }
             else { await Task.Delay(1000); return false; }
         }
+        public async Task<bool> IsLoadedData()
+        {
+            if (this.isLoaded) { await Task.Delay(1000); return true; }
+            else await Task.Delay(1000); return false;
+        }
         public bool status {  get; private set; }
         public async Task<bool> IsServerReady()
         {
-            Broker.Instance.Connect();
             Document doc = new Document()
             {
                 Status = "ready"

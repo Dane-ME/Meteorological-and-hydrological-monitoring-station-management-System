@@ -3,5 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DoAn.Views.HomeView"
              xmlns:viewmodel="clr-namespace:DoAn.ViewModels"
-             Content="{Binding MainContent}">
+             Content="{Binding MainContent}"
+             >
+    <!---->
 </ContentPage>

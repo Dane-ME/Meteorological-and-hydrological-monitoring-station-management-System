@@ -10,4 +10,10 @@
             Main.StartStorageThread();
         }
     }
+    public partial class Document
+    {
+        public string Content { get => GetString(nameof(Content)); set => Push(nameof(Content), value); }
+        public string Time { get => GetString(nameof(Time)); set => Push(nameof(Time), value); }
+
+    }
 }

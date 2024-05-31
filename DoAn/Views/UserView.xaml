@@ -3,7 +3,7 @@
              x:Class="DoAn.Views.UserView">
     <VerticalStackLayout>
         <StackLayout Orientation="Vertical">
-            <Image WidthRequest="100" HeightRequest="100" Aspect="AspectFill" Source="flyoutheader.png">
+            <Image WidthRequest="100" HeightRequest="100" Aspect="AspectFill" Source="flyoutheader.jpg">
                 <Image.Clip>
                     <EllipseGeometry Center="50,50" RadiusX="50" RadiusY="50"/>
                 </Image.Clip>

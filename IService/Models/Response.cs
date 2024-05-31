@@ -1,6 +1,8 @@
-﻿using MQTT;
+﻿using IService.Core;
+using MQTT;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,6 +34,11 @@ namespace System
         public void SendResponse(string topic, string objectid)
         {
             Broker.Instance.Send(topic, CreateResponse(objectid));
+            Broker.Instance.Listen($"dane/service/{objectid}", doc => 
+            {
+                Document docs = DB.Station.Find("6868");
+                Broker.Instance.Send($"dane/service/home/{objectid}", docs);
+            });
         }
 
     }

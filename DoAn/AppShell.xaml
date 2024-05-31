@@ -6,62 +6,68 @@
     xmlns:views="clr-namespace:DoAn.Views"
     xmlns:loading="clr-namespace:DoAn.Views.Loading"
     xmlns:viewmodels="clr-namespace:DoAn.ViewModels"
-    Shell.FlyoutBehavior="Disabled"
-    Shell.FlyoutItemIsVisible="True"
-    Shell.NavBarIsVisible="False">
-
-    <Shell.Resources>
-        <ResourceDictionary>
-            <Style x:Key="TabBarItemStyle" TargetType="ShellContent">
-                <Setter Property="Shell.TabBarUnselectedColor" Value="CornflowerBlue" />
-                <Setter Property="Shell.TabBarTitleColor" Value="CornflowerBlue" />
-                <Setter Property="Shell.TabBarBackgroundColor" Value="White" />
-                <Setter Property="Shell.ForegroundColor" Value="CornflowerBlue" />
-            </Style>
-        </ResourceDictionary>
-    </Shell.Resources>
-
+    Shell.FlyoutWidth="250"
+    Shell.FlyoutBehavior="Flyout"
+    FlyoutBackground="#eaecf5" 
+    Shell.TabBarIsVisible="False"
+    >
     <Shell.FlyoutHeader>
-        <Image Source="flyoutheader.png"></Image>
+        <Image Source="flyoutheader.jpg"></Image>
     </Shell.FlyoutHeader>
-
     <ShellContent
         ContentTemplate="{DataTemplate loading:CheckingNetworkView}"
         Route="CheckingNetworkView"
         Shell.FlyoutBehavior="Disabled"
         Shell.FlyoutItemIsVisible="False"/>
+    
     <ShellContent
+        ContentTemplate="{DataTemplate loading:CheckingLoginView}"
+        Route="CheckingLoginView"
+        Shell.FlyoutBehavior="Disabled"
+        Shell.FlyoutItemIsVisible="False"/>
+    <!--<ShellContent
         ContentTemplate="{DataTemplate loading:LoadingServerView}"
         Route="LoadingServerView"
         Shell.FlyoutBehavior="Disabled"
-        Shell.FlyoutItemIsVisible="False"/>
+        Shell.FlyoutItemIsVisible="False"/>-->
+
+    <ShellContent   
+                    ContentTemplate="{DataTemplate loading:LoadingView}"
+                    Route="LoadingView"
+                    Shell.FlyoutBehavior="Disabled"
+                    Shell.FlyoutItemIsVisible="False"/>
     <ShellContent
         ContentTemplate="{DataTemplate views:LoginView}"
         Route="LoginView"
         Shell.FlyoutBehavior="Disabled"
         Shell.FlyoutItemIsVisible="False"/>
-    <ShellContent   
-        ContentTemplate="{DataTemplate loading:LoadingView}"
-        Route="LoadingView"
-        Shell.FlyoutBehavior="Disabled"
-        Shell.FlyoutItemIsVisible="False"/>
+    
 
-    <TabBar>
+
+    <TabBar FlyoutDisplayOptions="AsMultipleItems">
+        
         <ShellContent Title="Home"
                       ContentTemplate="{DataTemplate views:HomeView}"
                       Route="HomeView"
                       Icon="home.png"
-                      Style="{StaticResource TabBarItemStyle}"/>
+                      Shell.BackgroundColor="#578fc8"
+                      Shell.TitleColor="#eaecf5"/>
         <ShellContent Title="List"
                       ContentTemplate="{DataTemplate views:ListView}"
                       Route="ListView"
                       Icon="menu.png"
-                      Style="{StaticResource TabBarItemStyle}"/>
+                      Shell.BackgroundColor="#578fc8"
+                      Shell.TitleColor="#eaecf5"
+                      />
         <ShellContent Title="Account"
                       ContentTemplate="{DataTemplate views:UserView}"
                       Route="UserView"
                       Icon="user.png"
-                      Style="{StaticResource TabBarItemStyle}"/>
+                      Shell.BackgroundColor="#578fc8"
+                      Shell.TitleColor="#eaecf5"
+                      />
     </TabBar>
+
+    
 
 </Shell>
