@@ -29,7 +29,7 @@ namespace IService.ViewModels.Import
             Document docs = DB.Station.Find("6868");
             SendCommand = new RelayCommand(execute => 
             {
-                Broker.Instance.Send("Dane/Test", docs);
+                Broker.Instance.Send("dane/service/hhdangev02", docs);
             });
             SaveCommand = new RelayCommand( execute => { 
                 if (DB.Station.Find($"{this.Code}") is null)
