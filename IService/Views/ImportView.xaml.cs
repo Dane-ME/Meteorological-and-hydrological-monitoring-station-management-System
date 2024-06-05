@@ -39,6 +39,11 @@ namespace IService.Views
                 UIElement uiElement = new RainfallView();
                 MainContent.Child = uiElement;
             };
+            list.Click += (s, e) => 
+            {
+                UIElement uiElement = new ImportListView();
+                MainContent.Child = uiElement;
+            };
         }
     }
 }
