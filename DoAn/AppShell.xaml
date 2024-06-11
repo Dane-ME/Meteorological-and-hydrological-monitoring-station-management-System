@@ -9,8 +9,7 @@
     Shell.FlyoutWidth="250"
     Shell.FlyoutBehavior="Flyout"
     FlyoutBackground="#eaecf5" 
-    Shell.TabBarIsVisible="False"
-    >
+    Shell.TabBarIsVisible="False">
     <Shell.FlyoutHeader>
         <Image Source="flyoutheader.jpg"></Image>
     </Shell.FlyoutHeader>

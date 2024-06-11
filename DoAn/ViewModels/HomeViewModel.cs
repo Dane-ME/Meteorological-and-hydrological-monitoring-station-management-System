@@ -20,8 +20,9 @@ namespace DoAn.ViewModels
         {
             _stationModel = stationModel;
 
-            int count = 0;
+            
             int amounts = _stationModel.data.Count;
+            int count = amounts;
             numOfRow = (int)(amounts / 2) + 1;
 
             string Information1 = "Mực nước biển (H): ";
@@ -67,20 +68,13 @@ namespace DoAn.ViewModels
                         grid.Add(CreateBorder(gridchild, "ffffff", 5), col, row);
                     }
 
-                    count++;
+                    count--;
                 }
             }
 
             var scrollview = new ScrollView();
             scrollview.Content = grid;
             MainContent = scrollview;
-
-        }
-        [Obsolete]
-        private async Task Initialize()
-        {
-
-            
 
         }
 

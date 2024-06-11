@@ -34,7 +34,7 @@ namespace DoAn
 
             builder.Services.AddSingleton<AuthService>();
             builder.Services.AddSingleton<UserModel>();
-            builder.Services.AddSingleton<StationModel>();
+            builder.Services.AddScoped<StationModel>();
 
 
             builder.Services.AddSingleton<LoginViewModel>();
