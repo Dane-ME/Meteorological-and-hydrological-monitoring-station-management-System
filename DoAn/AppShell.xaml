@@ -65,6 +65,18 @@
                       Shell.BackgroundColor="#578fc8"
                       Shell.TitleColor="#eaecf5"
                       />
+        <ShellContent Title="Admin"
+                      ContentTemplate="{DataTemplate views:AdminPageView}"
+                      Route="AdminPageView"
+                      Icon="user.png"
+                      Shell.BackgroundColor="#578fc8"
+                      Shell.TitleColor="#eaecf5"
+                      />    
+        <ShellContent Title="Detail"
+                      ContentTemplate="{DataTemplate views:StationDetailView}"
+                      Route="StationDetailView"
+                      Shell.BackgroundColor="#578fc8"
+                      Shell.FlyoutItemIsVisible="False"/>
     </TabBar>
 
     

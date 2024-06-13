@@ -5,5 +5,5 @@
              xmlns:viewmodel="clr-namespace:DoAn.ViewModels"
              Content="{Binding MainContent}"
              >
-    <!---->
+    
 </ContentPage>

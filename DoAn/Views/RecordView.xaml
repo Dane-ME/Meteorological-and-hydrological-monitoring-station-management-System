@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DoAn.Views.RecordView">
+    <Grid x:Name="Content">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="190"/>
+            <RowDefinition Height="65"/>
+        </Grid.RowDefinitions>
+        
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Tapped="OnGridTapped" />
+        </Grid.GestureRecognizers>
+        
+        <Border BackgroundColor="#578fc8" StrokeThickness="0">
+            <VerticalStackLayout Background="Transparent" HorizontalOptions="Center">
+                <Label Text="CẢNG XI MĂNG HẠ LONG" FontSize="20" TextColor="#eaecf5" HorizontalTextAlignment="Center"/>
+                <Label Text="Thống Nhất, Hoành Bồ, Hạ Long, QN" FontSize="15" TextColor="#eaecf5" HorizontalTextAlignment="Center"/>
+            </VerticalStackLayout>
+        </Border>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.61*"/>
+                <ColumnDefinition Width="0.29*"/>
+            </Grid.ColumnDefinitions>
+            <Border Background="Transparent" StrokeThickness="0" Margin="20,10,0,0">
+                <VerticalStackLayout>
+                    <Label Text=" Mực nước biển (H): 374 (Cm) " TextColor="#578fc8" FontSize="15" HeightRequest="38"></Label>
+                    <Label Text=" Độ cao sóng (HM0): 1 (Cm) " TextColor="#578fc8" FontSize="15" HeightRequest="38"></Label>
+                    <Label Text=" Độ dài sóng (TM02): 2.9 (m) " TextColor="#578fc8" FontSize="15" HeightRequest="38"></Label>
+                    <Label Text=" Độ cao sóng (Hmax): 3 (Cm) " TextColor="#578fc8" FontSize="15" HeightRequest="38"></Label>
+                    <Label Text=" Ac: (v) " TextColor="#578fc8" FontSize="15" HeightRequest="38"></Label>
+                </VerticalStackLayout>
+            </Border>
+            
+            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                <Image Source="wave.png" HeightRequest="41" WidthRequest="41" Margin="20"></Image>
+                <Image Source="lighthouse.png" HeightRequest="41" WidthRequest="41" Margin="20"></Image>
+            </VerticalStackLayout>
+            
+        </Grid>
+        <Border Grid.Row="2">
+            <VerticalStackLayout  Margin="20,5,0,0">
+                <Label Text="Thời gian: 21h 09 phút ngày 11/06/2024" FontSize="14" TextColor="#979797" FontAttributes="Italic"></Label>
+                <HorizontalStackLayout>
+                    <Label Text=" Hiện tại: " TextColor="Black" FontSize="20"></Label>
+                    <Label Text="Sóng nhỏ" TextColor="#82B54B" FontSize="20"></Label>
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+</ContentView>

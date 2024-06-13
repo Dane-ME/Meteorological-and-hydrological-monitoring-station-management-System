@@ -67,12 +67,6 @@ namespace DoAn.Services
                 else { status = false; }
             });
         }
-        public void IsLogined(string account, string password)
-        {
-            var in4 = new AccountModel();
-            if (account == in4.Account && password == in4.PassWord) { this.LoginState = true; }
-            else this.LoginState = false;
-        }
         public void Logout()
         {
             foreach(Document obj in DB.Token.SelectAll())

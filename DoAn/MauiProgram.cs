@@ -1,7 +1,9 @@
 ﻿using DoAn.Models;
 using DoAn.Services;
 using DoAn.ViewModels;
+using DoAn.ViewModels.AdminViewModel;
 using DoAn.Views;
+using DoAn.Views.AdminView;
 using DoAn.Views.Loading;
 using Microsoft.Extensions.Logging;
 using MQTT;
@@ -36,20 +38,27 @@ namespace DoAn
             builder.Services.AddSingleton<UserModel>();
             builder.Services.AddScoped<StationModel>();
 
-
             builder.Services.AddSingleton<LoginViewModel>();
             builder.Services.AddTransient<HomeViewModel>();
             builder.Services.AddTransient<LoadingViewModel>();
+            builder.Services.AddTransient<StationListViewModel>();
+            builder.Services.AddTransient<AdminPageViewModel>();
 
-
-            builder.Services.AddTransient<LoadingView>();
             builder.Services.AddTransient<LoginView>();
             builder.Services.AddTransient<UserView>();
             builder.Services.AddTransient<HomeView>();
+            builder.Services.AddTransient<StationDetailView>();
+            builder.Services.AddTransient<AdminPageView>();
+            builder.Services.AddTransient<StationListView>();
+            builder.Services.AddTransient<UserListView>();
 
             builder.Services.AddTransient<CheckingNetworkView>();
             builder.Services.AddTransient<CheckingLoginView>();
             builder.Services.AddTransient<LoadingServerView>();
+            builder.Services.AddTransient<LoadingView>();
+            builder.Services.AddTransient<WaitingView>();
+
+
             builder.Services.AddTransient<Views.ListView>();
 
 

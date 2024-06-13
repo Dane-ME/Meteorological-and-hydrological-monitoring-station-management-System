@@ -65,6 +65,15 @@ namespace DoAn.Models
         }
     }
 
+    public class RecordList : DocumentList
+    {
+        public event Action<Document> OnAdded;
+        public void Receive(Document doc)
+        {
+            Add(doc);
+            OnAdded?.Invoke(doc);
+        }
+    }
     public partial class StationModel
     {
         public string time { get; set; }
@@ -72,7 +81,7 @@ namespace DoAn.Models
         public string Id { get; set; }
         public string Local { get; set; }
         public string Type { get; set; }
-        public List<Document> data { get; set; }
+        public RecordList data { get; set; }
         public string seaLevel { get; set; }
         public string waveHeight { get; set; }
         public string waveLength { get; set; }
