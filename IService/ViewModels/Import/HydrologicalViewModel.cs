@@ -1,4 +1,5 @@
 ﻿using IService.Core;
+using System.Reflection;
 using MQTT;
 using System;
 using System.Collections.Generic;
@@ -6,14 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using IService.Services;
 
 namespace IService.ViewModels.Import
 {
     public class HydrologicalViewModel
     {
         public string Code { get; set; }
-        public string Name { get; set; }
-        public string Local { get; set; }
         public string TimeBinding { get; set; }
         public string SeaLevelBinding { get; set; }
         public string WaveHeightBinding { get; set; }
@@ -24,51 +24,65 @@ namespace IService.ViewModels.Import
         public HydrologicalViewModel() 
         {
             this.Code = "6868";
-            this.Name = "Cảng xăng dầu B12";
-            this.Local = "Bãi Cháy, TP Hạ Long, Quảng Ninh";
-            Document docs = DB.Station.Find("6868");
-            SendCommand = new RelayCommand(execute => 
+            SendCommand = new RelayCommand(execute =>
             {
-                Broker.Instance.Send("dane/service/hhdangev02", docs);
-            });
-            SaveCommand = new RelayCommand( execute => { 
-                if (DB.Station.Find($"{this.Code}") is null)
+                Document dt = new Document()
                 {
-                    Document doc = new Document() 
-                    {
-                        ObjectId = this.Code,
-                        StationName = this.Name,
-                        StationAddress = this.Local,
-                        StationType = "Hydrological",
-                        StationData = ParaData()
-                    };
-                    DB.Station.Insert(doc);
+                    ObjectId = "17062024",
+                };
+                string code = this.Code;
+                
+                object t = MethodHandle.CallMethod("6868", "Find", "17062024");
+            });
+            SaveCommand = new RelayCommand( execute => {
+                object obj = MethodHandle.CallMethod($"{this.Code}", "Find", "14062024");
+                DocumentList doclist = new DocumentList();
+
+                Document docs = new Document() 
+                {
+                    ObjectId = "14062024",
+                    StationData = 
+                };
+                if (obj is null)
+                {
+                    MethodHandle.CallMethod($"{this.Code}", "Insert", docs);
                 }
                 else
                 {
-                    Document doc = DB.Station.Find($"{this.Code}");
+                    object doc = MethodHandle.CallMethod($"{this.Code}", "Find", "14062024");
                     int loc = TimeMap(this.TimeBinding);
 
-                    string t = doc.StationData.ToString();
+                   //string t = doc.StationData.ToString();
 
                     if (loc != -1) {
-                        doc.StationData.Add(new Document()
+
+                        var d = new Document()
                         {
                             Time = this.TimeBinding,
                             SeaLevel = this.SeaLevelBinding,
                             WaveHeight = this.WaveHeightBinding,
                             WaveLength = this.WaveLengthBinding,
                             WaveHeightMax = this.WaveHeightMaxBinding,
-                        });  
+                        };
+                        DocumentList dl = doc.StationData;
+                        dl.Add(new Document()
+                        {
+                            Time = this.TimeBinding,
+                            SeaLevel = this.SeaLevelBinding,
+                            WaveHeight = this.WaveHeightBinding,
+                            WaveLength = this.WaveLengthBinding,
+                            WaveHeightMax = this.WaveHeightMaxBinding
+                        });
+                        doc.StationData = dl;
+                        DB.Station.Update(doc);
                     }
-                    DB.Station.Update(doc);
                 }
             ;});
         }
 
-        public List<Document> ParaData()
+        public DocumentList ParaData()
         {
-            List<Document> data = new List<Document>();
+            DocumentList data = new DocumentList();
             int loc = TimeMap(this.TimeBinding);
             if ( loc != -1) { data.Add(setParamData()); }
             else throw new FormatException("Time is invalid.");
@@ -78,7 +92,7 @@ namespace IService.ViewModels.Import
         {
             return new Document()
             {
-                Time = this.TimeBinding,
+                ObjectId = this.TimeBinding,
                 SeaLevel = this.SeaLevelBinding,
                 WaveHeight = this.WaveHeightBinding,
                 WaveLength = this.WaveLengthBinding,

@@ -13,14 +13,14 @@ namespace System
     {
         public string Status { get => GetString(nameof(Status)); set => Push(nameof(Status), value); }
     } 
-    public class Response
+    public class ResponseSender
     {
         public string Type { get; set; }
         public string Status { get; set; }
         public string Token { get; set; }
-        public Response(string type) { this.Type = type; }
-        public Response(string type, string status) { this.Type = type; this.Status = status; }
-        public Response(string type, string status, string token) { this.Type = type; this.Status = status; this.Token = token; }  
+        public ResponseSender(string type) { this.Type = type; }
+        public ResponseSender(string type, string status) { this.Type = type; this.Status = status; }
+        public ResponseSender(string type, string status, string token) { this.Type = type; this.Status = status; this.Token = token; }  
         public Document CreateResponse( string objectid ) 
         {
             Document content = new Document() 

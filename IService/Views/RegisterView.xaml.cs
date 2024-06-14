@@ -25,11 +25,19 @@ namespace IService.Views
             InitializeComponent();
             regis.Click += (s, e) =>
             {
+                string[] sm = manager.Text.Split(",");
+                List<string> dsm = new List<string>();
+                for(int i = 0;  i < sm.Length; i++)
+                {
+                    dsm.Add(sm[i]);
+                }
                 string encode = (password.Text).ToMD5();
                 Document user = new Document()
                 {
                     ObjectId = account.Text,
                     EncodePass = encode,
+                    Role = role.Text,
+                    StationManagement = dsm
 
                 };
                 DB.User.Insert(user);

@@ -9,12 +9,8 @@ namespace System
 {
     public partial class Document
     {
-        public string typ { get => GetString(nameof(typ)); set => Push(nameof(typ), value); }
-        public string alg { get => GetString(nameof(alg)); set => Push(nameof(alg), value); }
-        public string sub { get => GetString(nameof(sub)); set => Push(nameof(sub), value); }
-        public string name { get => GetString(nameof(name)); set => Push(nameof(name), value); }
-        public string role { get => GetString(nameof(role)); set => Push(nameof(role), value); }
-        public string exp { get => GetString(nameof(exp)); set => Push(nameof(exp), value); }
+        public string Typ { get => GetString(nameof(Typ)); set => Push(nameof(Typ), value); }
+        public string Alg { get => GetString(nameof(Alg)); set => Push(nameof(Alg), value); }
         public string SecretKey { get => GetString(nameof(SecretKey)); set => Push(nameof(SecretKey), value); }
     }
     public class Format
@@ -84,8 +80,8 @@ namespace System
         {
             Document header = new Document()
             {
-                typ = type,
-                alg = algorithm,
+                Typ = type,
+                Alg = algorithm,
             };
             this.Header = Base64urlEncode(header);
         }
@@ -93,10 +89,9 @@ namespace System
         {
             Document payload = new Document()
             {
-                sub = sub,
-                name = name,
-                role = role,
-                exp = exp
+                Name = name,
+                Role = role,
+                Exp = exp
             };
             this.Payload = Base64urlEncode(payload);
         }

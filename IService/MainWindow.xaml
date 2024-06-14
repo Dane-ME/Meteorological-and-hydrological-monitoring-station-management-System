@@ -26,7 +26,7 @@
                 <StackPanel Orientation="Horizontal">
                     <Button Content="Tạo tài khoản" x:Name="CreateAccount" Margin="5" Background="AliceBlue"></Button>
                     <Button Content="Nhập dữ liệu" x:Name="ImportData" Margin="5" Background="AliceBlue"></Button>
-                    <Button Width="60" Margin="5" Background="AliceBlue"></Button>
+                    <Button Content="Khởi tạo trạm" x:Name="InitStation" Width="85" Margin="5" Background="AliceBlue"></Button>
                     <Button Width="60" Margin="5" Background="AliceBlue"></Button>
                     <Button Width="60" Margin="5" Background="AliceBlue"></Button>
                 </StackPanel>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IService.ViewModels.Import;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,7 @@ namespace IService.Views.Import
         public ImportListView()
         {
             InitializeComponent();
+            DataContext = new ImportStationListViewModel();
         }
     }
 }

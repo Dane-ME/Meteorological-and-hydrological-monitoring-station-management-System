@@ -1,4 +1,6 @@
-﻿using IService.Views;
+﻿using IService.Services;
+using IService.Views;
+using IService.Views.Import;
 using MQTT;
 using System.Text;
 using System.Windows;
@@ -32,12 +34,21 @@ namespace IService
                 UIElement uIElement = new ImportView();
                 MainContent.Child = uIElement;
             };
+
+            InitStation.Click += (s, e) => 
+            {
+                UIElement uiElement = new ImportListView();
+                MainContent.Child = uiElement;
+            };
             
-            
-            var handle = new ManageThread();
+            var handle = new RequestManager();
 
             connect.Click += (s, e) => {
                 Broker.Instance.Connect();
+                Broker.Instance.Listen("dane/usercontroller/login", (doc) =>
+                {
+                    handle.IsItStoredandSendResponse(doc);
+                });
             };
             
             listen.Click += (s, e) => 

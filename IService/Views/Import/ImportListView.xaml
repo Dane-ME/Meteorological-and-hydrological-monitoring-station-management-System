@@ -14,11 +14,16 @@
         <ScrollViewer Margin="10">
             <StackPanel Orientation="Vertical">
                 <Label Content="Mã trạm"></Label>
-                <TextBox Text="{Binding Code}" Height="30" FontSize="20" VerticalAlignment="Center"></TextBox>
+                <TextBox Text="{Binding ID}" Height="30" FontSize="20" VerticalAlignment="Center"></TextBox>
                 <Label Content="Tên trạm"></Label>
                 <TextBox Text="{Binding Name}" Height="30" FontSize="20" VerticalAlignment="Center"></TextBox>
                 <Label Content="Địa chỉ trạm"></Label>
                 <TextBox Text="{Binding Local}" Height="30" FontSize="20" VerticalAlignment="Center"></TextBox>
+                <Label Content="Phân loại trạm"></Label>
+                <TextBox Text="{Binding Type}" Height="30" FontSize="20" VerticalAlignment="Center"></TextBox>
+                <Label Content="Người quản lý"></Label>
+                <TextBox Text="{Binding Manager}" Height="30" FontSize="20" VerticalAlignment="Center"></TextBox>
+
             </StackPanel>
         </ScrollViewer>
         <StackPanel Grid.Column="1" VerticalAlignment="Top">

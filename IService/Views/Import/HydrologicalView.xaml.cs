@@ -1,4 +1,5 @@
-﻿using IService.ViewModels.Import;
+﻿using IService.Models;
+using IService.ViewModels.Import;
 using System;
 using System.Collections.Generic;
 using System.Linq;

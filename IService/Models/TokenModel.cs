@@ -39,16 +39,16 @@ namespace System
            
             var format = new Format();
             format.header("JWT","HS256");
-            format.payload("123","Dang", "ADMIN", $"{message.exp}");
-            format.signature($"{data.Email}", $"{data.EncodePass}", $"{message.exp}");
+            format.payload("123","Dang", "ADMIN", $"{message.Exp}");
+            format.signature($"{data.Email}", $"{data.EncodePass}", $"{message.Exp}");
             string token = format.CreateJWT();
-            string srkey = format.CreateSecretKey($"{data.Email}", $"{data.EncodePass}", $"{message.exp}");
+            string srkey = format.CreateSecretKey($"{data.Email}", $"{data.EncodePass}", $"{message.Exp}");
 
             Document newToken = new Document()
             {
                 ObjectId = format.Header + format.Payload + format.Signature,
                 SecretKey = srkey,
-                Time = message.exp,
+                Time = message.Exp,
             };
             DB.Token.Insert(newToken);
 
@@ -59,15 +59,14 @@ namespace System
     {
         public string Token { get => GetString(nameof(Token)); set => Push(nameof(Token), value); }
         //public string DeviceInfo { get => GetString(nameof(DeviceInfo)); set => Push(nameof(DeviceInfo), value); }
-        public string EncodePass { get => GetString(nameof(EncodePass)); set => Push(nameof(EncodePass), value); }
         public string Time { get => GetString(nameof(Time)); set => Push(nameof(Time), value); }
+        public string Exp { get => GetString(nameof(Exp)); set => Push(nameof(Exp), value); }
         public string Type { get => GetString(nameof(Type)); set => Push(nameof(Type), value); }
-        public string UserID { get => GetString(nameof(UserID)); set => Push(nameof(UserID), value); }
 
     }
     public partial class DB
     {
-        static public BsonData.Collection? Token => Main.GetCollection(nameof(Token));
+        static public BsonData.Collection? Token => MainManager.GetCollection(nameof(Token));
 
     }
 }

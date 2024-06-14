@@ -3,52 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Threading;
 using MQTT;
-using System.Windows.Controls;
-using BsonData;
 
-namespace System
+namespace IService.Services
 {
-    class QueueTask
+    public class RequestManager
     {
-
-    }
-    class ManageThread
-    {
-        public static long CompletedWorkItemCount { get; }
-        public static long PendingWorkItemCount { get; }
-        public static int ThreadCount { get; }
-
-        public ManageThread() 
-        {
-            
-            int worker = 0;
-            int io = 0;
-            Threading.ThreadPool.GetAvailableThreads(out worker, out io);
-            // Thiết lập số lượng tối đa các luồng làm việc và luồng hoàn thành I/O
-            bool successMax = Threading.ThreadPool.SetMaxThreads(50, 20);
-            bool successMin = Threading.ThreadPool.SetMinThreads(10, 5);
-
-            //Console.WriteLine("Thread pool threads available at startup: ");
-            //Console.WriteLine("   Worker threads: {0:N0}", worker);
-            //Console.WriteLine("   Asynchronous I/O threads: {0:N0}", io);
-        }
-        public void ListenAsFixedThread(string topic)
-        {
-            while (true)
-            {
-                Broker.Instance.Listen($"{topic}", (doc) =>
-                {
-
-                });
-                Thread.Sleep(1000);
-            }
-        }
-        
+        public RequestManager() { }
         public void IsItStoredandSendResponse(Document doc)
         {
-            if (doc.Type == "id") 
+            if (doc.Type == "id")
             {
                 var token = new TokenModel();
                 if (IsIDStored(doc.UserID))
@@ -64,7 +28,7 @@ namespace System
                     Broker.Instance.Send($"dane/login/{doc.UserID}", con.CreateResponse($"{doc.UserID}"));
                 }
             }
-            else 
+            else
             {
                 var con = new ResponseSender("noknown", "0");
                 con.SendResponse($"dane/login/{doc.UserID}", doc.UserID);
@@ -86,4 +50,5 @@ namespace System
             con.SendResponse($"usercontroller/login/{doc.Token}", $"{doc.Token}");
         }
     }
+
 }

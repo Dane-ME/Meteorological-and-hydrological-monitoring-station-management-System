@@ -15,7 +15,6 @@
             <Button Content="Khí tượng" x:Name="meteorology" Width="80" FontSize="16" Background="AliceBlue" BorderThickness="0" ></Button>
             <Button Content="Thủy Văn" x:Name="hydrological" Width="80" FontSize="16" Background="AliceBlue" BorderThickness="0" ></Button>
             <Button Content="Mưa" x:Name="rainfall" Width="80" FontSize="16" Background="AliceBlue" BorderThickness="0"> </Button>
-            <Button Content="Danh sách" x:Name="list" Width="80" FontSize="16" Background="AliceBlue" BorderThickness="0"></Button>
         </StackPanel>
         <Border Grid.Row="1" x:Name="MainContent"></Border>
     </Grid>

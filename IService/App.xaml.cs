@@ -3,6 +3,7 @@ using System.Data;
 using System.Windows;
 using System;
 using System.IO;
+using IService.Models;
 using MQTT;
 
 namespace IService
@@ -17,7 +18,8 @@ namespace IService
             int count = 0;
             string dir = Environment.CurrentDirectory;
             while (count < 3) { dir = Directory.GetParent(dir).FullName; count++; }
-            DB.Start(dir + "/DataBase");
+            DB.InitMonitoringDatabase(dir + "/DataBase");
+            DB.InitManagerDatabase(dir + "/DataBase");
         }
     }
 
