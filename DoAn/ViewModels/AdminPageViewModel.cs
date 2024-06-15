@@ -82,7 +82,7 @@ namespace DoAn.ViewModels
 
         private async Task LoadDataAsync(Grid grid, ScrollView scrollview, StationListView stationlist)
         {
-            await Task.Delay(2000);
+            await Task.Delay(1000);
             grid.Children.Add(stationlist);
             scrollview.Content = grid;
             this.view = scrollview;

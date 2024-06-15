@@ -5,8 +5,10 @@ using DoAn.ViewModels.AdminViewModel;
 using DoAn.Views;
 using DoAn.Views.AdminView;
 using DoAn.Views.Loading;
+using Microcharts.Maui;
 using Microsoft.Extensions.Logging;
 using MQTT;
+using SkiaSharp.Views.Maui.Controls.Hosting;
 using System;
 
 namespace DoAn
@@ -18,6 +20,8 @@ namespace DoAn
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseSkiaSharp()
+                .UseMicrocharts()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

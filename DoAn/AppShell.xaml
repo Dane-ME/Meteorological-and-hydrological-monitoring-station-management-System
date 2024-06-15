@@ -11,7 +11,7 @@
     FlyoutBackground="#eaecf5" 
     Shell.TabBarIsVisible="False">
     <Shell.FlyoutHeader>
-        <Image Source="flyoutheader.jpg"></Image>
+        <Image Source="flyoutheader.png"></Image>
     </Shell.FlyoutHeader>
     <ShellContent
         ContentTemplate="{DataTemplate loading:CheckingNetworkView}"

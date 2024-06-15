@@ -8,6 +8,8 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <ScrollViewer Margin="10">
         <StackPanel Orientation="Vertical">
+            <Label Content="Mã trạm"></Label>
+            <TextBox Text="{Binding Code}" Height="30" FontSize="20" VerticalAlignment="Center"></TextBox>
             <Label Content="Tốc độ gió"></Label>
             <TextBox Height="30" FontSize="20" VerticalAlignment="Center"></TextBox>
             <Label Content="Hướng gió"></Label>

@@ -32,16 +32,23 @@ namespace IService.ViewModels.Import
                 };
                 string code = this.Code;
                 
-                object t = MethodHandle.CallMethod("6868", "Find", "17062024");
+                object t = MethodHandle.CallMethod("6868", "Find", $"{TimeFormat.getTimeNow()}");
             });
             SaveCommand = new RelayCommand( execute => {
-                object obj = MethodHandle.CallMethod($"{this.Code}", "Find", "14062024");
+                object obj = MethodHandle.CallMethod($"{this.Code}", "Find", $"{TimeFormat.getTimeNow()}");
                 DocumentList doclist = new DocumentList();
-
+                doclist.Add(new Document()
+                {
+                    ObjectId = this.TimeBinding,
+                    SeaLevel = this.SeaLevelBinding,
+                    WaveHeight = this.WaveHeightBinding,
+                    WaveLength = this.WaveLengthBinding,
+                    WaveHeightMax = this.WaveHeightMaxBinding,
+                });
                 Document docs = new Document() 
                 {
-                    ObjectId = "14062024",
-                    StationData = 
+                    ObjectId = TimeFormat.getTimeNow(),
+                    StationData = doclist
                 };
                 if (obj is null)
                 {
@@ -49,32 +56,23 @@ namespace IService.ViewModels.Import
                 }
                 else
                 {
-                    object doc = MethodHandle.CallMethod($"{this.Code}", "Find", "14062024");
+                    //object doc = MethodHandle.CallMethod($"{this.Code}", "Find", "14062024");
                     int loc = TimeMap(this.TimeBinding);
-
                    //string t = doc.StationData.ToString();
 
                     if (loc != -1) {
-
-                        var d = new Document()
-                        {
-                            Time = this.TimeBinding,
-                            SeaLevel = this.SeaLevelBinding,
-                            WaveHeight = this.WaveHeightBinding,
-                            WaveLength = this.WaveLengthBinding,
-                            WaveHeightMax = this.WaveHeightMaxBinding,
-                        };
+                        Document doc = (Document)obj;
                         DocumentList dl = doc.StationData;
-                        dl.Add(new Document()
+                        for (int i = 0; i < dl.Count; i++)
                         {
-                            Time = this.TimeBinding,
-                            SeaLevel = this.SeaLevelBinding,
-                            WaveHeight = this.WaveHeightBinding,
-                            WaveLength = this.WaveLengthBinding,
-                            WaveHeightMax = this.WaveHeightMaxBinding
-                        });
-                        doc.StationData = dl;
-                        DB.Station.Update(doc);
+                            if (this.TimeBinding != dl[i].ObjectId)
+                            {
+                                dl.Add(doclist[0]);
+                                doc.StationData = dl;
+                                MethodHandle.CallMethod($"{this.Code}", "Update", doc);
+                                break;
+                            }
+                        }
                     }
                 }
             ;});
@@ -92,7 +90,7 @@ namespace IService.ViewModels.Import
         {
             return new Document()
             {
-                ObjectId = this.TimeBinding,
+                Time = this.TimeBinding,
                 SeaLevel = this.SeaLevelBinding,
                 WaveHeight = this.WaveHeightBinding,
                 WaveLength = this.WaveLengthBinding,

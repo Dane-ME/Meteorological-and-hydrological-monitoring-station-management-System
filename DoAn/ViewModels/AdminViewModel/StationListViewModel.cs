@@ -8,25 +8,17 @@ using System.Threading.Tasks;
 
 namespace DoAn.ViewModels.AdminViewModel
 {
-    public class StationListViewModel
+    public class StationListViewModel : StationLabel
     {
         public bool IsLoading {  get; set; }
         public List<StationLabel> NameofStation {  get; set; }
         public List<StationLabel> STT {  get; set; }
         public StationListViewModel() 
         {
-            //LoadDataAsync();
-
             var items = new List<StationLabel>()
             {
-                new StationLabel {Name = "Cảng xăng dầu B12" , ID = "8686"},
-                new StationLabel {Name = "Cảng Xi Măng Hạ Long", ID = "60001" },
-                new StationLabel {Name = "Cảng xăng dầu B12", ID = "8686" },
-                new StationLabel {Name = "Cảng Xi Măng Hạ Long", ID = "60001" },
-                new StationLabel {Name = "Cảng xăng dầu B12", ID = "8686" },
-                new StationLabel {Name = "Cảng Xi Măng Hạ Long", ID = "60001" },
-                new StationLabel { Name = "Cảng xăng dầu B12", ID = "8686" },
-                new StationLabel { Name = "Cảng Xi Măng Hạ Long", ID = "60001" },
+                new StationLabel("Cảng xăng dầu B12", "6868"),
+                new StationLabel("Cảng Xi Măng Hạ Long", "60001"),
             };
             this.NameofStation = items;
             STT = new List<StationLabel>();
@@ -36,32 +28,15 @@ namespace DoAn.ViewModels.AdminViewModel
                 this.STT.Add(new StationLabel { Num = $"{i + 1}" });
             }
         }
-        private async Task LoadDataAsync()
-        {
-            IsLoading = true;
-            var items = new List<StationLabel>
-            {
-                new StationLabel { Name = "Cảng xăng dầu B12" },
-                new StationLabel { Name = "Cảng Xi Măng Hạ Long" },
-                new StationLabel { Name = "Cảng xăng dầu B12" },
-                new StationLabel { Name = "Cảng Xi Măng Hạ Long" },
-                new StationLabel { Name = "Cảng xăng dầu B12" },
-                new StationLabel { Name = "Cảng Xi Măng Hạ Long" },
-                new StationLabel { Name = "Cảng xăng dầu B12" },
-                new StationLabel { Name = "Cảng Xi Măng Hạ Long" }
-            };
-            NameofStation = items;
-            STT = new List<StationLabel>();
-            for (int i = 0; i < items.Count; i++)
-            {
-                STT.Add(new StationLabel { Num = $"{i + 1}" });
-            }
-            await Task.Delay(2000); // Simulate data loading delay
-            IsLoading = false;
-        }
     }
     public class StationLabel
     {
+        public StationLabel() { }
+        public StationLabel(string name, string id) 
+        {
+            Name = name;
+            ID = id;
+        }
         public string Name { get; set; }
         public string ID { get; set; }
         public string Num { get; set; }

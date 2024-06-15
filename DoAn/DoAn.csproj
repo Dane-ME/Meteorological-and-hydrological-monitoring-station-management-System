@@ -47,9 +47,12 @@
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
-		<MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
 		<MauiImage Update="Resources\Images\wave.png" Resize="True" />
 		<MauiImage Update="Resources\Images\lighthouse.png" Resize="True" />
+		<MauiImage Update="Resources\Images\home.png" Resize="True" />
+		<MauiImage Update="Resources\Images\menu.png" Resize="True" />
+		<MauiImage Update="Resources\Images\settings.png" Resize="True" />
+		<MauiImage Update="Resources\Images\user.png" Resize="True" />
 		<MauiImage Update="Resources\Images\tasks.png" Resize="True" />
 
 		<!-- Custom Fonts -->
@@ -60,7 +63,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="Resources\Images\flyoutheader.jpg" />
+	  <None Remove="Resources\Images\flyoutheader.png" />
 	  <None Remove="Resources\Images\home.png" />
 	  <None Remove="Resources\Images\lighthouse.png" />
 	  <None Remove="Resources\Images\menu.png" />
@@ -70,9 +73,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Microcharts.Maui" Version="1.0.0" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
+		<PackageReference Include="SkiaSharp" Version="2.88.8" />
+		<PackageReference Include="SkiaSharp.Views" Version="2.88.8" />
+		<PackageReference Include="Syncfusion.Maui.Charts" Version="26.1.35" />
 		<PackageReference Include="System.Security.Cryptography.Algorithms" Version="4.3.1" />
 		<PackageReference Include="System.Security.Permissions" Version="8.0.0" />
 	</ItemGroup>
