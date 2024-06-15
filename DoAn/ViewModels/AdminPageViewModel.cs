@@ -18,15 +18,23 @@ namespace DoAn.ViewModels
     public class AdminPageViewModel
     {
         private readonly StationListViewModel _stationListViewModel;
+        public interface INavigationService
+        {
+            void NavigateToStationDetail();
+        }
         public ICommand StationTappedCommand { get; set; }
         public ICommand UserTappedCommand { get; set; }
         public View view {  get; set; }
+        public Grid grid {  get; set; }
+        public ScrollView scrollview{ get; set; }
         public AdminPageViewModel(StationListViewModel stationListViewModel) 
         {
             _stationListViewModel = stationListViewModel;
-            Grid grid = new Grid();
+            _stationListViewModel.OnNavigateToStationDetail += NavigatedToStationDetail;
+
+            grid = new Grid();
             //this.view = new AdminPageView();
-            var scrollview = new ScrollView();
+            scrollview = new ScrollView();
             var stationlist = new StationListView(_stationListViewModel);
 
 
@@ -84,6 +92,14 @@ namespace DoAn.ViewModels
         {
             await Task.Delay(1000);
             grid.Children.Add(stationlist);
+            scrollview.Content = grid;
+            this.view = scrollview;
+        }
+
+        public void NavigatedToStationDetail()
+        {
+            this.grid.Clear();
+            grid.Children.Add(new StationProfileView(_stationListViewModel));
             scrollview.Content = grid;
             this.view = scrollview;
         }

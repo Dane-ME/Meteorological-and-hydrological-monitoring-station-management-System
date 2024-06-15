@@ -7,7 +7,7 @@ using DoAn.Views;
 using MQTT;
 using System;
 
-public class LoginViewModel : INotifyPropertyChanged
+public class LoginViewModel : ObservableObject
 {
     private bool _isValidAcc = false;
     private bool _isValidPass = false;
@@ -18,47 +18,28 @@ public class LoginViewModel : INotifyPropertyChanged
     public bool IsValidAcc
     {
         get => _isValidAcc;
-        set
-        {
-            _isValidAcc = value;
-            OnPropertyChanged();
-        }
+        set => SetProperty(ref _isValidAcc, value);
     }
 
     public bool IsValidPass
     {
         get => _isValidPass;
-        set
-        {
-            _isValidPass = value;
-            OnPropertyChanged();
-        }
+        set => SetProperty(ref _isValidPass, value);
     }
 
     public string Account
     {
         get => _account;
-        set
-        {
-            _account = value;
-            OnPropertyChanged();
-        }
+        set => SetProperty(ref _account, value);
     }
 
     public string Password
     {
         get => _password;
-        set
-        {
-            _password = value;
-            OnPropertyChanged();
-        }
+        set => SetProperty(ref _password, value);
     }
 
     public ICommand LoginButtonCommand { get; private set; }
-
-    public event PropertyChangedEventHandler PropertyChanged;
-
     public LoginViewModel(UserModel userModel)
     {
         _userModel = userModel;
@@ -94,10 +75,5 @@ public class LoginViewModel : INotifyPropertyChanged
                 }
             }
         });
-    }
-
-    protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

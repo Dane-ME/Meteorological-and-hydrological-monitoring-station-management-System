@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="DoAn.Views.AdminView.StationListView">
+             x:Class="DoAn.Views.AdminView.StationListView"
+             xmlns:vm="clr-namespace:DoAn.ViewModels.AdminViewModel">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -22,7 +23,7 @@
                 <ColumnDefinition Width="6*"/>
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
-            <ListView ItemsSource="{Binding STT}" SelectionMode="None">
+            <ListView ItemsSource="{Binding NumOrder}" SelectionMode="None" CachingStrategy="RecycleElement">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -35,18 +36,17 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <ListView Grid.Column="1" ItemsSource="{Binding NameofStation}" SelectionMode="None">
+            <ListView Grid.Column="1" ItemsSource="{Binding NameofStation}" SelectionMode="None" Background="Transparent">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ViewCell>
-                            <ViewCell.View>
-                                <Label Text="{Binding Name}" FontSize="15" TextColor="#3669CC" Margin="18, 0, 0, 0"></Label>
-                            </ViewCell.View>
-                            <ViewCell.ContextActions>
-                                <MenuItem Text="Favorite" />
-                                <MenuItem Text="Delete"/>
-                            </ViewCell.ContextActions>
-                        </ViewCell>
+                        <TextCell Text="{Binding Name}" TextColor="#3669CC">
+                            <TextCell.ContextActions>
+                                <MenuItem Text="Chi tiết" 
+                                  Command="{Binding Source={RelativeSource AncestorType={x:Type vm:StationListViewModel}}, Path=OpenDetailCommand}"
+                                  CommandParameter="{Binding .}"/>      
+                            </TextCell.ContextActions>
+                        </TextCell>
+                        
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
@@ -64,5 +64,6 @@
                 </ListView.ItemTemplate>
             </ListView>
         </Grid>
+        
     </Grid>
 </ContentView>

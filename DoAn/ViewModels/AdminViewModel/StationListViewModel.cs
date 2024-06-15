@@ -1,44 +1,92 @@
 ﻿using DoAn.Models;
+using DoAn.Models.AdminModel;
+using DoAn.Services;
 using Microsoft.VisualBasic;
+using System.Collections.ObjectModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using MQTT;
 
 namespace DoAn.ViewModels.AdminViewModel
 {
-    public class StationListViewModel : StationLabel
+    public class StationListViewModel : ObservableObject
     {
+        
         public bool IsLoading {  get; set; }
-        public List<StationLabel> NameofStation {  get; set; }
-        public List<StationLabel> STT {  get; set; }
-        public StationListViewModel() 
+
+        public event Action OnNavigateToStationDetail;
+        /// <summary>
+        /// //////////
+        /// </summary>
+        private ObservableCollection<StationListModel> _nameofStation;
+        public ObservableCollection<StationListModel> NameofStation 
         {
-            var items = new List<StationLabel>()
+            get => _nameofStation;
+            set
             {
-                new StationLabel("Cảng xăng dầu B12", "6868"),
-                new StationLabel("Cảng Xi Măng Hạ Long", "60001"),
-            };
-            this.NameofStation = items;
-            STT = new List<StationLabel>();
-            var c = this.NameofStation.Count;
-            for (int i = 0; i < c; i++)
-            {
-                this.STT.Add(new StationLabel { Num = $"{i + 1}" });
+                EventChanged.Instance.OnChanged();
+                SetProperty(ref _nameofStation, value);
             }
         }
-    }
-    public class StationLabel
-    {
-        public StationLabel() { }
-        public StationLabel(string name, string id) 
+        private ObservableCollection<NumOder> _numOder;
+        public ObservableCollection<NumOder> NumOrder
         {
-            Name = name;
-            ID = id;
+            get => _numOder;
+            set => SetProperty(ref _numOder, value);
         }
-        public string Name { get; set; }
-        public string ID { get; set; }
-        public string Num { get; set; }
+        /// <summary>
+        /// /////////
+        /// </summary>
+        public List<string> Name { get; set; }
+        public List<string> ID { get; set; }
+        public List<string> Num { get; set; }
+        public ICommand OpenDetailCommand { get; private set ; }
+        public StationListViewModel() 
+        {
+            SendandListen();
+            Name = new List<string>();
+            ID = new List<string>();
+            Num = new List<string>();
+
+            foreach(var i in this.NameofStation)
+            {
+                this.Name.Add(i.Name);
+                this.ID.Add(i.ID);
+            }
+            OpenDetailCommand = new Command<StationListModel>( (e) =>
+            {
+                OnNavigateToStationDetail?.Invoke();
+            });
+            EventChanged.Instance.DataChanged += (s, e) =>
+            {
+                var count = NameofStation.Count;
+                NumOrder.Add(new NumOder() { Num = $"{count}" });
+                foreach (var i in this.NumOrder)
+                {
+                    this.Num.Add(i.Num);
+                }
+            };
+
+            
+        }
+        public void SendandListen()
+        {
+            Broker.Instance.Send("dane/service/stationlist/hhdangev02", new Document() { Token = "00000" });
+            Broker.Instance.Listen("dane/service/stationlist/hhdangev02", (doc) =>
+            {
+                if (doc != null)
+                {
+                    DocumentList list = doc.StationList;
+                    foreach (Document item in list)
+                    {
+                        NameofStation.Add(new StationListModel() { Name = item.StationName, ID = item.ObjectId });
+                    }
+                }
+            });
+        }
     }
 }

@@ -57,6 +57,7 @@ namespace DoAn
             builder.Services.AddTransient<AdminPageView>();
             builder.Services.AddTransient<StationListView>();
             builder.Services.AddTransient<UserListView>();
+            builder.Services.AddTransient<StationProfileView>();
 
             builder.Services.AddTransient<CheckingNetworkView>();
             builder.Services.AddTransient<CheckingLoginView>();
