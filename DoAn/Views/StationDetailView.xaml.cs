@@ -61,6 +61,7 @@ public partial class StationDetailView : ContentPage
     public StationDetailView()
 	{
 		InitializeComponent();
+        BindingContext = new ViewModel();
         #region MICROCHARTS
 
         LineChart chart = new LineChart() 
@@ -70,17 +71,77 @@ public partial class StationDetailView : ContentPage
 
         ChartView chartView = new ChartView();
         chartView.Chart = chart;
-        main.Chart = new LineChart() 
-        {
-            Entries = entries
-        };
+        //main.Chart = new LineChart() 
+        //{
+        //    Entries = entries
+        //};
         #endregion
-        #region HIGHCHART
 
+        #region HIGHCHART
 
         SfCartesianChart chart1 = new SfCartesianChart() { };
         SplineAreaSeries series1 = new SplineAreaSeries() { };
         
         #endregion
+    }
+}
+public class Model
+{
+    public string Time { get; set; }
+
+    public double Values { get; set; }
+
+    public Model(string xValue, double yValue)
+    {
+        Time = xValue;
+        Values = yValue;
+    }
+}
+
+public class ViewModel
+{
+    public ObservableCollection<Model> Data { get; set; }
+
+    public ViewModel()
+    {
+        Data = new ObservableCollection<Model>()
+        {
+            new Model("08:20", 2.1),
+            new Model("08:30", 1.5),
+            new Model("08:40", 1.7),
+            new Model("08:50", 1.7),
+            new Model("09:00", 2.4),
+            new Model("09:00", 2.2),
+            new Model("08:20", 2.1),
+            new Model("08:30", 1.5),
+            new Model("08:40", 1.7),
+            new Model("08:50", 1.7),
+            new Model("09:00", 2.4),
+            new Model("09:00", 2.2),
+            new Model("08:20", 2.1),
+            new Model("08:30", 1.5),
+            new Model("08:40", 1.7),
+            new Model("08:50", 1.7),
+            new Model("09:00", 2.4),
+            new Model("09:00", 2.2),
+            new Model("08:20", 2.1),
+            new Model("08:30", 1.5),
+            new Model("08:40", 1.7),
+            new Model("08:50", 1.7),
+            new Model("09:00", 2.4),
+            new Model("09:00", 2.2),
+            new Model("08:20", 2.1),
+            new Model("08:30", 1.5),
+            new Model("08:40", 1.7),
+            new Model("08:50", 1.7),
+            new Model("09:00", 2.4),
+            new Model("09:00", 2.2),
+            new Model("08:20", 2.1),
+            new Model("08:30", 1.5),
+            new Model("08:40", 1.7),
+            new Model("08:50", 1.7),
+            new Model("09:00", 2.4),
+            new Model("09:00", 2.2),
+        };
     }
 }

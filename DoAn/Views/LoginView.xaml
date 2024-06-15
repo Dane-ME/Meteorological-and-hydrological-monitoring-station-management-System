@@ -16,8 +16,10 @@
         <VerticalStackLayout Grid.Row="1" Margin="10">
             <Label Text="Tài khoản"></Label>
             <Entry Text="{Binding Account, Mode=TwoWay}"></Entry>
+            <Label Text="Tài khoản không hợp lệ" IsVisible="{Binding IsValidAcc}" Margin="0, 5, 0, 0" TextColor="Red"></Label>
             <Label Text="Mật khẩu"></Label>
             <Entry Text="{Binding Password, Mode=TwoWay}"></Entry>
+            <Label Text="Chưa điền mật khẩu" IsVisible="{Binding IsValidPass}" Margin="0, 5, 0, 0" TextColor="Red"></Label>
             <Button Text="Login" Command="{Binding LoginButtonCommand}"></Button>
         </VerticalStackLayout>
     </Grid>

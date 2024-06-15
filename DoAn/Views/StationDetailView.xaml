@@ -1,8 +1,78 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:charts="clr-namespace:Microcharts;assembly=Microcharts.Maui"
-             xmlns:chart="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
+             xmlns:chart="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
              x:Class="DoAn.Views.StationDetailView">
-    <chart:ChartView x:Name="main" />
+    
+    <!--<chart:ChartView x:Name="main" />-->
+    <ScrollView>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="8*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="1">
+                <VerticalStackLayout>
+                    <chart:SfCartesianChart HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                        <chart:SfCartesianChart.XAxes>
+                            <chart:CategoryAxis/>
+                        </chart:SfCartesianChart.XAxes>
+
+                        <chart:SfCartesianChart.YAxes>
+                            <chart:NumericalAxis/>
+                        </chart:SfCartesianChart.YAxes>
+
+                        <chart:AreaSeries  
+                                ItemsSource="{Binding Data}" 
+                                XBindingPath="Time"
+                                YBindingPath="Values"
+                                ShowMarkers="True"
+                                Fill="#94d78a">
+                            <chart:AreaSeries.MarkerSettings>
+                                <chart:ChartMarkerSettings Type="Circle"
+                                                           Fill="#70ca63"
+                                                           Stroke="#70ca63"
+                                                           StrokeWidth="3"/>
+                            </chart:AreaSeries.MarkerSettings>
+                        </chart:AreaSeries>
+                    </chart:SfCartesianChart>
+                    <Border Background="Transparent" StrokeThickness="0" HeightRequest="30" Margin="0,0,0,10">
+                        <Label Text="Biểu đồ hướng gió và tốc độ" VerticalOptions="Center" HorizontalOptions="Center" FontSize="20" FontAttributes="Bold"></Label>
+                    </Border>
+                    <chart:SfCartesianChart HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                        <chart:SfCartesianChart.XAxes>
+                            <chart:CategoryAxis/>
+                        </chart:SfCartesianChart.XAxes>
+
+                        <chart:SfCartesianChart.YAxes>
+                            <chart:NumericalAxis/>
+                        </chart:SfCartesianChart.YAxes>
+
+                        <chart:AreaSeries  
+                                ItemsSource="{Binding Data}" 
+                                XBindingPath="Time"
+                                YBindingPath="Values"
+                                ShowMarkers="True"
+                                Fill="#94d78a">
+                            <chart:AreaSeries.MarkerSettings>
+                                <chart:ChartMarkerSettings Type="Circle"
+                                                           Fill="#70ca63"
+                                                           Stroke="#70ca63"
+                                                           StrokeWidth="3"/>
+                            </chart:AreaSeries.MarkerSettings>
+                        </chart:AreaSeries>
+                    </chart:SfCartesianChart>
+
+                    <Border Background="Transparent" StrokeThickness="0" HeightRequest="30" Margin="0,0,0,10">
+                        <Label Text="Biểu đồ mực nước biển" VerticalOptions="Center" HorizontalOptions="Center" FontSize="20" FontAttributes="Bold"></Label>
+                    </Border>
+                </VerticalStackLayout>
+            </Grid>
+            
+            
+        </Grid>
+    </ScrollView>
+    
 </ContentPage>

@@ -9,6 +9,7 @@ using Microcharts.Maui;
 using Microsoft.Extensions.Logging;
 using MQTT;
 using SkiaSharp.Views.Maui.Controls.Hosting;
+using Syncfusion.Maui.Core.Hosting;
 using System;
 
 namespace DoAn
@@ -22,6 +23,7 @@ namespace DoAn
                 .UseMauiApp<App>()
                 .UseSkiaSharp()
                 .UseMicrocharts()
+                .ConfigureSyncfusionCore()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

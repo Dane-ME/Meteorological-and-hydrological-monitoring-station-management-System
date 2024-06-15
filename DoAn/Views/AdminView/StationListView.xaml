@@ -40,10 +40,12 @@
                     <DataTemplate>
                         <ViewCell>
                             <ViewCell.View>
-                                <StackLayout VerticalOptions="Center">
-                                    <Label Text="{Binding Name}" FontSize="15" TextColor="#3669CC" Margin="18, 0, 0, 0"></Label>
-                                </StackLayout>
+                                <Label Text="{Binding Name}" FontSize="15" TextColor="#3669CC" Margin="18, 0, 0, 0"></Label>
                             </ViewCell.View>
+                            <ViewCell.ContextActions>
+                                <MenuItem Text="Favorite" />
+                                <MenuItem Text="Delete"/>
+                            </ViewCell.ContextActions>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>

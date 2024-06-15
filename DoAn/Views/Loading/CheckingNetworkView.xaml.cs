@@ -20,7 +20,7 @@ namespace DoAn.Views.Loading
                 await DisplayAlert("Error", "Loi ket noi mang", "Thu lai");
                 serverReady = await _authService.IsConnectedToNetworkAsync();
             }
-            await Shell.Current.GoToAsync($"//HomeView");
+            await Shell.Current.GoToAsync($"//LoginView");
         }
     }
 }
