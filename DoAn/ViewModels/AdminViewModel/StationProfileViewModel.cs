@@ -22,7 +22,7 @@ namespace DoAn.ViewModels.AdminViewModel
                 {
                     if(value != null)
                     {
-                        EventChanged.Instance.OnIDChanged();
+                        EventChanged.Instance.OnStationIDChanged();
                         _idd = value;
                     }
                 }
@@ -71,7 +71,7 @@ namespace DoAn.ViewModels.AdminViewModel
             Type = new List<string>();
             Manager = new List<string>();
 
-            EventChanged.Instance.IDChanged += (s, e) =>
+            EventChanged.Instance.StationIDChanged += (s, e) =>
             {
                 if(manager.Count == 0 && type.Count == 0)
                 {

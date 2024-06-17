@@ -4,10 +4,11 @@ namespace DoAn.Views.AdminView;
 
 public partial class UserListView : ContentView
 {
-	private readonly UserListViewModel _model;
+	private readonly UserListViewModel _userlistViewModel;
 	public UserListView(UserListViewModel userListViewModel)
 	{
-		_model = userListViewModel;
 		InitializeComponent();
-	}
+        _userlistViewModel = userListViewModel;
+		BindingContext = _userlistViewModel;
+    }
 }

@@ -14,11 +14,6 @@ namespace DoAn.Models.AdminModel
         public string Type { get; set; }
         public string Manager { get; set; }
     }
-    public class StationProfileSupportModel
-    {
-        public string Type { get; set; }
-        public string Manager { get; set; } 
-    }
 }
 namespace System
 {

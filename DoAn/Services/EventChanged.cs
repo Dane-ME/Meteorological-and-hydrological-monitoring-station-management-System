@@ -26,7 +26,10 @@ namespace DoAn.Services
         public event EventHandler StationListChanged;
         public event EventHandler UserListChanged;
         public event EventHandler StationProfileChanged;
-        public event EventHandler IDChanged;
+        public event EventHandler UserProfileChanged;
+        public event EventHandler StationIDChanged;
+        public event EventHandler UserIDChanged;
+
         public virtual void OnLoaded()
         {
             Loaded?.Invoke(this, EventArgs.Empty);
@@ -43,9 +46,17 @@ namespace DoAn.Services
         {
             StationProfileChanged?.Invoke(this, EventArgs.Empty);
         }
-        public virtual void OnIDChanged()
+        public virtual void OnUserProfileChanged()
         {
-            IDChanged?.Invoke(this, EventArgs.Empty);
+            UserProfileChanged?.Invoke(this, EventArgs.Empty);
+        }
+        public virtual void OnStationIDChanged()
+        {
+            StationIDChanged?.Invoke(this, EventArgs.Empty);
+        }
+        public virtual void OnUserIDChanged()
+        {
+            UserIDChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 

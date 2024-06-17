@@ -12,41 +12,73 @@ using System.Windows.Input;
 namespace DoAn.ViewModels.AdminViewModel
 {
     public class UserListViewModel : ObservableObject
-    {        
+    {
+        public event Action<UserListModel> OnNavigateToUserDetail;
 
-        private ObservableCollection<UserListModel> _nameofStation;
-        public ObservableCollection<UserListModel> NameofStation
+        private ObservableCollection<UserListModel> _userdetail;
+        public ObservableCollection<UserListModel> UserDetail
         {
-            get => _nameofStation;
+            get => _userdetail;
             set
             {
-                SetProperty(ref _nameofStation, value);
+                SetProperty(ref _userdetail, value);
+            }
+        }
+        private ObservableCollection<int> numbers;
+
+        public ObservableCollection<int> Numbers
+        {
+            get => numbers;
+            set
+            {
+                SetProperty(ref numbers, value);
             }
         }
         public List<string> Name { get; set; }
         public List<string> ID { get; set; }
-        public List<string> Num { get; set; }
         public ICommand OpenDetailCommand { get; private set; }
+        public ICommand AddUserCommand { get; private set; }
+        public ICommand RemoveUserCommand { get; private set; }
+
         public UserListViewModel() 
         {
+            SendandListen();
             Name = new List<string>();
             ID = new List<string>();
-            Num = new List<string>();
-            NameofStation = new ObservableCollection<UserListModel>();
+            UserDetail = new ObservableCollection<UserListModel>();
+            Numbers = new ObservableCollection<int>();
+
 
             EventChanged.Instance.UserListChanged += (s, e) =>
             {
-                var count = NameofStation.Count;
-                foreach (var i in this.NameofStation)
+                var count = UserDetail.Count;
+                for (int i = 1; i <= count; i++)
+                {
+                    Numbers.Add(i);
+                }
+                foreach (var i in this.UserDetail)
                 {
                     this.Name.Add(i.Name);
                     this.ID.Add(i.ID);
                 }
             };
 
+            AddUserCommand = new Command((e) =>
+            {
+
+            });
+            OpenDetailCommand = new Command<UserListModel>((e) =>
+            {
+                OnNavigateToUserDetail?.Invoke(e);
+            });
+            RemoveUserCommand = new Command((e) =>
+            {
+
+            });
+
         }
 
-        public void SendandListen()
+        private void SendandListen()
         {
             MQTT.Broker.Instance.Send("dane/service/userlist/hhdangev02", new Document() { Token = "00000" });
             MQTT.Broker.Instance.Listen("dane/service/userlist/hhdangev02", (doc) =>
@@ -59,7 +91,7 @@ namespace DoAn.ViewModels.AdminViewModel
                     {
                         list2.Add(new UserListModel() { Name = item.StationName, ID = item.ObjectId });
                     }
-                    NameofStation = list2;
+                    UserDetail = list2;
                     EventChanged.Instance.OnUserListChanged();
                 }
             });

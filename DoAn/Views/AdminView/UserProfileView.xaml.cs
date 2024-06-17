@@ -9,5 +9,6 @@ public partial class UserProfileView : ContentView
 	{
 		InitializeComponent();
 		_viewModel = userProfileViewModel;
+		BindingContext = _viewModel;
 	}
 }

@@ -49,9 +49,9 @@ namespace DoAn.ViewModels
             _userprofileView = new UserProfileView(_userprofileViewModel);
 
             _stationListViewModel.OnNavigateToStationDetail += NavigatedToStationDetail;
+            _userListViewModel.OnNavigateToUserDetail += NavigatedToUserDetail;
 
             grid = new Grid();
-            //this.view = new AdminPageView();
             scrollview = new ScrollView();
             
 
@@ -61,7 +61,6 @@ namespace DoAn.ViewModels
             LoadDataAsync(grid, scrollview, _stationListView);
 
             //Check(grid, scrollview);
-
 
             EventChanged.Instance.Loaded += (s, e) => 
             {
@@ -74,15 +73,14 @@ namespace DoAn.ViewModels
             StationTappedCommand = new Command(() =>
             {
                 grid.Children.Clear();
-                grid.Children.Add(new StationListView(_stationListViewModel));
+                grid.Children.Add(_stationListView);
                 Check(grid, scrollview);
             });
             UserTappedCommand = new Command(() =>
             {
                 grid.Children.Clear();
-                grid.Children.Add(new UserListView(_userListViewModel));
+                grid.Children.Add(_userListView);
                 Check(grid, scrollview);
-
             });
         }
         public void Check(Grid grid, ScrollView scrollView)
@@ -110,6 +108,14 @@ namespace DoAn.ViewModels
             this.grid.Children.Clear();
             _stationProfileViewModel.ID = stationListModel.ID;
             grid.Children.Add(_stationProfileView);
+            scrollview.Content = grid;
+            this.view = scrollview;
+        }
+        public void NavigatedToUserDetail(UserListModel userListModel)
+        {
+            this.grid.Children.Clear();
+            _stationProfileViewModel.ID = userListModel.ID;
+            grid.Children.Add(_userprofileView);
             scrollview.Content = grid;
             this.view = scrollview;
         }
