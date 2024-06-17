@@ -85,11 +85,11 @@ namespace DoAn.ViewModels.AdminViewModel
             {
                 if (doc != null)
                 {
-                    DocumentList list = doc.StationList;
+                    DocumentList list = doc.UserList;
                     ObservableCollection<UserListModel> list2 = new ObservableCollection<UserListModel>();
                     foreach (Document item in list)
                     {
-                        list2.Add(new UserListModel() { Name = item.StationName, ID = item.ObjectId });
+                        list2.Add(new UserListModel() { Name = item.UserName, ID = item.ObjectId });
                     }
                     UserDetail = list2;
                     EventChanged.Instance.OnUserListChanged();

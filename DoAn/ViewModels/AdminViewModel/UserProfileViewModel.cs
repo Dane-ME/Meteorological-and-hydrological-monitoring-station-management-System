@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using DoAn.Models.AdminModel;
 using System.Collections.ObjectModel;
 using DoAn.Services;
-using CoreBluetooth;
 
 namespace DoAn.ViewModels.AdminViewModel
 {
@@ -85,7 +84,6 @@ namespace DoAn.ViewModels.AdminViewModel
             Station = new List<string>();
             EventChanged.Instance.UserIDChanged += (s, e) =>
             {
-                this.Id = ID;
                 if (station.Count == 0)
                 {
                     SendRequest();
@@ -95,6 +93,11 @@ namespace DoAn.ViewModels.AdminViewModel
                 {
                     SendRequest();
                 }
+            };
+            EventChanged.Instance.UserProfileChanged += (s, e) => 
+            {
+                Id = ID;
+
             };
         }
         public void SendRequest()

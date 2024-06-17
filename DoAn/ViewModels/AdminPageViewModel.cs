@@ -74,13 +74,17 @@ namespace DoAn.ViewModels
             {
                 grid.Children.Clear();
                 grid.Children.Add(_stationListView);
-                Check(grid, scrollview);
+                scrollview.Content = grid;
+                this.view = scrollview;
+                //Check(grid, scrollview);
             });
             UserTappedCommand = new Command(() =>
             {
                 grid.Children.Clear();
                 grid.Children.Add(_userListView);
-                Check(grid, scrollview);
+                scrollview.Content = grid;
+                this.view = scrollview;
+                //Check(grid, scrollview);
             });
         }
         public void Check(Grid grid, ScrollView scrollView)
@@ -114,7 +118,7 @@ namespace DoAn.ViewModels
         public void NavigatedToUserDetail(UserListModel userListModel)
         {
             this.grid.Children.Clear();
-            _stationProfileViewModel.ID = userListModel.ID;
+            _userprofileViewModel.ID = userListModel.ID;
             grid.Children.Add(_userprofileView);
             scrollview.Content = grid;
             this.view = scrollview;
