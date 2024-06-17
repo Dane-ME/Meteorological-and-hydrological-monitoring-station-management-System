@@ -4,7 +4,7 @@
              x:Class="DoAn.Views.AdminView.StationProfileView">
     <ScrollView BackgroundColor="#EEF5FF">
         <VerticalStackLayout>
-            <Border BackgroundColor="#3669CC" WidthRequest="390" HeightRequest="180" StrokeThickness="0">
+            <Border BackgroundColor="#3669CC" WidthRequest="390" HeightRequest="180" StrokeThickness="0" Margin="0,10,0,0">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="10">
                     </RoundRectangle>
@@ -22,14 +22,27 @@
                         </Grid.ColumnDefinitions>
 
                         <VerticalStackLayout VerticalOptions="Start" HorizontalOptions="Start" Margin="8, 8, 0, 0">
-                            <Label Text="Cảng xi măng Hạ Long" FontSize="20" TextColor="White" FontAttributes="Bold"></Label>
-                            <Label Text="Mã trạm: 60001" FontSize="15" TextColor="White"></Label>
+                            <Label Text="{Binding Name}" FontSize="20" TextColor="White" FontAttributes="Bold"></Label>
+                            <HorizontalStackLayout>
+                                <Label Text="Mã trạm: " FontSize="15" TextColor="White"></Label>
+                                <Label Text="{Binding Id}" FontSize="15" TextColor="White"></Label>
+                            </HorizontalStackLayout>
                         </VerticalStackLayout>
 
                         <VerticalStackLayout Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Margin="0, 8, 0, 0">
-                            <Label Text="Hydrological" FontSize="15" TextColor="White"></Label>
-                            <Label Text="Meteorology" FontSize="15" TextColor="White"></Label>
-                            <Label Text="Rainfall" FontSize="15" TextColor="White"></Label>
+                            <ListView ItemsSource="{Binding type}" SelectionMode="None" Background="Transparent">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <ViewCell.View>
+                                                <VerticalStackLayout>
+                                                    <Label Text="{Binding Type}" FontSize="15" TextColor="White"></Label>
+                                                </VerticalStackLayout>
+                                            </ViewCell.View>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
                         </VerticalStackLayout>
                     </Grid>
 
@@ -49,17 +62,17 @@
                     </Button>
 
                     <Label
-            Grid.Row="2"
-            Text="Địa điểm: Thống Nhất, Hoành Bồ, Hạ Long, QN"
-            FontSize="15"
-            TextColor="White"
-            Margin="8,0,0,0"
-            VerticalOptions="Center"/>
+                        Grid.Row="2"
+                        Text="{Binding Address}"
+                        FontSize="15"
+                        TextColor="White"
+                        Margin="8,0,0,0"
+                        VerticalOptions="Center"/>      
 
                 </Grid>
             </Border>
 
-            <Border BackgroundColor="#578FC8" WidthRequest="390" HeightRequest="180" Margin="0, 10, 0, 0" StrokeThickness="0">
+            <Border BackgroundColor="#578FC8" WidthRequest="390" Margin="0, 10, 0, 0" StrokeThickness="0">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="10"></RoundRectangle>
                 </Border.StrokeShape>
@@ -75,20 +88,21 @@
                         </Border.StrokeShape>
                         <Label Text="Người quản lý" TextColor="White" FontSize="15" Margin="8, 0, 0, 0" VerticalOptions="Center"></Label>
                     </Border>
-
-                    <ListView Grid.Row="1" ItemsSource="{Binding NameofStation}" SelectionMode="None" Background="Transparent">
+                    <ListView Grid.Row="1" ItemsSource="{Binding manager}" SelectionMode="None" Background="Transparent">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>
                                     <ViewCell.View>
                                         <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                                            <Label Text="{Binding Name}" FontSize="15" TextColor="White"></Label>
+                                            <Label Text="{Binding Manager}" FontSize="15" TextColor="White"></Label>
                                         </StackLayout>
                                     </ViewCell.View>
                                 </ViewCell>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
+                    <!--<ListView Grid.Row="1" x:Name="listview"></ListView>-->
+                    
                 </Grid>
             </Border>
         </VerticalStackLayout>

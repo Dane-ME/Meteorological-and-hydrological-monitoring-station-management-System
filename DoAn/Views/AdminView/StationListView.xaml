@@ -23,13 +23,13 @@
                 <ColumnDefinition Width="6*"/>
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
-            <ListView ItemsSource="{Binding NumOrder}" SelectionMode="None" CachingStrategy="RecycleElement">
+            <ListView ItemsSource="{Binding Numbers}" SelectionMode="None" CachingStrategy="RecycleElement">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <ViewCell.View>
                                 <StackLayout VerticalOptions="Center">
-                                    <Label Text="{Binding Num}"  FontSize="15" TextColor="#3669CC" Margin="25, 0, 0, 0"></Label>
+                                    <Label Text="{Binding}"  FontSize="15" TextColor="#3669CC" Margin="25, 0, 0, 0"></Label>
                                 </StackLayout>
                             </ViewCell.View>
                         </ViewCell>

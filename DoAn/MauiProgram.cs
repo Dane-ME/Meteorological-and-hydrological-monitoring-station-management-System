@@ -38,8 +38,6 @@ namespace DoAn
             //System.File.Instance.CreateNewDatafolder("app_data", AppDataDir);
             System.File.Instance.CreateNewDatafolder("cache_data", CacheDataDir);
 
-            Broker.Instance.Connect();
-
             builder.Services.AddSingleton<AuthService>();
             builder.Services.AddSingleton<UserModel>();
             builder.Services.AddScoped<StationModel>();
@@ -47,18 +45,24 @@ namespace DoAn
             builder.Services.AddSingleton<LoginViewModel>();
             builder.Services.AddTransient<HomeViewModel>();
             builder.Services.AddTransient<LoadingViewModel>();
+            //
             builder.Services.AddTransient<StationListViewModel>();
+            builder.Services.AddTransient<StationProfileViewModel>();
+            builder.Services.AddTransient<UserListViewModel>();
+            builder.Services.AddTransient<UserProfileViewModel>();
             builder.Services.AddTransient<AdminPageViewModel>();
-
+            //
             builder.Services.AddTransient<LoginView>();
             builder.Services.AddTransient<UserView>();
             builder.Services.AddTransient<HomeView>();
             builder.Services.AddTransient<StationDetailView>();
             builder.Services.AddTransient<AdminPageView>();
+            //
             builder.Services.AddTransient<StationListView>();
             builder.Services.AddTransient<UserListView>();
             builder.Services.AddTransient<StationProfileView>();
-
+            builder.Services.AddTransient<UserProfileView>();
+            //
             builder.Services.AddTransient<CheckingNetworkView>();
             builder.Services.AddTransient<CheckingLoginView>();
             builder.Services.AddTransient<LoadingServerView>();

@@ -37,7 +37,7 @@ namespace DoAn.Models
                     this.isLoaded = true;
                     this.Name = doc.StationName;
                     this.Local = doc.StationAddress;
-                    this.Type = doc.StationType;
+                    //this.Type = doc.StationType;
                     if (this.Type == "Hydrological")
                     {
                         this.data = doc.StationData;
@@ -55,7 +55,7 @@ namespace DoAn.Models
                     _authService.isLoaded = true;
                     this.Name = doc.StationName;
                     this.Local = doc.StationAddress;
-                    this.Type = doc.StationType;
+                    //this.Type = doc.StationType;
                     if (this.Type == "Hydrological")
                     {
                         this.data = doc.StationData;

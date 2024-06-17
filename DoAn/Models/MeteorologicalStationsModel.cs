@@ -10,7 +10,7 @@ namespace System
     {
         public string StationName { get => GetString(nameof(StationName)); set => Push(nameof(StationName), value); }
         public string StationAddress { get => GetString(nameof(StationAddress)); set => Push(nameof(StationAddress), value); }
-        public string StationType { get => GetString(nameof(StationType)); set => Push(nameof(StationType), value); }
+        public List<string> StationType { get => GetArray<List<string>>(nameof(StationType)); set => Push(nameof(StationType), value); }
         public RecordList StationData { get => GetArray<RecordList>(nameof(StationData)); set => Push(nameof(StationData), value); }
 
     }

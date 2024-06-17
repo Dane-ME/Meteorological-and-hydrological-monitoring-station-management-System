@@ -6,11 +6,20 @@ namespace DoAn.Views;
 
 public partial class AdminPageView : ContentPage
 {
-	private readonly StationListViewModel _viewModel;
-	public AdminPageView(StationListViewModel stationListViewModel)
+    private readonly StationListViewModel _stationListViewModel;
+    private readonly StationProfileViewModel _stationProfileViewModel;
+    private readonly UserListViewModel _userListViewModel;
+    private readonly UserProfileViewModel _userprofileViewModel; 
+	public AdminPageView(StationListViewModel stationListViewModel, 
+		StationProfileViewModel stationProfileViewModel,
+		UserListViewModel userListViewModel,
+		UserProfileViewModel userProfileViewModel)
 	{
 		InitializeComponent();
-		_viewModel = stationListViewModel;
-		BindingContext = new AdminPageViewModel(_viewModel);
+		_stationListViewModel = stationListViewModel;
+		_stationProfileViewModel = stationProfileViewModel;
+		_userListViewModel = userListViewModel;
+		_userprofileViewModel = userProfileViewModel;
+		BindingContext = new AdminPageViewModel(_stationListViewModel, _stationProfileViewModel, _userListViewModel, _userprofileViewModel);
 	}
 }

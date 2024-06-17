@@ -1,4 +1,5 @@
 using DoAn.Services;
+using MQTT;
 
 namespace DoAn.Views.Loading
 {
@@ -20,6 +21,8 @@ namespace DoAn.Views.Loading
                 await DisplayAlert("Error", "Loi ket noi mang", "Thu lai");
                 serverReady = await _authService.IsConnectedToNetworkAsync();
             }
+            Broker.Instance.Connect();
+
             await Shell.Current.GoToAsync($"//HomeView");
         }
     }

@@ -1,4 +1,5 @@
-﻿using DoAn.Services;
+﻿using DoAn.Models.AdminModel;
+using DoAn.Services;
 using DoAn.ViewModels.AdminViewModel;
 using DoAn.Views;
 using DoAn.Views.AdminView;
@@ -18,41 +19,54 @@ namespace DoAn.ViewModels
     public class AdminPageViewModel
     {
         private readonly StationListViewModel _stationListViewModel;
-        public interface INavigationService
-        {
-            void NavigateToStationDetail();
-        }
+        public readonly StationProfileViewModel _stationProfileViewModel;
+        private readonly UserListViewModel _userListViewModel;
+        private readonly UserProfileViewModel _userprofileViewModel;
+
+        public StationListView _stationListView;
+        public StationProfileView _stationProfileView;
+        public UserListView _userListView;
+        public UserProfileView _userprofileView;
         public ICommand StationTappedCommand { get; set; }
         public ICommand UserTappedCommand { get; set; }
         public View view {  get; set; }
         public Grid grid {  get; set; }
         public ScrollView scrollview{ get; set; }
-        public AdminPageViewModel(StationListViewModel stationListViewModel) 
+        public readonly WaitingView waitingview = new WaitingView();
+        public AdminPageViewModel(StationListViewModel stationListViewModel, 
+            StationProfileViewModel stationProfileViewModel,
+            UserListViewModel userListViewModel,
+            UserProfileViewModel userProfileViewModel) 
         {
             _stationListViewModel = stationListViewModel;
+            _stationProfileViewModel = stationProfileViewModel;
+            _userListViewModel = userListViewModel;
+            _userprofileViewModel = userProfileViewModel;
+
+            _stationListView = new StationListView(_stationListViewModel);
+            _stationProfileView = new StationProfileView(_stationProfileViewModel);
+            _userListView = new UserListView(_userListViewModel);
+            _userprofileView = new UserProfileView(_userprofileViewModel);
+
             _stationListViewModel.OnNavigateToStationDetail += NavigatedToStationDetail;
 
             grid = new Grid();
             //this.view = new AdminPageView();
             scrollview = new ScrollView();
-            var stationlist = new StationListView(_stationListViewModel);
+            
 
-
-            grid.Children.Add(new WaitingView());
+            grid.Children.Add(waitingview);
             scrollview.Content = grid;
             this.view = scrollview;
-            LoadDataAsync(grid, scrollview, stationlist);
-
+            LoadDataAsync(grid, scrollview, _stationListView);
 
             //Check(grid, scrollview);
-            //Task.Run(async () => 
-            //{
-            //    await Notice();
-            //});
+
+
             EventChanged.Instance.Loaded += (s, e) => 
             {
                 grid.Children.Clear();
-                grid.Children.Add(stationlist);
+                grid.Children.Add(_stationListView);
                 scrollview.Content = grid;
                 this.view = scrollview;
             };
@@ -66,7 +80,7 @@ namespace DoAn.ViewModels
             UserTappedCommand = new Command(() =>
             {
                 grid.Children.Clear();
-                grid.Children.Add(new UserListView());
+                grid.Children.Add(new UserListView(_userListViewModel));
                 Check(grid, scrollview);
 
             });
@@ -76,32 +90,37 @@ namespace DoAn.ViewModels
             if(_stationListViewModel.IsLoading)
             {
                 grid.Children.Clear();
-                grid.Children.Add(new WaitingView());
+                grid.Children.Add(waitingview);
             }
             scrollView.Content = grid;
             this.view = scrollView;
         }
 
-        public async Task Notice()
-        {
-            while(_stationListViewModel.IsLoading) { Task.Delay(500); }
-            EventChanged.Instance.OnLoaded();
-        }
-
         private async Task LoadDataAsync(Grid grid, ScrollView scrollview, StationListView stationlist)
         {
-            await Task.Delay(1000);
+            await Task.Delay(2000);
             grid.Children.Add(stationlist);
+
             scrollview.Content = grid;
             this.view = scrollview;
         }
 
-        public void NavigatedToStationDetail()
+        public void NavigatedToStationDetail(StationListModel stationListModel)
         {
-            this.grid.Clear();
-            grid.Children.Add(new StationProfileView(_stationListViewModel));
+            this.grid.Children.Clear();
+            _stationProfileViewModel.ID = stationListModel.ID;
+            grid.Children.Add(_stationProfileView);
             scrollview.Content = grid;
             this.view = scrollview;
+        }
+        public void NavigatedToWaitingView()
+        {
+            this.grid.Clear();
+            grid.Children.Add(new WaitingView());
+            Task.Delay(1000);
+            grid.Children.Clear();
+            grid.Children.Add(new StationListView(_stationListViewModel));
+            Check(grid, scrollview);
         }
 
     }

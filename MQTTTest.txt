@@ -1,0 +1,52 @@
+dane/service/stationlist/hhdangev02
+{
+  "_id": "1",
+  "StationList": [
+    {
+      "_id": "61221868",
+      "StationName": "121221212"
+    },
+    {
+      "_id": "686fd8",
+      "StationName": "dfghdgdh"
+    },
+    {
+      "_id": "6868",
+      "StationName": "Hhdangev02"
+    },
+    {
+      "_id": "ádgasdg",
+      "StationName": "dsfgsfg"
+    },
+    {
+      "_id": "6868",
+      "StationName": "Hhdangev02"
+    },
+    {
+      "_id": "6868",
+      "StationName": "Hhdangev02"
+    },
+    {
+      "_id": "6868",
+      "StationName": "Hhdangev02"
+    }
+  ]
+}
+
+
+dane/service/stationprofile/hhdangev02
+{
+  "_id": "hhdangev02",
+  "StationName": "Hoàng Hồng Dăng",
+  "StationAddress": "Bãi Cháy, TP Hạ Long, Quảng Ninh",
+  "StationType": [
+    "Hydro",
+    "Meteo",
+    "RainFall"
+  ],
+  "Manager": [
+    "hhdangev02",
+    "TVHH",
+    "ssajbk"
+  ]
+}

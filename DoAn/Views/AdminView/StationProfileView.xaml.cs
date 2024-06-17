@@ -4,12 +4,12 @@ namespace DoAn.Views.AdminView;
 
 public partial class StationProfileView : ContentView
 {
-    private readonly StationListViewModel _model;
+    private readonly StationProfileViewModel _model;
 
-    public StationProfileView(StationListViewModel stationListViewModel)
+    public StationProfileView(StationProfileViewModel stationprofileViewModel)
 	{
 		InitializeComponent();
-        _model = stationListViewModel;
+        _model = stationprofileViewModel;
         BindingContext = _model;
     }
 }
