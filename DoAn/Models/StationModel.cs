@@ -40,7 +40,7 @@ namespace DoAn.Models
                     //this.Type = doc.StationType;
                     if (this.Type == "Hydrological")
                     {
-                        this.data = doc.StationData;
+                        //this.data = doc.StationData;
                     }
                 }
             });
@@ -58,7 +58,7 @@ namespace DoAn.Models
                     //this.Type = doc.StationType;
                     if (this.Type == "Hydrological")
                     {
-                        this.data = doc.StationData;
+                        //this.data = doc.StationData;
                     }
                 }
             });

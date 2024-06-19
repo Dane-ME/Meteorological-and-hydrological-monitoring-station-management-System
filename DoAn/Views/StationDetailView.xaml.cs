@@ -1,5 +1,4 @@
 using DoAn.ViewModels;
-using Microcharts;
 using Microcharts.Maui;
 using SkiaSharp;
 using Syncfusion.Maui.Charts;
@@ -28,6 +27,10 @@ public partial class StationDetailView : ContentPage
     {
         string stationid = doc.StationID;
         BindingContext = new StationDetailViewModel(stationid);
+    }
+    public async Task Wait()
+    {
+        await Task.Delay(2000);
     }
 
     
