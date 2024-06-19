@@ -1,5 +1,6 @@
 using DoAn.Models;
 using DoAn.Services;
+using DoAn.ViewModels;
 
 namespace DoAn.Views;
 
@@ -12,11 +13,5 @@ public partial class ListView : ContentPage
 		InitializeComponent();
         _authService = authService;
         _stationModel = stationModel;
-
-        reload.Clicked += (s, e) => 
-        {
-            _stationModel.SendRequest("home");
-            Shell.Current.GoToAsync("//HomeView");
-        };
 	}
 }

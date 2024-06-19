@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DoAn.Views.MeteorologyView">
+    <Grid x:Name="Content">
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#8e9eab" Offset="0.0" />
+                <GradientStop Color="#eef2f3" Offset="1.0" />
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="190"/>
+            <RowDefinition Height="65"/>
+        </Grid.RowDefinitions>
+
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer />
+        </Grid.GestureRecognizers>
+
+        <Border StrokeThickness="0">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#bdc3c7" Offset="0.0" />
+                    <GradientStop Color="#2c3e50" Offset="1.0" />
+                </LinearGradientBrush>
+            </Border.Background>
+            <VerticalStackLayout Background="Transparent" HorizontalOptions="Center">
+                <Label Text="{Binding StationName}" FontSize="20" TextColor="#eaecf5" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                <Label Text="{Binding StationAddress}" FontSize="15" TextColor="#eaecf5" HorizontalTextAlignment="Center"/>
+            </VerticalStackLayout>
+        </Border>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.61*"/>
+                <ColumnDefinition Width="0.39*"/>
+            </Grid.ColumnDefinitions>
+
+            <VerticalStackLayout Margin="20,15,0,0">
+                <Grid Background="Transparent">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="3*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <HorizontalStackLayout Grid.Column="0" Grid.Row="0" Margin="4,0,0,0">
+                        <Label Text="ff: " TextColor="#578fc8" FontSize="15" HeightRequest="38"></Label>
+                        <Label Text="{Binding WindSpeed}" TextColor="Red" FontSize="15" HeightRequest="38"></Label>
+                        <Label Text="(m/s)" TextColor="#578fc8" FontSize="15" HeightRequest="38"></Label>
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout Grid.Column="0" Grid.Row="1">
+                        <Label Text=" fxfx2m: " TextColor="#578fc8" FontSize="15" HeightRequest="38"></Label>
+                        <Label Text="{Binding WindSpeedAt2mHeight} " TextColor="Red" FontSize="15" HeightRequest="38"></Label>
+                        <Label Text="(m/s)" TextColor="#578fc8" FontSize="15" HeightRequest="38"></Label>
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout Grid.Column="0" Grid.Row="2">
+                        <Label Text=" fxfx2s: " TextColor="#578fc8" FontSize="15" HeightRequest="38"></Label>
+                        <Label Text="{Binding AverageWindSpeedIn2s} " TextColor="Red" FontSize="15" HeightRequest="38"></Label>
+                        <Label Text="(m/s)" TextColor="#578fc8" FontSize="15" HeightRequest="38"></Label>
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout Grid.Column="1" Grid.Row="0">
+                        <Label Text=" dd: " TextColor="#578fc8" FontSize="15" HeightRequest="38"></Label>
+                        <Label Text="{Binding WindDirection} " TextColor="Red" FontSize="15" HeightRequest="38"></Label>
+                        <Label Text="Độ" TextColor="#578fc8" FontSize="15" HeightRequest="38"></Label>
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout Grid.Column="1" Grid.Row="1">
+                        <Label Text=" dxdx2m: " TextColor="#578fc8" FontSize="15" HeightRequest="38"></Label>
+                        <Label Text="{Binding WindDirectionAt2mHeight} " TextColor="Red" FontSize="15" HeightRequest="38"></Label>
+                        <Label Text="Độ" TextColor="#578fc8" FontSize="15" HeightRequest="38"></Label>
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout Grid.Column="1" Grid.Row="2">
+                        <Label Text=" dxdx2s: " TextColor="#578fc8" FontSize="15" HeightRequest="38"></Label>
+                        <Label Text="{Binding AverageWindDirectionIn2s} " TextColor="Red" FontSize="15" HeightRequest="38"></Label>
+                        <Label Text="Độ" TextColor="#578fc8" FontSize="15" HeightRequest="38"></Label>
+                    </HorizontalStackLayout>
+                </Grid>
+                <Label Text=" Ac: (v) " TextColor="#578fc8" FontSize="15" HeightRequest="20" VerticalOptions="End"></Label>
+
+            </VerticalStackLayout>
+            
+
+            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                <Image Source="wave.png" HeightRequest="41" WidthRequest="41" Margin="20"></Image>
+                <Image Source="lighthouse.png" HeightRequest="41" WidthRequest="41" Margin="20"></Image>
+            </VerticalStackLayout>
+
+        </Grid>
+        <Border Grid.Row="2">
+            <VerticalStackLayout  Margin="20,5,0,0">
+                <Label Text="Thời gian: 21h 09 phút ngày 11/06/2024" FontSize="14" TextColor="#979797" FontAttributes="Italic"></Label>
+                <HorizontalStackLayout>
+                    <Label Text=" Hiện tại: " TextColor="Black" FontSize="20"></Label>
+                    <Label Text="Sóng nhỏ" TextColor="#82B54B" FontSize="20"></Label>
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+</ContentView>

@@ -33,6 +33,9 @@ namespace DoAn
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NCaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXlfeHVUQ2dcVEZxXEQ=");
+
+            new MQTT.Broker();
             string AppDataDir = FileSystem.AppDataDirectory;
             string CacheDataDir = FileSystem.CacheDirectory;
             //System.File.Instance.CreateNewDatafolder("app_data", AppDataDir);
@@ -43,7 +46,7 @@ namespace DoAn
             builder.Services.AddScoped<StationModel>();
 
             builder.Services.AddSingleton<LoginViewModel>();
-            builder.Services.AddTransient<HomeViewModel>();
+            builder.Services.AddSingleton<HomeViewModel>();
             builder.Services.AddTransient<LoadingViewModel>();
             //
             builder.Services.AddTransient<StationListViewModel>();
@@ -54,7 +57,7 @@ namespace DoAn
             //
             builder.Services.AddTransient<LoginView>();
             builder.Services.AddTransient<UserView>();
-            builder.Services.AddTransient<HomeView>();
+            builder.Services.AddSingleton<HomeView>();
             builder.Services.AddTransient<StationDetailView>();
             builder.Services.AddTransient<AdminPageView>();
             //

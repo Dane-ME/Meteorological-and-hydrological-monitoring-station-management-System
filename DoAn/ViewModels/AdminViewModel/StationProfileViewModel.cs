@@ -108,7 +108,7 @@ namespace DoAn.ViewModels.AdminViewModel
                     ObservableCollection<StationProfileModel> list2 = new ObservableCollection<StationProfileModel>();
                     this.Name = doc.StationName;
                     this.Address = doc.StationAddress;
-                    foreach (var i in doc.StationType)
+                    foreach (var i in doc.StationTypeList)
                     {
                         list.Add(new StationProfileModel() { Type = i });
                     }

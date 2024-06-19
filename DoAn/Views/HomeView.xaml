@@ -2,8 +2,10 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DoAn.Views.HomeView"
-             xmlns:viewmodel="clr-namespace:DoAn.ViewModels"
-             Content="{Binding MainContent}"
+             Title="Trang chủ"
              >
     
+    <Grid>
+        <ContentView Grid.Row="1" Content="{Binding content}"></ContentView>
+    </Grid>
 </ContentPage>

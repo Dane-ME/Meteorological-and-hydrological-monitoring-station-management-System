@@ -1,173 +1,149 @@
 ﻿using DoAn.Models;
 using DoAn.Services;
 using DoAn.Views;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Controls.Shapes;
+using DoAn.Views.Loading;
 using Microsoft.Maui.Layouts;
-using System.Data;
-using System.Diagnostics.Metrics;
-using System.Drawing;
-using Color = Microsoft.Maui.Graphics.Color;
+using MQTT;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Windows.Input;
 
 namespace DoAn.ViewModels
 {
-    public class HomeViewModel
+    public class HomeViewModel : ObservableObject
     {
-        public int numOfRow { get; set; }
-        public View MainContent { get; set; }
-        private readonly StationModel _stationModel;
-
-        [Obsolete]
-        public HomeViewModel(StationModel stationModel)
+        private View _content;
+        public View content
         {
-            _stationModel = stationModel;
+            get => _content;
+            set
+            {
+                if (_content != value)
+                {
+                    _content = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public FlexLayout flexlayout { get; set; }
+        public ScrollView scrollView { get; set; }
+        public DocumentList _data;
+        public List<Document> Data
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// ////////////
+        /// </summary>
+        public event Action MyEvent;
 
+        // Phương thức để kích hoạt sự kiện
+        protected virtual void OnMyEvent()
+        {
+            MyEvent?.Invoke();
+        }
+        /// <summary>
+        /// /////////
+        /// </summary>
+        public ICommand t { get; set; }
 
-            //int amounts = _stationModel.data.Count;
-            //int count = amounts;
-            //numOfRow = (int)(amounts / 2) + 1;
-
-            string Information1 = "Mực nước biển (H): ";
-            string Information2 = "Độ cao sóng (HM0): ";
-            string Information3 = "Độ dài sóng (TM02): ";
-            string Information4 = "Độ cao sóng (Hmax): ";
-            string Information5 = "Ac: ĐANG ĐI BẢO DƯỠNG (v)";
-            string meter = " (m)";
-            string centimeter = " (cm)";
-
-            FlexLayout grid = new FlexLayout() 
+        public HomeViewModel()
+        {
+            SendAndListen();
+            Data = new List<Document>();
+            MyEvent += OnMyEventHandler;
+            flexlayout = new FlexLayout()
             {
                 Direction = FlexDirection.Row,
                 Wrap = FlexWrap.Wrap,
                 HorizontalOptions = LayoutOptions.Fill,
             };
-            //Grid grid = CreateGrid(2, numOfRow);
-            grid.BackgroundColor = Color.FromHex("#eaecf5");
+            scrollView = new ScrollView();
 
-            IView createItem(Document e)
+            scrollView.Content = new WaitingView();
+            content = scrollView;
+        }
+
+        public async Task SendAndListen()
+        {
+            await Task.Delay(1000);
+
+            Broker.Instance.Send($"dane/service/home/hhdangev02", new Document() { Token = "00000" });
+            Broker.Instance.Listen($"dane/service/home/hhdangev02", HandleReceivedData);
+
+        }
+        private void HandleReceivedData(Document doc)
+        {
+            if (doc != null && doc.HomeData != null)
             {
-                var item = new RecordView {
-                    BindingContext = e,
-                };
-
-                //grid.Children.Insert(0, item);
-                grid.Children.Add(item);
-                return item;
+                Data = doc.HomeData;
+                OnMyEvent();
             }
-
-            //_stationModel.data.OnAdded += r => {
-            //    createItem(r);
-            //};
-
-            //foreach (var e in  _stationModel.data)
-            //{
-            //    createItem(e);
-            //}
-            for(int i = 0; i < 10; i++) 
+        }
+        private void OnMyEventHandler()
+        {
+            Task.Delay(1000);
+            List<Document> hydrological = HydrologicalFilter(Data);
+            List<Document> meteorological = MeteorologicalFilter(Data);
+            MainThread.BeginInvokeOnMainThread(() =>
             {
-                createItem(new Document() 
+                flexlayout.Children.Clear();
+                foreach(Document doc in hydrological)
                 {
-                    SeaLevel = "123"
-                });
-            }
-            //for (int row = 0; row < numOfRow; row++)
-            //{
-            //    for (int col = 0; col < 2; col++)
-            //    {
-            //        // Make sure that the count is within the bounds of the _stationModel.data list
-            //        if (count < amounts)
-            //        {
-            //            Document data = _stationModel.data[count];
-            //            Grid gridchild = CreateGrid(1, 3);
-            //            List<View> views = new List<View>();
-            //            views.Add(CreateLabel($"{_stationModel.Name}", "#eaecf5", 20));
-            //            views.Add(CreateLabel($"{_stationModel.Local}", "#eaecf5", 15));
+                    InitHydroView(doc);
+                }
+                foreach (Document doc in meteorological)
+                {
+                    InitMeteoView(doc);
+                }
+                scrollView.Content = flexlayout;
+            });
 
-            //            gridchild.Add(CreateBorder(CreateStackLayout(views), "578fc8", 5), 0, 0);
-            //            Grid gridchild2 = CreateGrid(2, 1);
-            //            Grid gridchild3 = CreateGrid(1, 5);
-            //            gridchild3.Add(CreateLabel(Information1 + data.SeaLevel + centimeter, "#578fc8", 15), 0, 0);
-            //            gridchild3.Add(CreateLabel(Information2 + data.WaveHeight + meter, "#578fc8", 15), 0, 1);
-            //            gridchild3.Add(CreateLabel(Information3 + data.WaveLength + meter, "#578fc8", 15), 0, 2);
-            //            gridchild3.Add(CreateLabel(Information4 + data.WaveHeightMax + meter, "#578fc8", 15), 0, 3);
-            //            gridchild3.Add(CreateLabel(Information5, "#578fc8", 15), 0, 4);
-
-            //            Image wave = new Image() { Source = "wave.png", WidthRequest = 80, HeightRequest = 80 };
-            //            gridchild2.Add(wave, 1, 0);
-            //            gridchild2.Add(gridchild3, 0, 0);
-            //            gridchild2.Margin = new Thickness(5);
-
-            //            gridchild.Add(gridchild2, 0, 1);
-            //            gridchild.Add(CreateLabel($"Thời gian: {data.Time}", "#000000", 15), 0, 2);
-
-            //            grid.Add(CreateBorder(gridchild, "ffffff", 5), col, row);
-            //        }
-
-            //        count--;
-            //    }
-            //}
-
-            var scrollview = new ScrollView();
-            scrollview.Content = grid;
-            MainContent = scrollview;
-
-        }
-
-        
-
-        [Obsolete]
-        public View CreateLabel(string content, string color, int size) 
-        {
-            return new Label() { 
-                Text = $"{content}",
-                TextColor = Color.FromHex($"{color}"),
-                FontSize = size,
-                Margin = new Thickness(5),
-            };
-        }
-        public View CreateStackLayout(List<View> content)
-        {
-            var layout = new StackLayout() 
-            {
-                Orientation = StackOrientation.Vertical,
-                HorizontalOptions = LayoutOptions.Center
-                
-            };
-
-            foreach (var view in content)
-            {
-                layout.Children.Add(view);
-            }
-
-            return layout;
-        }
-
-        public Grid CreateGrid(int column, int row )
-        {
-            var grid = new Grid() { BackgroundColor = Colors.Transparent};
-            for (int i = 0; i < column; i++)
-            {
-                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-            }
-
-            for (int i = 0; i < row; i++)
-            {
-                grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-            }
             
-            return grid;
+            content = scrollView;
         }
-        [Obsolete]
-        public Border CreateBorder(View content, string brushcolor, Thickness margin) => new Border()
+        public List<Document> HydrologicalFilter(List<Document> dl)
         {
-            HorizontalOptions = LayoutOptions.FillAndExpand,
-            VerticalOptions = LayoutOptions.FillAndExpand,
-            StrokeShape = new RoundRectangle { CornerRadius = new CornerRadius(15) },
-            Margin = margin,
-            BackgroundColor = Color.FromHex($"#{brushcolor}"),
-            StrokeThickness = 0,
-            Content = content
-        };
-
+            List<Document> result = new List<Document>();
+            foreach (var item in dl)
+            {
+                if (item.StationType == "Hydrological")
+                {
+                    result.Add(item);
+                }
+            }
+            return result;
+        }
+        public List<Document> MeteorologicalFilter(List<Document> dl)
+        {
+            List<Document> result = new List<Document>();
+            foreach (var item in dl)
+            {
+                if (item.StationType == "Meteorological")
+                {
+                    result.Add(item);
+                }
+            }
+            return result;
+        }
+        public View InitHydroView(Document e)
+        {
+            var item = new HydrologicalView
+            {
+                BindingContext = e,
+            };
+            flexlayout.Children.Add(item);
+            return item;
+        }
+        public View InitMeteoView(Document e)
+        {
+            var item = new MeteorologyView
+            {
+                BindingContext = e,
+            };
+            flexlayout.Children.Add(item);
+            return item;
+        }
     }
 }

@@ -1,15 +1,27 @@
-using DoAn.Models;
+﻿using DoAn.Models;
+using DoAn.Services;
 using DoAn.ViewModels;
 
 namespace DoAn.Views;
 
 public partial class HomeView : ContentPage
 {
-	private readonly StationModel _stationModel;
-	public HomeView ( StationModel stationModel)
+    public HomeView()
 	{
-		InitializeComponent();
-		_stationModel = stationModel;
-		BindingContext = new HomeViewModel(_stationModel);
-	}
+		//InitializeComponent();
+		//BindingContext = new HomeViewModel();
+        
+        try
+        {
+            InitializeComponent();
+            // Rest of your code
+            BindingContext = new HomeViewModel();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error in InitializeComponent: {ex.Message}");
+            // Có thể thêm xử lý lỗi ở đây
+        }
+
+    }
 }

@@ -16,6 +16,7 @@ namespace System
     {
         public DocumentList StationList { get => GetArray<DocumentList>(nameof(StationList)); set => Push(nameof(StationList), value); }
         public DocumentList UserList { get => GetArray<DocumentList>(nameof(UserList)); set => Push(nameof(UserList), value); }
+        public DocumentList HomeData { get => GetArray<DocumentList>(nameof(HomeData)); set => Push(nameof(HomeData), value); }
 
     }
 }

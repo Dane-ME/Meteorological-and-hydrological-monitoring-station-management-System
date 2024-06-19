@@ -16,7 +16,7 @@ using System.Windows.Input;
 
 namespace DoAn.ViewModels
 {
-    public class AdminPageViewModel
+    public class AdminPageViewModel : ObservableObject
     {
         private readonly StationListViewModel _stationListViewModel;
         public readonly StationProfileViewModel _stationProfileViewModel;
@@ -29,6 +29,7 @@ namespace DoAn.ViewModels
         public UserProfileView _userprofileView;
         public ICommand StationTappedCommand { get; set; }
         public ICommand UserTappedCommand { get; set; }
+        //public View _view;
         public View view {  get; set; }
         public Grid grid {  get; set; }
         public ScrollView scrollview{ get; set; }
@@ -62,13 +63,13 @@ namespace DoAn.ViewModels
 
             //Check(grid, scrollview);
 
-            EventChanged.Instance.Loaded += (s, e) => 
-            {
-                grid.Children.Clear();
-                grid.Children.Add(_stationListView);
-                scrollview.Content = grid;
-                this.view = scrollview;
-            };
+            //EventChanged.Instance.Loaded += (s, e) => 
+            //{
+            //    grid.Children.Clear();
+            //    grid.Children.Add(_stationListView);
+            //    scrollview.Content = grid;
+            //    this.view = scrollview;
+            //};
 
             StationTappedCommand = new Command(() =>
             {

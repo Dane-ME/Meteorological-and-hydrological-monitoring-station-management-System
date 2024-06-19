@@ -30,11 +30,11 @@
         Shell.FlyoutBehavior="Disabled"
         Shell.FlyoutItemIsVisible="False"/>-->
 
-    <ShellContent   
+    <!--<ShellContent   
                     ContentTemplate="{DataTemplate loading:LoadingView}"
                     Route="LoadingView"
                     Shell.FlyoutBehavior="Disabled"
-                    Shell.FlyoutItemIsVisible="False"/>
+                    Shell.FlyoutItemIsVisible="False"/>-->
     <ShellContent
         ContentTemplate="{DataTemplate views:LoginView}"
         Route="LoginView"
@@ -44,39 +44,41 @@
 
 
     <TabBar FlyoutDisplayOptions="AsMultipleItems">
-        
-        <ShellContent Title="Home"
+
+        <ShellContent Title="Trang chủ"
                       ContentTemplate="{DataTemplate views:HomeView}"
                       Route="HomeView"
                       Icon="home.png"
-                      Shell.BackgroundColor="#578fc8"
-                      Shell.TitleColor="#eaecf5"/>
-        <ShellContent Title="List"
+                      Shell.BackgroundColor="#3669CC"
+                      Shell.TitleColor="#eaecf5">
+        </ShellContent>
+        <ShellContent Title="Thông Báo"
                       ContentTemplate="{DataTemplate views:ListView}"
                       Route="ListView"
                       Icon="menu.png"
-                      Shell.BackgroundColor="#578fc8"
+                      Shell.BackgroundColor="#3669CC"
                       Shell.TitleColor="#eaecf5"
                       />
-        <ShellContent Title="Account"
+        <ShellContent Title="Tài khoản"
                       ContentTemplate="{DataTemplate views:UserView}"
                       Route="UserView"
                       Icon="user.png"
-                      Shell.BackgroundColor="#578fc8"
+                      Shell.BackgroundColor="#3669CC"
                       Shell.TitleColor="#eaecf5"
                       />
-        <ShellContent Title="Admin"
+        <ShellContent Title="Quản trị viên"
                       ContentTemplate="{DataTemplate views:AdminPageView}"
                       Route="AdminPageView"
                       Icon="user.png"
-                      Shell.BackgroundColor="#578fc8"
+                      Shell.BackgroundColor="#3669CC"
                       Shell.TitleColor="#eaecf5"
                       />    
-        <ShellContent Title="Detail"
+        <ShellContent Title="Chi tiết"
                       ContentTemplate="{DataTemplate views:StationDetailView}"
                       Route="StationDetailView"
-                      Shell.BackgroundColor="#578fc8"
-                      Shell.FlyoutItemIsVisible="False"/>
+                      Shell.BackgroundColor="#3669CC"
+                      Shell.TitleColor="#eaecf5"
+                      Shell.FlyoutItemIsVisible="false"/>
     </TabBar>
 
     

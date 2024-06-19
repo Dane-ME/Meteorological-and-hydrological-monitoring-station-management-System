@@ -133,7 +133,10 @@
 	  <MauiXaml Update="Views\LoginView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\RecordView.xaml">
+	  <MauiXaml Update="Views\HydrologicalView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\MeteorologyView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\StationDetailView.xaml">
@@ -146,6 +149,12 @@
 
 	<ItemGroup>
 	  <Folder Include="Core\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Views\HydrologicalView.xaml.cs">
+	    <DependentUpon>HydrologicalView.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 </Project>

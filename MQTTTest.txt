@@ -50,3 +50,6 @@ dane/service/stationprofile/hhdangev02
     "ssajbk"
   ]
 }
+
+dane/service/home/hhdangev02
+

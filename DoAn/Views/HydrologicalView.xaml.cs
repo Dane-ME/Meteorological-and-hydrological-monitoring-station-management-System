@@ -1,9 +1,10 @@
+using DoAn.ViewModels.RecordViewModel;
 namespace DoAn.Views;
 
 
-public partial class RecordView : ContentView
+public partial class HydrologicalView : ContentView
 {
-	public RecordView()
+	public HydrologicalView()
 	{
 		InitializeComponent();
         var displayInfo = DeviceDisplay.MainDisplayInfo;
@@ -20,10 +21,17 @@ public partial class RecordView : ContentView
         double heightInDp = height / density;
 
         Content.WidthRequest = widthInDp;
+
+        //var doc = this.BindingContext as Document;
     }
     private async void OnGridTapped(object sender, EventArgs e)
     {
-        // X? lý s? ki?n nh?p chu?t ? ?ây
-        await Shell.Current.GoToAsync("//StationDetailView");
+        Document doc = BindingContext as Document;
+
+        var navigationParameter = new ShellNavigationQueryParameters
+        {
+            { "test", doc }
+        };
+        await Shell.Current.GoToAsync($"//StationDetailView", navigationParameter);
     }
 }

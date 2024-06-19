@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DoAn.Views.HydrologicalView">
+    <Grid x:Name="Content">
+
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#eef2f3" Offset="0.0" />
+                <GradientStop Color="#6dd5ed" Offset="1.0" />
+            </LinearGradientBrush>
+        </Grid.Background>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="190"/>
+            <RowDefinition Height="65"/>
+        </Grid.RowDefinitions>
+        
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Tapped="OnGridTapped" />
+        </Grid.GestureRecognizers>
+        
+        <Border StrokeThickness="0">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#5B86E5" Offset="0.0" />
+                    <GradientStop Color="#36D1DC" Offset="1.0" />
+                </LinearGradientBrush>
+            </Border.Background>
+            <VerticalStackLayout Background="Transparent" HorizontalOptions="Center">
+                <Label Text="{Binding StationName}" FontSize="20" TextColor="#eaecf5" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                <Label Text="{Binding StationAddress}" FontSize="15" TextColor="#eaecf5" HorizontalTextAlignment="Center"/>
+            </VerticalStackLayout>
+        </Border>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.61*"/>
+                <ColumnDefinition Width="0.29*"/>
+            </Grid.ColumnDefinitions>
+            <Border Background="Transparent" StrokeThickness="0" Margin="20,10,0,0">
+                <VerticalStackLayout>
+                    <HorizontalStackLayout>
+                        <Label Text=" Mực nước biển (H): " TextColor="#578fc8" FontSize="15" HeightRequest="38"></Label>
+                        <Label Text="{Binding SeaLevel}" TextColor="Red" FontSize="15" HeightRequest="38"></Label>
+                        <Label Text="(Cm)" TextColor="#578fc8" FontSize="15" HeightRequest="38"></Label>
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout>
+                        <Label Text=" Độ cao sóng (HM0): " TextColor="#578fc8" FontSize="15" HeightRequest="38"></Label>
+                        <Label Text="{Binding WaveHeight} " TextColor="Red" FontSize="15" HeightRequest="38"></Label>
+                        <Label Text="(Cm)" TextColor="#578fc8" FontSize="15" HeightRequest="38"></Label>
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout>
+                        <Label Text=" Độ dài sóng (TM02): " TextColor="#578fc8" FontSize="15" HeightRequest="38"></Label>
+                        <Label Text="{Binding WaveLength} " TextColor="Red" FontSize="15" HeightRequest="38"></Label>
+                        <Label Text="(M)" TextColor="#578fc8" FontSize="15" HeightRequest="38"></Label>
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout>
+                        <Label Text=" Độ cao sóng (Hmax): " TextColor="#578fc8" FontSize="15" HeightRequest="38"></Label>
+                        <Label Text="{Binding WaveHeightMax} " TextColor="Red" FontSize="15" HeightRequest="38"></Label>
+                        <Label Text="(Cm)" TextColor="#578fc8" FontSize="15" HeightRequest="38"></Label>
+                    </HorizontalStackLayout>
+                    <Label Text=" Ac: (v) " TextColor="#578fc8" FontSize="15" HeightRequest="38"></Label>
+                </VerticalStackLayout>
+            </Border>
+            
+            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                <Image Source="wave.png" HeightRequest="41" WidthRequest="41" Margin="20"></Image>
+                <Image Source="lighthouse.png" HeightRequest="41" WidthRequest="41" Margin="20"></Image>
+            </VerticalStackLayout>
+            
+        </Grid>
+        <Border Grid.Row="2">
+            <VerticalStackLayout  Margin="20,5,0,0">
+                <Label Text="Thời gian: 21h 09 phút ngày 11/06/2024" FontSize="14" TextColor="#979797" FontAttributes="Italic"></Label>
+                <HorizontalStackLayout>
+                    <Label Text=" Hiện tại: " TextColor="Black" FontSize="20"></Label>
+                    <Label Text="Sóng nhỏ" TextColor="#82B54B" FontSize="20"></Label>
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+</ContentView>
