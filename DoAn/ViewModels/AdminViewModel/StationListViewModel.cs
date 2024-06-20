@@ -68,8 +68,9 @@ namespace DoAn.ViewModels.AdminViewModel
                 }
             };
         }
-        public void SendandListen()
+        public async void SendandListen()
         {
+            await Task.Delay(500);
             Broker.Instance.Send("dane/service/stationlist/hhdangev02", new Document() { Token = "00000" });
             Broker.Instance.Listen("dane/service/stationlist/hhdangev02", (doc) =>
             {
