@@ -1,17 +1,8 @@
 ﻿using DoAn.Models.AdminModel;
 using DoAn.Services;
 using DoAn.ViewModels.AdminViewModel;
-using DoAn.Views;
 using DoAn.Views.AdminView;
 using DoAn.Views.Loading;
-using Microsoft.Maui.Layouts;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace DoAn.ViewModels

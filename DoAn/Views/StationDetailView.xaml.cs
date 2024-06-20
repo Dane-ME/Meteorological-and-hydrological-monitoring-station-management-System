@@ -23,7 +23,7 @@ public partial class StationDetailView : ContentPage
         InitializeComponent();
     }
 
-    public async void ShowMessage(Document doc)
+    public void ShowMessage(Document doc)
     {
         string stationid = doc.StationID;
         BindingContext = new StationDetailViewModel(stationid);

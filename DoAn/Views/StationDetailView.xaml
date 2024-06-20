@@ -48,7 +48,7 @@
                         </chart:SfCartesianChart.YAxes>
 
                         <chart:AreaSeries  
-                                ItemsSource="{Binding Data}" 
+                                ItemsSource="{Binding WindChart}" 
                                 XBindingPath="Time"
                                 YBindingPath="Values"
                                 ShowMarkers="True"
@@ -75,23 +75,23 @@
                             <chart:NumericalAxis/>
                         </chart:SfCartesianChart.YAxes>
 
-                        <chart:AreaSeries  
-                                ItemsSource="{Binding Data}" 
+                        <chart:SplineAreaSeries   
+                                ItemsSource="{Binding SeaChart}" 
                                 XBindingPath="Time"
                                 YBindingPath="Values"
                                 ShowMarkers="True"
-                                Fill="#94d78a">
+                                Fill="#78a7e5">
                             <chart:AreaSeries.MarkerSettings>
                                 <chart:ChartMarkerSettings Type="Circle"
-                                                           Fill="#70ca63"
-                                                           Stroke="#70ca63"
+                                                           Fill="#4a89dc"
+                                                           Stroke="#4a89dc"
                                                            StrokeWidth="3"/>
                             </chart:AreaSeries.MarkerSettings>
-                        </chart:AreaSeries>
+                        </chart:SplineAreaSeries>
                     </chart:SfCartesianChart>
 
 
-                    <syncfusion:SfDataGrid DefaultStyle="{StaticResource customStyle}" ItemsSource="{Binding DataGrid}" ColumnWidthMode="Fill" AutoGenerateColumnsMode="None" >
+                    <syncfusion:SfDataGrid DefaultStyle="{StaticResource customStyle}" ItemsSource="{Binding WindDataGrid}" ColumnWidthMode="Fill" AutoGenerateColumnsMode="None" >
                         <syncfusion:SfDataGrid.Columns>
                             <syncfusion:DataGridNumericColumn HeaderText="Thời gian"
                                             MappingName="timing" Width="100"/>
@@ -111,6 +111,21 @@
                                             MappingName="dxdx2s" Width="100" />
                             <syncfusion:DataGridTextColumn  HeaderText="TGXH2s"
                                             MappingName="tgxh2s" Width="100" />
+                        </syncfusion:SfDataGrid.Columns>
+                    </syncfusion:SfDataGrid>
+
+                    <syncfusion:SfDataGrid DefaultStyle="{StaticResource customStyle}" ItemsSource="{Binding SeaDataGrid}" ColumnWidthMode="Fill" AutoGenerateColumnsMode="None" >
+                        <syncfusion:SfDataGrid.Columns>
+                            <syncfusion:DataGridNumericColumn HeaderText="Thời gian"
+                                            MappingName="timing" Width="100"/>
+                            <syncfusion:DataGridTextColumn  HeaderText="waterlevel"
+                                            MappingName="waterlevel" Width="100" />
+                            <syncfusion:DataGridTextColumn  HeaderText="waveheight"
+                                            MappingName="waveheight" Width="100" />
+                            <syncfusion:DataGridTextColumn  HeaderText="wavelength"
+                                            MappingName="wavelength" Width="100" />
+                            <syncfusion:DataGridTextColumn  HeaderText="waveheightmax"
+                                            MappingName="waveheightmax" Width="100" />
                         </syncfusion:SfDataGrid.Columns>
                     </syncfusion:SfDataGrid>
                 </VerticalStackLayout>

@@ -78,8 +78,9 @@ namespace DoAn.ViewModels.AdminViewModel
 
         }
 
-        private void SendandListen()
+        private async void SendandListen()
         {
+            await Task.Delay(1000);
             MQTT.Broker.Instance.Send("dane/service/userlist/hhdangev02", new Document() { Token = "00000" });
             MQTT.Broker.Instance.Listen("dane/service/userlist/hhdangev02", (doc) =>
             {

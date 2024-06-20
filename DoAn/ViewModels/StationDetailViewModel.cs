@@ -19,13 +19,32 @@ namespace DoAn.ViewModels
             set => SetProperty(ref _stationId,value); 
         }
         public Document DataResponse { get; set; }
-        public ObservableCollection<StationDetailModel> Data { get; set; }
-        private ObservableCollection<StationDetailModel> _dataGrid;
-        public ObservableCollection<StationDetailModel> DataGrid
+        public ObservableCollection<StationDetailModel> _windchart;
+        public ObservableCollection<StationDetailModel> _seachart;
+        private ObservableCollection<StationDetailModel> _winddataGrid;
+        private ObservableCollection<StationDetailModel> _seadataGrid;
+
+        public ObservableCollection<StationDetailModel> WindChart
         {
-            get { return _dataGrid; }
-            set { this._dataGrid = value; OnPropertyChanged(); }
+            get { return _windchart; }
+            set { this._windchart = value; OnPropertyChanged(); }
         }
+        public ObservableCollection<StationDetailModel> SeaChart
+        {
+            get { return _seachart; }
+            set { this._seachart = value; OnPropertyChanged(); }
+        }
+        public ObservableCollection<StationDetailModel> WindDataGrid
+        {
+            get { return _winddataGrid; }
+            set { this._winddataGrid = value; OnPropertyChanged(); }
+        }
+        public ObservableCollection<StationDetailModel> SeaDataGrid
+        {
+            get { return _seadataGrid; }
+            set { this._seadataGrid = value; OnPropertyChanged(); }
+        }
+
         public event Action ResponseHandle;
         protected virtual void OnResponseHandleEvent()
         {
@@ -39,17 +58,8 @@ namespace DoAn.ViewModels
             StationId = station;
             ResponseHandle += OnResponseHandle;
 
-            DataGrid = new ObservableCollection<StationDetailModel>();
-
-            Data = new ObservableCollection<StationDetailModel>(){
-                new StationDetailModel("08:20", 2.1),
-                new StationDetailModel("08:30", 1.5),
-                new StationDetailModel("08:40", 1.7),
-                new StationDetailModel("08:50", 1.7),
-                new StationDetailModel("09:00", 2.4),
-                new StationDetailModel("09:00", 2.2)
-            };
-
+            WindDataGrid = new ObservableCollection<StationDetailModel>();
+            WindChart = new ObservableCollection<StationDetailModel>();
 
         }
         public async Task SendandListen()
@@ -69,26 +79,32 @@ namespace DoAn.ViewModels
         private void OnResponseHandle()
         {
             List<string> dl = DataResponse.StationTypeList;
-            if(dl.Contains("Hydrological")) 
+            Func<string, int> convert = (input) => {
+                if (dl.Contains($"{input}")) { return 1; }
+                else return 0;
+            };
+            int act = (convert("Hydrological") << 2) | (convert("Meteorological") << 1) | convert("RainFall");
+            switch (act)
             {
-                Console.WriteLine("ok");
+                case 7: HydroData(DataResponse); MeteoData(DataResponse); break;  // 111
+                case 6: HydroData(DataResponse); MeteoData(DataResponse); break; //110
+                case 5: MeteoData(DataResponse); break; //101
+                case 4: MeteoData(DataResponse); break; //100
+                case 3: MeteoData(DataResponse); break; //011
+                case 2: MeteoData(DataResponse); break; //010
+                case 1: Console.WriteLine(); break; //001
+                case 0: Console.WriteLine("Ehe"); break; //000
+
             }
-            else if(dl.Contains("Meteorological")) 
-            {
-                DataGrid = MeteoData(DataResponse);
-            }
-            else if (dl.Contains("RainFall"))
-            {
-                Console.WriteLine("ok");
-            }
-            else { }
         } 
-        private ObservableCollection<StationDetailModel> MeteoData(Document doc)
+        private void MeteoData(Document doc)
         {
-            ObservableCollection<StationDetailModel> detailModels = new ObservableCollection<StationDetailModel>();
-            foreach(var item in doc.StationData)
+            ObservableCollection<StationDetailModel> datagrid = new ObservableCollection<StationDetailModel>();
+            ObservableCollection<StationDetailModel> chart = new ObservableCollection<StationDetailModel>();
+
+            foreach (var item in doc.StationData)
             {
-                detailModels.Add(
+                datagrid.Add(
                     new StationDetailModel(
                     item.ObjectId,
                     item.WindSpeed,
@@ -100,8 +116,44 @@ namespace DoAn.ViewModels
                     item.AverageWindDirectionIn2s,
                     item.TimeOfOccurrenceOffxfx2s)
                     );
+                double yvalue = ConvertStringToDouble(item.WindSpeedAt2mHeight);
+                chart.Add(new StationDetailModel(item.ObjectId, yvalue));
             }
-            return detailModels;
+            this.WindDataGrid = datagrid;
+            this.WindChart = chart;
         }
+        private void HydroData(Document doc)
+        {
+            ObservableCollection<StationDetailModel> datagrid = new ObservableCollection<StationDetailModel>();
+            ObservableCollection<StationDetailModel> chart = new ObservableCollection<StationDetailModel>();
+
+            foreach (var item in doc.StationData)
+            {
+                datagrid.Add(
+                    new StationDetailModel(
+                    item.ObjectId,
+                    item.WaterLevel,
+                    item.WaveHeight,
+                    item.WaveLength,
+                    item.WaveHeightMax)
+                    );
+                double yvalue = ConvertStringToDouble(item.WaterLevel);
+                chart.Add(new StationDetailModel(item.ObjectId, yvalue));
+            }
+            this.SeaDataGrid = datagrid;
+            this.SeaChart = chart;
+        }
+        public static double ConvertStringToDouble(string input)
+        {
+            if (double.TryParse(input, out double result))
+            {
+                return result;
+            }
+            else
+            {
+                throw new FormatException($"The input string '{input}' is not in a correct format to be converted to a double.");
+            }
+        }
+
     }
 }

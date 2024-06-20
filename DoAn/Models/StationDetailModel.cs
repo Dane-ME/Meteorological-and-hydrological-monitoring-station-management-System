@@ -13,7 +13,7 @@ namespace DoAn.Models
         public double Values { get; set; }
         #endregion
 
-        #region DataGrid
+        #region DataGrid Wind
         private string _ff;
         private string _dd;
         private string _fxfx2m;
@@ -70,6 +70,37 @@ namespace DoAn.Models
             set { this._timing = value; }
         }
         #endregion
+
+        #region DataGrid Sea
+
+        private string _waterlevel;
+        private string _waveheight;
+        private string _wavelength;
+        private string _waveheightmax;
+
+        public string waterlevel
+        {
+            get { return _waterlevel; }
+            set { this._waterlevel = value; }
+        }
+        public string waveheight
+        {
+            get { return _waveheight; }
+            set { this._waveheight = value; }
+        }
+        public string wavelength
+        {
+            get { return _wavelength; }
+            set { this._wavelength = value; }
+        }
+        public string waveheightmax
+        {
+            get { return _waveheightmax; }
+            set { this._waveheightmax = value; }
+        }
+
+
+        #endregion
         public StationDetailModel(string xValue, double yValue)
         {
             Time = xValue;
@@ -87,6 +118,14 @@ namespace DoAn.Models
             this.dxdx2s = dxdx2s;
             this.tgxh2s = tgxh2s;
         }
+        public StationDetailModel(string timing, string waterlevel, string waveheight, string wavelength, string waveheightmax)
+        {
+            this.timing= timing;
+            this.waterlevel = waterlevel;
+            this.waveheight = waveheight;
+            this.wavelength = wavelength;
+            this.waveheightmax = waveheightmax;
+        } 
     }
 }
 namespace System
