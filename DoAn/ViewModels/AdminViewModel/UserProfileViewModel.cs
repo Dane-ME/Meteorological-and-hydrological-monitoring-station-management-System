@@ -112,7 +112,7 @@ namespace DoAn.ViewModels.AdminViewModel
                 {
                     ObservableCollection<UserProfileModel> list = new ObservableCollection<UserProfileModel>();
                     this.Name = doc.UserName;
-                    this.Role = doc.role;
+                    this.Role = doc.Role;
                     this.Email = doc.Email;
                     this.WorkingUnit = doc.WorkingUnit;
                     this.Position = doc.Position;

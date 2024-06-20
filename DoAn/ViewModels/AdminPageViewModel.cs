@@ -138,7 +138,6 @@ namespace DoAn.ViewModels
         }
     }
 
-
     //public class AdminPageViewModel : ObservableObject
     //{
     //    private readonly StationListViewModel _stationListViewModel;

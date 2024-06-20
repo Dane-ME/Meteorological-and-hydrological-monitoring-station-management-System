@@ -48,11 +48,15 @@ public class LoginViewModel : ObservableObject
             if (!string.IsNullOrEmpty(this.Password) && !string.IsNullOrEmpty(this.Account))
             {
                 this.Password = this.Password.ToMD5();
+                Send();
+                if(Service.Instance.LoginState == false)
+                {
+                    Listen();
+                }
                 _userModel.Account = this.Account;
                 _userModel.Password = this.Password;
                 _userModel.LoginRequest();
                 Shell.Current.GoToAsync("//CheckingLoginView");
-                this.Token = _userModel.token;
             }
             else
             {
@@ -73,6 +77,38 @@ public class LoginViewModel : ObservableObject
                 {
                     IsValidAcc = false;
                 }
+            }
+        });
+    }
+    public async Task Send()
+    {
+        await Task.Delay(500);
+        Broker.Instance.Send("dane/usercontroller/login", new Document()
+        {
+            Type = "id",
+            UserID = this.Account,
+            Pass = this.Password
+        });
+        
+    }
+    public async Task Listen()
+    {
+        await Task.Delay(1000);
+        Broker.Instance.Listen($"dane/login/{this.Account}", (doc) =>
+        {
+            if (doc.Token != null)
+            {
+                string token = doc.Token;
+                string Payload = token.Split('.')[1];
+                var decode = new Format();
+                string role = decode.Base64urlDecode(Payload).Role;
+                if (role == "Admin" || role == "User")
+                {
+                    Service.Instance.LoginState = true;
+                    Service.Instance.Role = role;
+                    EventChanged.Instance.OnRoleChanged();
+                }
+                else { Service.Instance.LoginState = false; }
             }
         });
     }

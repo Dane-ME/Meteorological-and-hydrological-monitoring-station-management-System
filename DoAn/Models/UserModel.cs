@@ -53,8 +53,6 @@ namespace DoAn.Models
                 Pass = this.Password
             });
             getToken(this.Account);
-            _authService.Token = this.token;
-            _authService.Account = this.Account;
         }
         public void getToken(string userid)
         {
@@ -63,17 +61,15 @@ namespace DoAn.Models
                 if (doc.Token !=  null)
                 {
                     this.token = doc.Token;
-                    DB.Token.Insert(new Document 
+                    string Payload = this.token.Split('.')[1];
+                    var decode = new Format();
+                    if (decode.Base64urlDecode(Payload).Role == "ADMIN")
                     {
-                        Token = this.token
-                    });
+                        Service.Instance.LoginState = true;
+                    }
                 }
-                string Payload = this.token.Split('.')[1];
-                var decode = new Format();
-                if (decode.Base64urlDecode(Payload).role == "ADMIN")
-                {
-                    Service.Instance.LoginState = true;
-                }
+                else { }
+                
             });
         }
 

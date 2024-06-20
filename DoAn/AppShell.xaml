@@ -72,6 +72,7 @@
                       Icon="user.png"
                       Shell.BackgroundColor="#3669CC"
                       Shell.TitleColor="#eaecf5"
+                      Shell.FlyoutItemIsVisible="{Binding IsUser}"
                       />    
         <ShellContent Title="Chi tiết"
                       ContentTemplate="{DataTemplate views:StationDetailView}"

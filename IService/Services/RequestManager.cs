@@ -34,20 +34,10 @@ namespace IService.Services
                 con.SendResponse($"dane/login/{doc.UserID}", doc.UserID);
             };
         }
-        public bool IsTokenStored(string objectId)
-        {
-            if (DB.Token.Find(objectId) != null) { return true; }
-            else { return false; }
-        }
         public bool IsIDStored(string objectId)
         {
             if (DB.User.Find(objectId) != null) { return true; }
             else { return false; }
-        }
-        public void LoginByTokenFail(Document doc)
-        {
-            var con = new ResponseSender("token", "0");
-            con.SendResponse($"usercontroller/login/{doc.Token}", $"{doc.Token}");
         }
     }
 

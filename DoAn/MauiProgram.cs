@@ -54,6 +54,7 @@ namespace DoAn
             builder.Services.AddTransient<UserListViewModel>();
             builder.Services.AddTransient<UserProfileViewModel>();
             builder.Services.AddTransient<AdminPageViewModel>();
+            builder.Services.AddTransient<AppShellViewModel>();
             //
             builder.Services.AddTransient<LoginView>();
             builder.Services.AddTransient<UserView>();

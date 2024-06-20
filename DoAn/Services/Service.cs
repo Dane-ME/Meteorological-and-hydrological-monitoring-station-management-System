@@ -6,10 +6,13 @@ using System.Threading.Tasks;
 
 namespace DoAn.Services
 {
-    public class Service
+    public class Service : ObservableObject
     {
-        public string objectrequested { get; set; }
-        public static Service instance;
+        private bool _loginState;
+        private string? _token;
+        private string? _role;
+
+        public static Service? instance;
         public static Service Instance
         {
             get
@@ -21,16 +24,23 @@ namespace DoAn.Services
                 return instance;
             }
         }
-        public bool LoginState { get; set; }
+        public bool LoginState { 
+            get => _loginState; 
+            set => SetProperty(ref _loginState, value); 
+        }
+        public string Token { 
+            get => _token; 
+            set => SetProperty(ref _token, value); 
+        }
+        public string Role
+        {
+            get => _role;
+            set => SetProperty(ref _role, value);
+        }
         public async Task<bool> IsLoginAsync()
         {
             if (this.LoginState) { await Task.Delay(1000); return true; }
             else await Task.Delay(1000); return false;
-        }
-        public void NavigatedTo(string target, string current) 
-        {
-            objectrequested = current;
-            Shell.Current.GoToAsync($"//{target}");
         }
     }
 }

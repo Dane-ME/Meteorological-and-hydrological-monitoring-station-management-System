@@ -30,7 +30,7 @@ namespace DoAn.Services
         public event EventHandler StationIDChanged;
         public event EventHandler UserIDChanged;
 
-        public event EventHandler HomeChanged;
+        public event EventHandler RoleChanged;
 
         public virtual void OnLoaded()
         {
@@ -60,9 +60,9 @@ namespace DoAn.Services
         {
             UserIDChanged?.Invoke(this, EventArgs.Empty);
         }
-        public virtual void OnHomeChanged()
+        public virtual void OnRoleChanged()
         {
-            HomeChanged?.Invoke(this, EventArgs.Empty);
+            RoleChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 

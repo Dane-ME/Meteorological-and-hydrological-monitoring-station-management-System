@@ -1,4 +1,5 @@
-﻿using DoAn.Views;
+﻿using DoAn.ViewModels;
+using DoAn.Views;
 
 namespace DoAn
 {
@@ -7,6 +8,7 @@ namespace DoAn
         public AppShell()
         {
             InitializeComponent();
+            BindingContext = new AppShellViewModel();
         }
     }
 }

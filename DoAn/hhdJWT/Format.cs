@@ -13,8 +13,8 @@ namespace System
         public string alg { get => GetString(nameof(alg)); set => Push(nameof(alg), value); }
         public string sub { get => GetString(nameof(sub)); set => Push(nameof(sub), value); }
         public string name { get => GetString(nameof(name)); set => Push(nameof(name), value); }
-        public string role { get => GetString(nameof(role)); set => Push(nameof(role), value); }
-        public string exp { get => GetString(nameof(exp)); set => Push(nameof(exp), value); }
+        public string Role { get => GetString(nameof(Role)); set => Push(nameof(Role), value); }
+        public string Exp { get => GetString(nameof(Exp)); set => Push(nameof(Exp), value); }
         public string SecretKey { get => GetString(nameof(SecretKey)); set => Push(nameof(SecretKey), value); }
     }
     public class Format
@@ -95,8 +95,8 @@ namespace System
             {
                 sub = sub,
                 name = name,
-                role = role,
-                exp = exp
+                Role = role,
+                Exp = exp
             };
             this.Payload = Base64urlEncode(payload);
         }

@@ -39,7 +39,7 @@ namespace System
            
             var format = new Format();
             format.header("JWT","HS256");
-            format.payload("123","Dang", "ADMIN", $"{message.Exp}");
+            format.payload("123","Dang", "Admin", $"{message.Exp}");
             format.signature($"{data.Email}", $"{data.EncodePass}", $"{message.Exp}");
             string token = format.CreateJWT();
             string srkey = format.CreateSecretKey($"{data.Email}", $"{data.EncodePass}", $"{message.Exp}");

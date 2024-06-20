@@ -45,10 +45,6 @@ namespace IService
 
             connect.Click += (s, e) => {
                 Broker.Instance.Connect();
-                Broker.Instance.Listen("dane/usercontroller/login", (doc) =>
-                {
-                    handle.IsItStoredandSendResponse(doc);
-                });
             };
             
             listen.Click += (s, e) => 

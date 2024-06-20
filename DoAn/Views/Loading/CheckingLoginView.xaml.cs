@@ -24,7 +24,7 @@ public partial class CheckingLoginView : ContentPage
 
         if (serverReady)
         {
-            await Shell.Current.GoToAsync("//LoadingView");
+            await Shell.Current.GoToAsync("//HomeView");
         }
         else { await Shell.Current.GoToAsync("//LoginView"); }
 

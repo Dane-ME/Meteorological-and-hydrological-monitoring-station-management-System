@@ -33,12 +33,13 @@ namespace System
         }
         public void SendResponse(string topic, string objectid)
         {
+            Task.Delay(500);
             Broker.Instance.Send(topic, CreateResponse(objectid));
-            Broker.Instance.Listen($"dane/service/{objectid}", doc => 
-            {
-                Document docs = DB.Station.Find("6868");
-                Broker.Instance.Send($"dane/service/home/{objectid}", docs);
-            });
+            //Broker.Instance.Listen($"dane/service/{objectid}", doc => 
+            //{
+            //    Document docs = DB.Station.Find("6868");
+            //    Broker.Instance.Send($"dane/service/home/{objectid}", docs);
+            //});
         }
 
     }
