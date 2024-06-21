@@ -1,65 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DoAn.Views.UserView">
-    <VerticalStackLayout>
-        <VerticalStackLayout.Background>
-            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                <GradientStop Color="#2c3e50" Offset="0.5" />
-                <GradientStop Color="#bdc3c7" Offset="1.0" />
-            </LinearGradientBrush>
-        </VerticalStackLayout.Background>
-        <Border Background="White" Margin="10">
-            <Border.StrokeShape>
-                <RoundRectangle CornerRadius="10"/>
-            </Border.StrokeShape>
-            <StackLayout>
-                <Image WidthRequest="100" HeightRequest="100" Aspect="AspectFill" Source="flyoutheader.png" HorizontalOptions="Center" Margin="5">
-                    <Image.Clip>
-                        <EllipseGeometry Center="50,50" RadiusX="50" RadiusY="50"/>
-                    </Image.Clip>
-                </Image>
+    <ScrollView>
+        <VerticalStackLayout>
+            <VerticalStackLayout.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#2c3e50" Offset="0.5" />
+                    <GradientStop Color="#bdc3c7" Offset="1.0" />
+                </LinearGradientBrush>
+            </VerticalStackLayout.Background>
+            <Border Background="White" Margin="10">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10"/>
+                </Border.StrokeShape>
+                <StackLayout>
+                    <Image WidthRequest="100" HeightRequest="100" Aspect="AspectFill" Source="flyoutheader.png" HorizontalOptions="Center" Margin="5">
+                        <Image.Clip>
+                            <EllipseGeometry Center="50,50" RadiusX="50" RadiusY="50"/>
+                        </Image.Clip>
+                    </Image>
 
-                <Label Text="Ho�ng H?ng ??ng" FontSize="20" FontAttributes="Bold" Margin="10,0,0,0" TextColor="#2c3e50"></Label>
-                <Label Text="UserID: Hhdangev02" FontSize="14" FontAttributes="Bold" Margin="10,0,0,0" TextColor="#2c3e50"></Label>
-                <Label Text="Role: User" FontSize="14" FontAttributes="Bold" Margin="10,0,0,0" TextColor="#2c3e50"></Label>
-                <Label Text="??a ch?: Hhdangev02@gmail.com" FontSize="14" FontAttributes="Bold" Margin="10,20,0,0" TextColor="#2c3e50"></Label>
-            </StackLayout>
-        </Border>
+                    <Label Text="Hoàng Hồng Đăng" FontSize="20" FontAttributes="Bold" Margin="10,0,0,0" TextColor="#2c3e50"></Label>
+                    <Label Text="UserID: Hhdangev02" FontSize="14" FontAttributes="Bold" Margin="10,0,0,0" TextColor="#2c3e50"></Label>
+                    <Label Text="Role: User" FontSize="14" FontAttributes="Bold" Margin="10,0,0,0" TextColor="#2c3e50"></Label>
+                    <Label Text="Địa chỉ: Hhdangev02@gmail.com" FontSize="14" FontAttributes="Bold" Margin="10,20,0,0" TextColor="#2c3e50"></Label>
+                </StackLayout>
+            </Border>
 
-        <Border Background="White" Margin="10">
-            <Border.StrokeShape>
-                <RoundRectangle CornerRadius="10"/>
-            </Border.StrokeShape>
-            <StackLayout>
-                <Label Text="??i h?c B�ch Khoa H� N?i" FontSize="20" FontAttributes="Bold" Margin="10,10,0,0" TextColor="#2c3e50"></Label>
-                <Label Text="??n v?: Tr??ng ?i?n - ?i?n t?" FontSize="14" FontAttributes="Bold" Margin="10,0,0,0" TextColor="#2c3e50"></Label>
-                <Label Text="Ch?c v?: Sinh vi�n" FontSize="14" FontAttributes="Bold" Margin="10,0,0,10" TextColor="#2c3e50"></Label>
-            </StackLayout>
-        </Border>
+            <Border Background="White" Margin="10">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10"/>
+                </Border.StrokeShape>
+                <StackLayout>
+                    <Label Text="Đại học Bách Khoa Hà Nội" FontSize="20" FontAttributes="Bold" Margin="10,10,0,0" TextColor="#2c3e50"></Label>
+                    <Label Text="Đơn vị: Trường điện - điện tử" FontSize="14" FontAttributes="Bold" Margin="10,0,0,0" TextColor="#2c3e50"></Label>
+                    <Label Text="Chức vụ: Sinh viên" FontSize="14" FontAttributes="Bold" Margin="10,0,0,10" TextColor="#2c3e50"></Label>
+                </StackLayout>
+            </Border>
 
-        <Border Background="White" Margin="10">
-            <Border.StrokeShape>
-                <RoundRectangle CornerRadius="10"/>
-            </Border.StrokeShape>
-            <StackLayout>
-                <Grid Background="#2c3e50" HeightRequest="40">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="2*"/>
-                        <ColumnDefinition Width="5*"/>
-                        <ColumnDefinition Width="2*"/>
-                    </Grid.ColumnDefinitions>
-                    <Label Text="STT" VerticalOptions="Center" TextColor="#EAECF5" FontSize="18" Margin="15,0,0,0"></Label>
-                    <Label Grid.Column="1" VerticalOptions="Center" Text="T�n tr?m" TextColor="#EAECF5" FontSize="18" ></Label>
-                    <Label Grid.Column="2" VerticalOptions="Center" Text="M� tr?m" TextColor="#EAECF5" FontSize="18"></Label>
-                </Grid>
-                <ListView>
-                    
-                </ListView>
-            </StackLayout>
-        </Border>
+            <Border Background="White" Margin="10">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10"/>
+                </Border.StrokeShape>
+                <StackLayout>
+                    <Grid Background="#2c3e50" HeightRequest="40">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="5*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Text="STT" VerticalOptions="Center" TextColor="#EAECF5" FontSize="18" Margin="15,0,0,0"></Label>
+                        <Label Grid.Column="1" VerticalOptions="Center" Text="Tên trạm" TextColor="#EAECF5" FontSize="18" ></Label>
+                        <Label Grid.Column="2" VerticalOptions="Center" Text="Mã trạm" TextColor="#EAECF5" FontSize="18"></Label>
+                    </Grid>
+                    <ListView>
 
-        <Button Text="C?p l?i m?t kh?u" Command="{Binding LogOutButonCommand}" Margin="10,10,10,0"/>
-        <Button Text="??i m?t kh?u" Command="{Binding LogOutButonCommand}" Margin="10,10,10,0"/>
-        <Button Text="??ng xu?t" Command="{Binding LogOutButonCommand}" Margin="10,10,10,0"/>
-    </VerticalStackLayout>
+                    </ListView>
+                </StackLayout>
+            </Border>
+
+            <Button Text="Cấp lại mật khẩu" Command="{Binding LogOutButonCommand}" Margin="10,10,10,0"/>
+            <Button Text="Đổi mật khẩu" Command="{Binding LogOutButonCommand}" Margin="10,10,10,0"/>
+            <Button Text="Đăng xuất" Command="{Binding LogOutButonCommand}" Margin="10,10,10,0"/>
+        </VerticalStackLayout>
+    </ScrollView>
+    
 </ContentPage>
