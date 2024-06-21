@@ -39,8 +39,8 @@ namespace DoAn.Services
         }
         public async Task<bool> IsLoginAsync()
         {
-            if (this.LoginState) { await Task.Delay(1000); return true; }
-            else await Task.Delay(1000); return false;
+            if (this.LoginState) { await Task.Delay(500); return true; }
+            else await Task.Delay(500); return false;
         }
     }
 }

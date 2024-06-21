@@ -12,6 +12,7 @@ namespace DoAn.ViewModels.AdminViewModel
         public bool IsLoading {  get; set; }
 
         public event Action<StationListModel> OnNavigateToStationDetail;
+
         /// <summary>
         /// //////////
         /// </summary>
@@ -43,7 +44,8 @@ namespace DoAn.ViewModels.AdminViewModel
         public ICommand OpenDetailCommand { get; private set ; }
         public StationListViewModel() 
         {
-            SendandListen();
+            SendAndListen();
+            
             Name = new List<string>();
             ID = new List<string>();
             NameofStation = new ObservableCollection<StationListModel>();
@@ -68,16 +70,22 @@ namespace DoAn.ViewModels.AdminViewModel
                 }
             };
         }
-        public async void SendandListen()
+        public async Task SendAndListen()
         {
-            await Task.Delay(500);
-            Broker.Instance.Send("dane/service/stationlist/hhdangev02", new Document() { Token = "00000" });
-            Broker.Instance.Listen("dane/service/stationlist/hhdangev02", (doc) =>
+            await Task.Delay(1000);
+
+            Broker.Instance.Send($"dane/service/stationlist/hhdangev02", new Document() { Token = "00000" });
+            Broker.Instance.Listen($"dane/service/stationlist/hhdangev02", HandleReceivedData);
+
+        }
+        private void HandleReceivedData(Document doc)
+        {
+            if (doc != null)
             {
-                if (doc != null)
+                DocumentList list = doc.StationList;
+                if(list != null)
                 {
-                    DocumentList list = doc.StationList;
-                    ObservableCollection<StationListModel> list2 = new ObservableCollection<StationListModel>();    
+                    ObservableCollection<StationListModel> list2 = new ObservableCollection<StationListModel>();
                     foreach (Document item in list)
                     {
                         list2.Add(new StationListModel() { Name = item.StationName, ID = item.ObjectId });
@@ -85,7 +93,8 @@ namespace DoAn.ViewModels.AdminViewModel
                     NameofStation = list2;
                     EventChanged.Instance.OnStationListChanged();
                 }
-            });
+            }
         }
+        
     }
 }

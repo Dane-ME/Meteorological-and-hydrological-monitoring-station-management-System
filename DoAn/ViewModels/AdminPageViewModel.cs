@@ -54,18 +54,18 @@ namespace DoAn.ViewModels
 
             LoadInitialView();
 
-            StationTappedCommand = new Command(async () => await ShowStationListViewAsync());
-            UserTappedCommand = new Command(async () => await ShowUserListViewAsync());
+            StationTappedCommand = new Command(() => ShowStationListViewAsync());
+            UserTappedCommand = new Command(() => ShowUserListViewAsync());
         }
 
         private async Task LoadInitialView()
         {
             Grid.Children.Add(WaitingView);
             await Task.Delay(2000);
-            await ShowStationListViewAsync();
+            ShowStationListViewAsync();
         }
 
-        private async Task ShowStationListViewAsync()
+        private void ShowStationListViewAsync()
         {
             if (!isStationListViewInitialized)
             {
@@ -83,7 +83,7 @@ namespace DoAn.ViewModels
             view = ScrollView;
         }
 
-        private async Task ShowUserListViewAsync()
+        private void ShowUserListViewAsync()
         {
             if (!isUserListViewInitialized)
             {
@@ -97,6 +97,7 @@ namespace DoAn.ViewModels
                 Grid.Children.Clear();
                 Grid.Children.Add(_userListView);
             }
+            EventChanged.Instance.OnUserList();
             ScrollView.Content = Grid;
             view = ScrollView;
         }
@@ -152,14 +153,14 @@ namespace DoAn.ViewModels
     //    public ICommand StationTappedCommand { get; set; }
     //    public ICommand UserTappedCommand { get; set; }
     //    //public View _view;
-    //    public View view {  get; set; }
-    //    public Grid grid {  get; set; }
-    //    public ScrollView scrollview{ get; set; }
+    //    public View view { get; set; }
+    //    public Grid grid { get; set; }
+    //    public ScrollView scrollview { get; set; }
     //    public readonly WaitingView waitingview = new WaitingView();
-    //    public AdminPageViewModel(StationListViewModel stationListViewModel, 
+    //    public AdminPageViewModel(StationListViewModel stationListViewModel,
     //        StationProfileViewModel stationProfileViewModel,
     //        UserListViewModel userListViewModel,
-    //        UserProfileViewModel userProfileViewModel) 
+    //        UserProfileViewModel userProfileViewModel)
     //    {
     //        _stationListViewModel = stationListViewModel;
     //        _stationProfileViewModel = stationProfileViewModel;
@@ -212,7 +213,7 @@ namespace DoAn.ViewModels
     //    }
     //    public void Check(Grid grid, ScrollView scrollView)
     //    {
-    //        if(_stationListViewModel.IsLoading)
+    //        if (_stationListViewModel.IsLoading)
     //        {
     //            grid.Children.Clear();
     //            grid.Children.Add(waitingview);

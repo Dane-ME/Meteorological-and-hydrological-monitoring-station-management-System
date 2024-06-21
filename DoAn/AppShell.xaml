@@ -50,7 +50,8 @@
                       Route="HomeView"
                       Icon="home.png"
                       Shell.BackgroundColor="#3669CC"
-                      Shell.TitleColor="#eaecf5">
+                      Shell.TitleColor="#eaecf5"
+                      >
         </ShellContent>
         <ShellContent Title="Thông Báo"
                       ContentTemplate="{DataTemplate views:ListView}"

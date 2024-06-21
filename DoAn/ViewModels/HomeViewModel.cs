@@ -63,11 +63,27 @@ namespace DoAn.ViewModels
 
             scrollView.Content = new WaitingView();
             content = scrollView;
+            scrollView.Scrolled += OnScrolled;
+        }
+        private void OnScrolled(object sender, ScrolledEventArgs e)
+        {
+            var scrollView = sender as ScrollView;
+            if (scrollView != null)
+            {
+                if (e.ScrollY <= 0)
+                {
+                    OnScrolledToStart();
+                }
+            }
         }
 
+        private void OnScrolledToStart()
+        {
+            Broker.Instance.Listen($"dane/service/home/hhdangev02", HandleReceivedData);
+        }
         public async Task SendAndListen()
         {
-            await Task.Delay(1000);
+            await Task.Delay(500);
 
             Broker.Instance.Send($"dane/service/home/hhdangev02", new Document() { Token = "00000" });
             Broker.Instance.Listen($"dane/service/home/hhdangev02", HandleReceivedData);

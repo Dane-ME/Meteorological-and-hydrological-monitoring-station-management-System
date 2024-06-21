@@ -42,7 +42,10 @@ namespace DoAn.ViewModels.AdminViewModel
 
         public UserListViewModel() 
         {
-            SendandListen();
+            EventChanged.Instance.UserList += (s, e) =>
+            {
+                SendandListen();
+            };
             Name = new List<string>();
             ID = new List<string>();
             UserDetail = new ObservableCollection<UserListModel>();
@@ -78,7 +81,7 @@ namespace DoAn.ViewModels.AdminViewModel
 
         }
 
-        private async void SendandListen()
+        private async Task SendandListen()
         {
             await Task.Delay(1000);
             MQTT.Broker.Instance.Send("dane/service/userlist/hhdangev02", new Document() { Token = "00000" });
@@ -87,13 +90,16 @@ namespace DoAn.ViewModels.AdminViewModel
                 if (doc != null)
                 {
                     DocumentList list = doc.UserList;
-                    ObservableCollection<UserListModel> list2 = new ObservableCollection<UserListModel>();
-                    foreach (Document item in list)
+                    if(list != null)
                     {
-                        list2.Add(new UserListModel() { Name = item.UserName, ID = item.ObjectId });
+                        ObservableCollection<UserListModel> list2 = new ObservableCollection<UserListModel>();
+                        foreach (Document item in list)
+                        {
+                            list2.Add(new UserListModel() { Name = item.UserName, ID = item.ObjectId });
+                        }
+                        UserDetail = list2;
+                        EventChanged.Instance.OnUserListChanged();
                     }
-                    UserDetail = list2;
-                    EventChanged.Instance.OnUserListChanged();
                 }
             });
         }
