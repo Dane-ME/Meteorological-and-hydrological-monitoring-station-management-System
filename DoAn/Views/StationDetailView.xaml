@@ -12,8 +12,8 @@
         <ResourceDictionary>
             <syncfusion:DataGridStyle x:Key="customStyle" 
                                   RowBackground="Transparent"
-                                  HeaderRowBackground="#2F80ED"
-                                  RowTextColor="White"
+                                  HeaderRowBackground="#2c3e50"
+                                  RowTextColor="#2c3e50"
                                   HeaderRowTextColor="White"/>
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -21,113 +21,149 @@
     <ScrollView>
         <ScrollView.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                <GradientStop Color="#2F80ED" Offset="0.0" />
-                <GradientStop Color="#DECBA4" Offset="1.0" />
+                <GradientStop Color="#bdc3c7" Offset="0.0" />
+                <GradientStop Color="#2c3e50" Offset="1.0" />
             </LinearGradientBrush>
         </ScrollView.Background>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="8*"/>
-                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition />
+                <ColumnDefinition Width="380"/>
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="1">
                 <VerticalStackLayout>
-                    <Border Background="Transparent" StrokeThickness="0" HeightRequest="30" Margin="0,0,0,10">
-                        <Label Text="Biểu đồ hướng gió và tốc độ" VerticalOptions="Center" HorizontalOptions="Center" FontSize="20" FontAttributes="Bold"></Label>
+                    <Border Margin="0, 10, 0, 10">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10"/>
+                        </Border.StrokeShape>
+                        <StackLayout BackgroundColor="White">
+                            <Label Text="Cảng xăng dầu B12" FontSize="20" FontAttributes="Bold" Margin="5"></Label>
+                            <Label Text="6868" FontSize="16" Margin="5"></Label>
+                        </StackLayout>
                     </Border>
+
+                    <Border StrokeThickness="0" BackgroundColor="White" Margin="0, 10, 0, 10">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10"/>
+                        </Border.StrokeShape>
+                        <StackLayout BackgroundColor="Transparent">
+                            <Border Background="Transparent" StrokeThickness="0" HeightRequest="30" Margin="0,0,0,10">
+                                <Label Text="Biểu đồ hướng gió và tốc độ" VerticalOptions="Center" HorizontalOptions="Center" FontSize="20" FontAttributes="Bold"></Label>
+                            </Border>
+
+                            <chart:SfCartesianChart HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                <chart:SfCartesianChart.XAxes>
+                                    <chart:CategoryAxis/>
+                                </chart:SfCartesianChart.XAxes>
+
+                                <chart:SfCartesianChart.YAxes>
+                                    <chart:NumericalAxis/>
+                                </chart:SfCartesianChart.YAxes>
+
+                                <chart:AreaSeries  
+                                            ItemsSource="{Binding WindChart}" 
+                                            XBindingPath="Time"
+                                            YBindingPath="Values"
+                                            ShowMarkers="True"
+                                            Fill="#94d78a">
+                                    <chart:AreaSeries.MarkerSettings>
+                                        <chart:ChartMarkerSettings Type="Circle"
+                                           Fill="#70ca63"
+                                           Stroke="#70ca63"
+                                           StrokeWidth="3"/>
+                                    </chart:AreaSeries.MarkerSettings>
+                                </chart:AreaSeries>
+                            </chart:SfCartesianChart>
+                        </StackLayout>
+                    </Border>
+
+                    <Border StrokeThickness="0" BackgroundColor="White" Margin="0, 10, 0, 10">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10"/>
+                        </Border.StrokeShape>
+                        <StackLayout>
+                            <Border Background="Transparent" StrokeThickness="0" HeightRequest="30" Margin="0,0,0,10">
+                                <Label Text="Biểu đồ mực nước biển" VerticalOptions="Center" HorizontalOptions="Center" FontSize="20" FontAttributes="Bold"></Label>
+                            </Border>
+
+                            <chart:SfCartesianChart HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                <chart:SfCartesianChart.XAxes>
+                                    <chart:CategoryAxis/>
+                                </chart:SfCartesianChart.XAxes>
+
+                                <chart:SfCartesianChart.YAxes>
+                                    <chart:NumericalAxis/>
+                                </chart:SfCartesianChart.YAxes>
+
+                                <chart:SplineAreaSeries   
+                                        ItemsSource="{Binding SeaChart}" 
+                                        XBindingPath="Time"
+                                        YBindingPath="Values"
+                                        ShowMarkers="True"
+                                        Fill="#78a7e5">
+                                    <chart:AreaSeries.MarkerSettings>
+                                        <chart:ChartMarkerSettings Type="Circle"
+                                       Fill="#4a89dc"
+                                       Stroke="#4a89dc"
+                                       StrokeWidth="3"/>
+                                    </chart:AreaSeries.MarkerSettings>
+                                </chart:SplineAreaSeries>
+                            </chart:SfCartesianChart>
+                        </StackLayout>
+                    </Border>
+
+                    <Border StrokeThickness="0" BackgroundColor="White" Margin="0, 10, 0, 10">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10"/>
+                        </Border.StrokeShape>
+                        <syncfusion:SfDataGrid DefaultStyle="{StaticResource customStyle}" ItemsSource="{Binding WindDataGrid}" ColumnWidthMode="Fill" AutoGenerateColumnsMode="None" >
+                            <syncfusion:SfDataGrid.Columns>
+                                <syncfusion:DataGridNumericColumn HeaderText="Thời gian"
+                        MappingName="timing" Width="100"/>
+                                <syncfusion:DataGridTextColumn  HeaderText="ff"
+                        MappingName="ff" Width="100" />
+                                <syncfusion:DataGridTextColumn  HeaderText="dd"
+                        MappingName="dd" Width="100" />
+                                <syncfusion:DataGridTextColumn  HeaderText="fxfx2m"
+                        MappingName="fxfx2m" Width="100" />
+                                <syncfusion:DataGridTextColumn  HeaderText="dxdx2m"
+                        MappingName="dxdx2m" Width="100" />
+                                <syncfusion:DataGridTextColumn  HeaderText="TGXH2m"
+                        MappingName="tgxh2m" Width="100" />
+                                <syncfusion:DataGridTextColumn  HeaderText="fxfx2s"
+                        MappingName="fxfx2s" Width="100" />
+                                <syncfusion:DataGridTextColumn  HeaderText="dxdx2s"
+                        MappingName="dxdx2s" Width="100" />
+                                <syncfusion:DataGridTextColumn  HeaderText="TGXH2s"
+                        MappingName="tgxh2s" Width="100" />
+                            </syncfusion:SfDataGrid.Columns>
+                        </syncfusion:SfDataGrid>
+                    </Border>
+
+                    <Border StrokeThickness="0" BackgroundColor="White" Margin="0, 10, 0, 10">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10"/>
+                        </Border.StrokeShape>
+                        <syncfusion:SfDataGrid DefaultStyle="{StaticResource customStyle}" ItemsSource="{Binding SeaDataGrid}" ColumnWidthMode="Fill" AutoGenerateColumnsMode="None" >
+                            <syncfusion:SfDataGrid.Columns>
+                                <syncfusion:DataGridNumericColumn HeaderText="Thời gian"
+                        MappingName="timing" Width="100"/>
+                                <syncfusion:DataGridTextColumn  HeaderText="waterlevel"
+                        MappingName="waterlevel" Width="100" />
+                                <syncfusion:DataGridTextColumn  HeaderText="waveheight"
+                        MappingName="waveheight" Width="100" />
+                                <syncfusion:DataGridTextColumn  HeaderText="wavelength"
+                        MappingName="wavelength" Width="100" />
+                                <syncfusion:DataGridTextColumn  HeaderText="waveheightmax"
+                        MappingName="waveheightmax" Width="100" />
+                            </syncfusion:SfDataGrid.Columns>
+                        </syncfusion:SfDataGrid>
+
+                    </Border>
+
                     
-                    <chart:SfCartesianChart HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                        <chart:SfCartesianChart.XAxes>
-                            <chart:CategoryAxis/>
-                        </chart:SfCartesianChart.XAxes>
-
-                        <chart:SfCartesianChart.YAxes>
-                            <chart:NumericalAxis/>
-                        </chart:SfCartesianChart.YAxes>
-
-                        <chart:AreaSeries  
-                                ItemsSource="{Binding WindChart}" 
-                                XBindingPath="Time"
-                                YBindingPath="Values"
-                                ShowMarkers="True"
-                                Fill="#94d78a">
-                            <chart:AreaSeries.MarkerSettings>
-                                <chart:ChartMarkerSettings Type="Circle"
-                                                           Fill="#70ca63"
-                                                           Stroke="#70ca63"
-                                                           StrokeWidth="3"/>
-                            </chart:AreaSeries.MarkerSettings>
-                        </chart:AreaSeries>
-                    </chart:SfCartesianChart>
-
-                    <Border Background="Transparent" StrokeThickness="0" HeightRequest="30" Margin="0,0,0,10">
-                        <Label Text="Biểu đồ mực nước biển" VerticalOptions="Center" HorizontalOptions="Center" FontSize="20" FontAttributes="Bold"></Label>
-                    </Border>
-
-                    <chart:SfCartesianChart HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                        <chart:SfCartesianChart.XAxes>
-                            <chart:CategoryAxis/>
-                        </chart:SfCartesianChart.XAxes>
-
-                        <chart:SfCartesianChart.YAxes>
-                            <chart:NumericalAxis/>
-                        </chart:SfCartesianChart.YAxes>
-
-                        <chart:SplineAreaSeries   
-                                ItemsSource="{Binding SeaChart}" 
-                                XBindingPath="Time"
-                                YBindingPath="Values"
-                                ShowMarkers="True"
-                                Fill="#78a7e5">
-                            <chart:AreaSeries.MarkerSettings>
-                                <chart:ChartMarkerSettings Type="Circle"
-                                                           Fill="#4a89dc"
-                                                           Stroke="#4a89dc"
-                                                           StrokeWidth="3"/>
-                            </chart:AreaSeries.MarkerSettings>
-                        </chart:SplineAreaSeries>
-                    </chart:SfCartesianChart>
-
-
-                    <syncfusion:SfDataGrid DefaultStyle="{StaticResource customStyle}" ItemsSource="{Binding WindDataGrid}" ColumnWidthMode="Fill" AutoGenerateColumnsMode="None" >
-                        <syncfusion:SfDataGrid.Columns>
-                            <syncfusion:DataGridNumericColumn HeaderText="Thời gian"
-                                            MappingName="timing" Width="100"/>
-                            <syncfusion:DataGridTextColumn  HeaderText="ff"
-                                            MappingName="ff" Width="100" />
-                            <syncfusion:DataGridTextColumn  HeaderText="dd"
-                                            MappingName="dd" Width="100" />
-                            <syncfusion:DataGridTextColumn  HeaderText="fxfx2m"
-                                            MappingName="fxfx2m" Width="100" />
-                            <syncfusion:DataGridTextColumn  HeaderText="dxdx2m"
-                                            MappingName="dxdx2m" Width="100" />
-                            <syncfusion:DataGridTextColumn  HeaderText="TGXH2m"
-                                            MappingName="tgxh2m" Width="100" />
-                            <syncfusion:DataGridTextColumn  HeaderText="fxfx2s"
-                                            MappingName="fxfx2s" Width="100" />
-                            <syncfusion:DataGridTextColumn  HeaderText="dxdx2s"
-                                            MappingName="dxdx2s" Width="100" />
-                            <syncfusion:DataGridTextColumn  HeaderText="TGXH2s"
-                                            MappingName="tgxh2s" Width="100" />
-                        </syncfusion:SfDataGrid.Columns>
-                    </syncfusion:SfDataGrid>
-
-                    <syncfusion:SfDataGrid DefaultStyle="{StaticResource customStyle}" ItemsSource="{Binding SeaDataGrid}" ColumnWidthMode="Fill" AutoGenerateColumnsMode="None" >
-                        <syncfusion:SfDataGrid.Columns>
-                            <syncfusion:DataGridNumericColumn HeaderText="Thời gian"
-                                            MappingName="timing" Width="100"/>
-                            <syncfusion:DataGridTextColumn  HeaderText="waterlevel"
-                                            MappingName="waterlevel" Width="100" />
-                            <syncfusion:DataGridTextColumn  HeaderText="waveheight"
-                                            MappingName="waveheight" Width="100" />
-                            <syncfusion:DataGridTextColumn  HeaderText="wavelength"
-                                            MappingName="wavelength" Width="100" />
-                            <syncfusion:DataGridTextColumn  HeaderText="waveheightmax"
-                                            MappingName="waveheightmax" Width="100" />
-                        </syncfusion:SfDataGrid.Columns>
-                    </syncfusion:SfDataGrid>
                 </VerticalStackLayout>
             </Grid>
             

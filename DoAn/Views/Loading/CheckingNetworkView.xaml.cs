@@ -22,7 +22,7 @@ namespace DoAn.Views.Loading
                 serverReady = await _authService.IsConnectedToNetworkAsync();
             }
             Broker.Instance.Connect();
-            await Shell.Current.GoToAsync("//LoginView");
+            await Shell.Current.GoToAsync("//HomeView");
         }
     }
 

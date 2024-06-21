@@ -2,13 +2,13 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DoAn.Views.MeteorologyView">
-    <Grid x:Name="Content">
-        <Grid.Background>
+    <Grid BackgroundColor="White" Margin="10">
+        <!--<Grid.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                 <GradientStop Color="#8e9eab" Offset="0.0" />
                 <GradientStop Color="#eef2f3" Offset="1.0" />
             </LinearGradientBrush>
-        </Grid.Background>
+        </Grid.Background>-->
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
             <RowDefinition Height="190"/>
@@ -22,8 +22,8 @@
         <Border StrokeThickness="0">
             <Border.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                    <GradientStop Color="#bdc3c7" Offset="0.0" />
-                    <GradientStop Color="#2c3e50" Offset="1.0" />
+                    <GradientStop Color="#2c3e50" Offset="0.5" />
+                    <GradientStop Color="#bdc3c7" Offset="1.0" />
                 </LinearGradientBrush>
             </Border.Background>
             <VerticalStackLayout Background="Transparent" HorizontalOptions="Center">

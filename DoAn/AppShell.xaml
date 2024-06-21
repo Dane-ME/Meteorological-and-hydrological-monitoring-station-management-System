@@ -49,7 +49,7 @@
                       ContentTemplate="{DataTemplate views:HomeView}"
                       Route="HomeView"
                       Icon="home.png"
-                      Shell.BackgroundColor="#3669CC"
+                      Shell.BackgroundColor="#2c3e50"
                       Shell.TitleColor="#eaecf5"
                       >
         </ShellContent>
@@ -57,28 +57,28 @@
                       ContentTemplate="{DataTemplate views:ListView}"
                       Route="ListView"
                       Icon="menu.png"
-                      Shell.BackgroundColor="#3669CC"
+                      Shell.BackgroundColor="#2c3e50"
                       Shell.TitleColor="#eaecf5"
                       />
         <ShellContent Title="Tài khoản"
                       ContentTemplate="{DataTemplate views:UserView}"
                       Route="UserView"
                       Icon="user.png"
-                      Shell.BackgroundColor="#3669CC"
+                      Shell.BackgroundColor="#2c3e50"
                       Shell.TitleColor="#eaecf5"
                       />
         <ShellContent Title="Quản trị viên"
                       ContentTemplate="{DataTemplate views:AdminPageView}"
                       Route="AdminPageView"
                       Icon="user.png"
-                      Shell.BackgroundColor="#3669CC"
+                      Shell.BackgroundColor="#2c3e50"
                       Shell.TitleColor="#eaecf5"
                       Shell.FlyoutItemIsVisible="{Binding IsUser}"
                       />    
         <ShellContent Title="Chi tiết"
                       ContentTemplate="{DataTemplate views:StationDetailView}"
                       Route="StationDetailView"
-                      Shell.BackgroundColor="#3669CC"
+                      Shell.BackgroundColor="#2c3e50"
                       Shell.TitleColor="#eaecf5"
                       Shell.FlyoutItemIsVisible="false"/>
     </TabBar>

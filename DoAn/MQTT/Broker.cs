@@ -40,7 +40,7 @@ namespace MQTT
         string last_topic;
         //Queue<string> last_topic = new Queue<string>();
 
-        public void Listen(string topic, Action<Document> received_callback) // Trong một thời điểm chỉ xử lý 1 topic
+        public void Listen(string topic, Action<Document> received_callback)
         {
             process_received_data = received_callback;
             if (last_topic != null)
