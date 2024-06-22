@@ -10,14 +10,11 @@ namespace DoAn.ViewModels
 {
     public class UserViewModel
     {
-        private readonly AuthService _authService;
         public ICommand LogOutButonCommand { get; private set; }
-        public UserViewModel(AuthService authService)
+        public UserViewModel()
         {
-            _authService = authService;
             LogOutButonCommand = new Command(() => 
             {
-                _authService.Logout();
                 Shell.Current.GoToAsync("//LoginView");
             });
         }

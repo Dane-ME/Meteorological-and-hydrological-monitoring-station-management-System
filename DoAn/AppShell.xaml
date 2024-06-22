@@ -8,11 +8,23 @@
     xmlns:viewmodels="clr-namespace:DoAn.ViewModels"
     Shell.FlyoutWidth="250"
     Shell.FlyoutBehavior="Flyout"
-    FlyoutBackground="#eaecf5" 
-    Shell.TabBarIsVisible="False">
+    FlyoutBackground="#bdc3c7"
+    Shell.TabBarIsVisible="False"
+    >
     <Shell.FlyoutHeader>
-        <Image Source="flyoutheader.png"></Image>
+        <Border HeightRequest="200" StrokeThickness="0">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#2c3e50" Offset="0.5" />
+                    <GradientStop Color="#bdc3c7" Offset="1.0" />
+                </LinearGradientBrush>
+            </Border.Background>
+            <Label FontAttributes="Bold" FontSize="16" TextColor="#bdc3c7" Margin="10,10,10,0">Hệ thống quản lý Trạm quan trắc Khí tượng Thủy Văn</Label>
+        </Border>
     </Shell.FlyoutHeader>
+    
+    
+    
     <ShellContent
         ContentTemplate="{DataTemplate loading:CheckingNetworkView}"
         Route="CheckingNetworkView"
@@ -24,6 +36,9 @@
         Route="CheckingLoginView"
         Shell.FlyoutBehavior="Disabled"
         Shell.FlyoutItemIsVisible="False"/>
+    
+    
+    
     <!--<ShellContent
         ContentTemplate="{DataTemplate loading:LoadingServerView}"
         Route="LoadingServerView"
@@ -40,48 +55,45 @@
         Route="LoginView"
         Shell.FlyoutBehavior="Disabled"
         Shell.FlyoutItemIsVisible="False"/>
-    
 
 
+    <!--FlyoutDisplayOptions="AsMultipleItems"-->
     <TabBar FlyoutDisplayOptions="AsMultipleItems">
 
         <ShellContent Title="Trang chủ"
                       ContentTemplate="{DataTemplate views:HomeView}"
                       Route="HomeView"
-                      Icon="home.png"
                       Shell.BackgroundColor="#2c3e50"
                       Shell.TitleColor="#eaecf5"
-                      >
-        </ShellContent>
+                      />
         <ShellContent Title="Thông Báo"
                       ContentTemplate="{DataTemplate views:ListView}"
                       Route="ListView"
-                      Icon="menu.png"
                       Shell.BackgroundColor="#2c3e50"
                       Shell.TitleColor="#eaecf5"
                       />
         <ShellContent Title="Tài khoản"
                       ContentTemplate="{DataTemplate views:UserView}"
                       Route="UserView"
-                      Icon="user.png"
                       Shell.BackgroundColor="#2c3e50"
                       Shell.TitleColor="#eaecf5"
                       />
         <ShellContent Title="Quản trị viên"
                       ContentTemplate="{DataTemplate views:AdminPageView}"
                       Route="AdminPageView"
-                      Icon="user.png"
                       Shell.BackgroundColor="#2c3e50"
                       Shell.TitleColor="#eaecf5"
                       Shell.FlyoutItemIsVisible="{Binding IsUser}"
-                      />    
+                      />
         <ShellContent Title="Chi tiết"
                       ContentTemplate="{DataTemplate views:StationDetailView}"
                       Route="StationDetailView"
                       Shell.BackgroundColor="#2c3e50"
                       Shell.TitleColor="#eaecf5"
-                      Shell.FlyoutItemIsVisible="false"/>
+                      Shell.FlyoutItemIsVisible="False"/>
     </TabBar>
+    
+    
 
     
 

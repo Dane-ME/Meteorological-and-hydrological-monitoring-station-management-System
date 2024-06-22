@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:syncfusion="clr-namespace:Syncfusion.Maui.DataGrid;assembly=Syncfusion.Maui.DataGrid"
-             x:Class="DoAn.Views.AdminView.ManagerChangeView">
+             x:Class="DoAn.Views.AdminView.StationChangeView"
+             xmlns:syncfusion="clr-namespace:Syncfusion.Maui.DataGrid;assembly=Syncfusion.Maui.DataGrid">
     <ContentView.Resources>
         <ResourceDictionary>
             <syncfusion:DataGridStyle x:Key="customStyle" 
-                              RowBackground="Transparent"
-                              HeaderRowBackground="#2c3e50"
-                              RowTextColor="#2c3e50"
-                              HeaderRowTextColor="White"/>
+                          RowBackground="Transparent"
+                          HeaderRowBackground="#2c3e50"
+                          RowTextColor="#2c3e50"
+                          HeaderRowTextColor="White"/>
         </ResourceDictionary>
     </ContentView.Resources>
     <ScrollView>
@@ -29,44 +29,44 @@
                     <Label Text="Filter Options:  " VerticalOptions="Center" Margin="3" TextColor="#bdc3c7"/>
                     <Picker x:Name="columns" Margin="3" WidthRequest="100" TextColor="#bdc3c7">
                         <Picker.Items>
-                            <x:String>UserName</x:String>
-                            <x:String>UserID</x:String>
+                            <x:String>StationName</x:String>
+                            <x:String>StationID</x:String>
                         </Picker.Items>
                         <Picker.SelectedItem>
-                            <x:String>UserName</x:String>
+                            <x:String>StationName</x:String>
                         </Picker.SelectedItem>
                     </Picker>
-                    
+
                     <Button Text="Save" 
-                            BackgroundColor="#bdc3c7"
-                            TextColor="#2c3e50" Margin="100,5,0,0"
-                            />
+                        BackgroundColor="#bdc3c7"
+                        TextColor="#2c3e50" Margin="100,5,0,0"
+                        />
                 </StackLayout>
 
                 <SearchBar 
-                           Text="{Binding FilterText, Mode=TwoWay}"
-                           Placeholder="Search here to filter"
-                           SearchButtonPressed="SearchButton_Pressed" 
-                           TextChanged="FilterTextChanged"
-                           BackgroundColor="#2c3e50"
-                           TextColor="#bdc3c7"
-                           PlaceholderColor="#bdc3c7"/>
+                       Text="{Binding FilterText, Mode=TwoWay}"
+                       Placeholder="Search here to filter"
+                       SearchButtonPressed="SearchButton_Pressed" 
+                       TextChanged="FilterTextChanged"
+                       BackgroundColor="#2c3e50"
+                       TextColor="#bdc3c7"
+                       PlaceholderColor="#bdc3c7"/>
 
                 <syncfusion:SfDataGrid x:Name="dataGrid" 
-                                       DefaultStyle="{StaticResource customStyle}" 
-                                       ItemsSource="{Binding DataGrid}" 
-                                       ColumnWidthMode="Fill" 
-                                       HorizontalScrollBarVisibility="Always"
-                                       VerticalScrollBarVisibility="Always"
-                                       RowHeight="48"
-                                       >
+                                   DefaultStyle="{StaticResource customStyle}" 
+                                   ItemsSource="{Binding DataGrid}" 
+                                   ColumnWidthMode="Fill" 
+                                   HorizontalScrollBarVisibility="Always"
+                                   VerticalScrollBarVisibility="Always"
+                                   RowHeight="48"
+                                   >
                     <syncfusion:SfDataGrid.Columns>
                         <syncfusion:DataGridTextColumn  HeaderText="Họ tên"
-                            MappingName="UserName" Width="190" />
+                        MappingName="StationName" Width="190" />
                         <syncfusion:DataGridTextColumn  HeaderText="Tài khoản"
-                            MappingName="UserID" Width="100" />
+                        MappingName="StationID" Width="100" />
                         <syncfusion:DataGridCheckBoxColumn  HeaderText="Cấp phép"
-                            MappingName="IsValid" Width="100" />
+                        MappingName="IsValid" Width="100" />
                     </syncfusion:SfDataGrid.Columns>
                 </syncfusion:SfDataGrid>
             </VerticalStackLayout>

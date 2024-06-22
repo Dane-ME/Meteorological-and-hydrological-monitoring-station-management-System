@@ -10,5 +10,7 @@ namespace DoAn
             InitializeComponent();
             BindingContext = new AppShellViewModel();
         }
+
+       
     }
 }

@@ -40,7 +40,6 @@ namespace DoAn
             string CacheDataDir = FileSystem.CacheDirectory;
             //System.File.Instance.CreateNewDatafolder("app_data", AppDataDir);
             System.File.Instance.CreateNewDatafolder("cache_data", CacheDataDir);
-
             builder.Services.AddSingleton<AuthService>();
             builder.Services.AddSingleton<UserModel>();
             builder.Services.AddScoped<StationModel>();

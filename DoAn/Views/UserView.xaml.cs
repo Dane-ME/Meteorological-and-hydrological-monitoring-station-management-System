@@ -5,11 +5,9 @@ namespace DoAn.Views;
 
 public partial class UserView : ContentPage
 {
-	private readonly AuthService _authService;
-	public UserView(AuthService authService)
+	public UserView()
 	{
 		InitializeComponent();
-		_authService = authService;
-        BindingContext = new UserViewModel(_authService);
+        BindingContext = new UserViewModel();
 	}
 }
