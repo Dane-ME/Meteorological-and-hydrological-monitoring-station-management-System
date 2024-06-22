@@ -1,5 +1,6 @@
 ﻿using DoAn.Models.AdminModel;
 using DoAn.Services;
+using DoAn.Views.AdminView;
 using MQTT;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace DoAn.ViewModels.AdminViewModel
 {
@@ -65,12 +67,26 @@ namespace DoAn.ViewModels.AdminViewModel
             set => SetProperty(ref _adr, value);
         }
         #endregion
-
+        private View _editmanagerView;
+        public View editManagerView 
+        { 
+            get => _editmanagerView; 
+            set
+            {
+                _editmanagerView = value;
+                OnPropertyChanged();
+            } 
+        }
+        public ICommand EditCommand {  get; set; }
         public StationProfileViewModel() 
         {
             Type = new List<string>();
             Manager = new List<string>();
 
+            EditCommand = new Command(() =>
+            {
+                editManagerView = new ManagerChangeView(ID);
+            });
             EventChanged.Instance.StationIDChanged += (s, e) =>
             {
                 if(manager.Count == 0 && type.Count == 0)

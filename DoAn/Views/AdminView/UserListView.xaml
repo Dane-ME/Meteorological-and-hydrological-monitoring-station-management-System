@@ -9,7 +9,7 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <Grid Background="#578FC8">
+        <Grid Background="#2c3e50">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="5*"/>
@@ -20,7 +20,7 @@
             <Label Grid.Column="2" VerticalOptions="Center" Text="Tên đăng nhập" TextColor="#EAECF5" FontSize="18"></Label>
         </Grid>
 
-        <Grid Grid.Row="1" Background="#EEF5FF">
+        <Grid Grid.Row="1" Background="#bdc3c7">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="6*"/>
@@ -32,7 +32,7 @@
                         <ViewCell>
                             <ViewCell.View>
                                 <StackLayout VerticalOptions="Center">
-                                    <Label Text="{Binding}"  FontSize="15" TextColor="#3669CC" Margin="25, 0, 0, 0"></Label>
+                                    <Label Text="{Binding}"  FontSize="15" TextColor="#2c3e50" Margin="25, 0, 0, 0"></Label>
                                 </StackLayout>
                             </ViewCell.View>
                         </ViewCell>
@@ -42,7 +42,7 @@
             <ListView Grid.Column="1" ItemsSource="{Binding UserDetail}" SelectionMode="None" CachingStrategy="RecycleElement" Background="Transparent">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextCell Text="{Binding Name}" TextColor="#3669CC">
+                        <TextCell Text="{Binding Name}" TextColor="#2c3e50">
                             <TextCell.ContextActions>
                                 <MenuItem Text="Chi tiết" 
                                   Command="{Binding Source={ RelativeSource AncestorType={x:Type vm:UserListViewModel}}, Path=OpenDetailCommand }"
@@ -65,7 +65,7 @@
                         <ViewCell>
                             <ViewCell.View>
                                 <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                                    <Label Text="{Binding ID}" FontSize="15" TextColor="#3669CC"></Label>
+                                    <Label Text="{Binding ID}" FontSize="15" TextColor="#2c3e50"></Label>
                                 </StackLayout>
                             </ViewCell.View>
                         </ViewCell>

@@ -9,19 +9,19 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Grid Background="#578FC8">
+        <Grid Background="#2c3e50">
             <Border Background="#EEF5FF" StrokeThickness="0" Margin="10,2,10,2">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="15"/>
                 </Border.StrokeShape>
 
                 <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
-                    <Label Text="Station" FontSize="15" TextColor="#3669CC" Margin="0, 0, 80 , 0" FontAttributes="Bold">
+                    <Label Text="Station" FontSize="15" TextColor="#2c3e50" Margin="0, 0, 80 , 0" FontAttributes="Bold">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding StationTappedCommand}"/>
                         </Label.GestureRecognizers>
                     </Label>
-                    <Label Text="User" FontSize="15" TextColor="#3669CC" Margin="80, 0, 0 , 0" FontAttributes="Bold">
+                    <Label Text="User" FontSize="15" TextColor="#2c3e50" Margin="80, 0, 0 , 0" FontAttributes="Bold">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding UserTappedCommand}"/>
                         </Label.GestureRecognizers>
@@ -30,7 +30,6 @@
             </Border>
         </Grid>
         <ContentView Content="{Binding view}" Grid.Row="1">
-            
         </ContentView>
     </Grid>
 </ContentPage>

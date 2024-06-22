@@ -60,9 +60,9 @@
                 </StackLayout>
             </Border>
 
-            <Button Text="Cấp lại mật khẩu" Command="{Binding LogOutButonCommand}" Margin="10,10,10,0"/>
-            <Button Text="Đổi mật khẩu" Command="{Binding LogOutButonCommand}" Margin="10,10,10,0"/>
-            <Button Text="Đăng xuất" Command="{Binding LogOutButonCommand}" Margin="10,10,10,0"/>
+            <Button Text="Cấp lại mật khẩu" Command="{Binding LogOutButonCommand}" BackgroundColor="#bdc3c7" Margin="10,10,10,0"/>
+            <Button Text="Đổi mật khẩu" Command="{Binding LogOutButonCommand}" BackgroundColor="#bdc3c7" Margin="10,10,10,0"/>
+            <Button Text="Đăng xuất" Command="{Binding LogOutButonCommand}" BackgroundColor="#bdc3c7" Margin="10,10,10,0"/>
         </VerticalStackLayout>
     </ScrollView>
     

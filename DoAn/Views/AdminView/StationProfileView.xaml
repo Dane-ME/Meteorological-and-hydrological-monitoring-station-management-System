@@ -2,9 +2,15 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DoAn.Views.AdminView.StationProfileView">
-    <ScrollView BackgroundColor="#EEF5FF">
+    <ScrollView>
+        <ScrollView.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#2c3e50" Offset="0.5" />
+                <GradientStop Color="#bdc3c7" Offset="1.0" />
+            </LinearGradientBrush>
+        </ScrollView.Background>
         <VerticalStackLayout>
-            <Border BackgroundColor="#3669CC" WidthRequest="390" HeightRequest="180" StrokeThickness="0" Margin="0,10,0,0">
+            <Border BackgroundColor="#bdc3c7" WidthRequest="390" HeightRequest="180" StrokeThickness="0" Margin="0,10,0,0">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="10">
                     </RoundRectangle>
@@ -22,10 +28,10 @@
                         </Grid.ColumnDefinitions>
 
                         <VerticalStackLayout VerticalOptions="Start" HorizontalOptions="Start" Margin="8, 8, 0, 0">
-                            <Label Text="{Binding Name}" FontSize="20" TextColor="White" FontAttributes="Bold"></Label>
+                            <Label Text="{Binding Name}" FontSize="20" TextColor="#2c3e50" FontAttributes="Bold"></Label>
                             <HorizontalStackLayout>
-                                <Label Text="Mã trạm: " FontSize="15" TextColor="White"></Label>
-                                <Label Text="{Binding Id}" FontSize="15" TextColor="White"></Label>
+                                <Label Text="Mã trạm: " FontSize="15" TextColor="#2c3e50"></Label>
+                                <Label Text="{Binding Id}" FontSize="15" TextColor="#2c3e50"></Label>
                             </HorizontalStackLayout>
                         </VerticalStackLayout>
 
@@ -36,7 +42,7 @@
                                         <ViewCell>
                                             <ViewCell.View>
                                                 <VerticalStackLayout>
-                                                    <Label Text="{Binding Type}" FontSize="15" TextColor="White"></Label>
+                                                    <Label Text="{Binding Type}" FontSize="15" TextColor="#2c3e50"></Label>
                                                 </VerticalStackLayout>
                                             </ViewCell.View>
                                         </ViewCell>
@@ -47,18 +53,19 @@
                     </Grid>
 
                     <Button
-            HorizontalOptions="Start"
-            Grid.Row="1"
-            WidthRequest="190" 
-            HeightRequest="40"
-            BorderWidth="0" 
-            Margin="8,0,0,0"
-            VerticalOptions="Center"
-            CornerRadius="10" 
-            BackgroundColor="#578FC8"
-            Text="Thay đổi người quản lý" 
-            TextColor="White"
-            FontSize="15">
+                        HorizontalOptions="Start"
+                        Grid.Row="1"
+                        WidthRequest="190" 
+                        HeightRequest="40"
+                        BorderWidth="0" 
+                        Margin="8,0,0,0"
+                        VerticalOptions="Center"
+                        CornerRadius="10" 
+                        BackgroundColor="#2c3e50"
+                        Text="Thay đổi người quản lý" 
+                        TextColor="White"
+                        FontSize="15"
+                        Command="{Binding EditCommand}">
                     </Button>
 
                     <Label
@@ -72,7 +79,7 @@
                 </Grid>
             </Border>
 
-            <Border BackgroundColor="#578FC8" WidthRequest="390" Margin="0, 10, 0, 0" StrokeThickness="0">
+            <Border BackgroundColor="#bdc3c7" WidthRequest="390" Margin="0, 10, 0, 0" StrokeThickness="0">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="10"></RoundRectangle>
                 </Border.StrokeShape>
@@ -82,11 +89,11 @@
                         <RowDefinition />
                     </Grid.RowDefinitions>
 
-                    <Border BackgroundColor="#3669CC" StrokeThickness="0">
+                    <Border BackgroundColor="#bdc3c7" StrokeThickness="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="10, 10, 0, 0"></RoundRectangle>
                         </Border.StrokeShape>
-                        <Label Text="Người quản lý" TextColor="White" FontSize="15" Margin="8, 0, 0, 0" VerticalOptions="Center"></Label>
+                        <Label Text="Người quản lý" TextColor="#2c3e50" FontSize="15" Margin="8, 0, 0, 0" VerticalOptions="Center"></Label>
                     </Border>
                     <ListView Grid.Row="1" ItemsSource="{Binding manager}" SelectionMode="None" Background="Transparent">
                         <ListView.ItemTemplate>
@@ -94,7 +101,7 @@
                                 <ViewCell>
                                     <ViewCell.View>
                                         <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                                            <Label Text="{Binding Manager}" FontSize="15" TextColor="White"></Label>
+                                            <Label Text="{Binding Manager}" FontSize="15" TextColor="#2c3e50"></Label>
                                         </StackLayout>
                                     </ViewCell.View>
                                 </ViewCell>
@@ -104,6 +111,15 @@
                     <!--<ListView Grid.Row="1" x:Name="listview"></ListView>-->
                     
                 </Grid>
+            </Border>
+
+            <Border BackgroundColor="#bdc3c7" WidthRequest="390" Margin="0, 10, 0, 0" StrokeThickness="0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10"></RoundRectangle>
+                </Border.StrokeShape>
+                <ContentView Content="{Binding editManagerView}">
+                   
+                </ContentView>
             </Border>
         </VerticalStackLayout>
     </ScrollView>

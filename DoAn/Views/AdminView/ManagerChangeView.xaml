@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:syncfusion="clr-namespace:Syncfusion.Maui.DataGrid;assembly=Syncfusion.Maui.DataGrid"
+             x:Class="DoAn.Views.AdminView.ManagerChangeView">
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <syncfusion:DataGridStyle x:Key="customStyle" 
+                              RowBackground="Transparent"
+                              HeaderRowBackground="#2c3e50"
+                              RowTextColor="#2c3e50"
+                              HeaderRowTextColor="White"/>
+        </ResourceDictionary>
+    </ContentView.Resources>
+    <ScrollView>
+        <ScrollView.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#bdc3c7" Offset="0.0" />
+                <GradientStop Color="#2c3e50" Offset="1.0" />
+            </LinearGradientBrush>
+        </ScrollView.Background>
+
+        <Border BackgroundColor="White" StrokeThickness="0">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="10"/>
+            </Border.StrokeShape>
+
+            <syncfusion:SfDataGrid DefaultStyle="{StaticResource customStyle}" ItemsSource="{Binding DataGrid}" ColumnWidthMode="Fill" AutoGenerateColumnsMode="None" >
+                <syncfusion:SfDataGrid.Columns>
+                    <syncfusion:DataGridTextColumn  HeaderText="Họ tên"
+                            MappingName="UserName" Width="130" />
+                    <syncfusion:DataGridTextColumn  HeaderText="Tên tài khoản"
+                            MappingName="UserID" Width="130" />
+                    <syncfusion:DataGridCheckBoxColumn  HeaderText="Cấp phép"
+                            MappingName="IsValid" Width="130" />
+                </syncfusion:SfDataGrid.Columns>
+            </syncfusion:SfDataGrid>
+
+        </Border>
+    </ScrollView>
+</ContentView>

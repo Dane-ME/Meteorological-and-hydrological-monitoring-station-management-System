@@ -20,5 +20,6 @@ namespace System
     public partial class Document
     {
         public List<string> Manager { get => GetArray<List<string>>(nameof(Manager)); set => Push(nameof(Manager), value); }
+
     }
 }
