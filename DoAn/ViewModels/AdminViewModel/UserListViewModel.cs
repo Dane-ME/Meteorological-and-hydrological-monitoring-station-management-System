@@ -14,6 +14,7 @@ namespace DoAn.ViewModels.AdminViewModel
     public class UserListViewModel : ObservableObject
     {
         public event Action<UserListModel> OnNavigateToUserDetail;
+        public event Action<UserListModel> OnNavigateToAddUser;
 
         private ObservableCollection<UserListModel> _userdetail;
         public ObservableCollection<UserListModel> UserDetail
@@ -66,9 +67,9 @@ namespace DoAn.ViewModels.AdminViewModel
                 }
             };
 
-            AddUserCommand = new Command((e) =>
+            AddUserCommand = new Command<UserListModel>(async (e) =>
             {
-
+                await Shell.Current.GoToAsync("AddUserView"); 
             });
             OpenDetailCommand = new Command<UserListModel>((e) =>
             {
@@ -80,7 +81,10 @@ namespace DoAn.ViewModels.AdminViewModel
             });
 
         }
+        public void NavigatedToAddUser()
+        {
 
+        }
         private async Task SendandListen()
         {
             await Task.Delay(1000);

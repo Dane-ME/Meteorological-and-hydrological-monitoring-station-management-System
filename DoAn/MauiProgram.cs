@@ -60,6 +60,7 @@ namespace DoAn
             builder.Services.AddSingleton<HomeView>();
             builder.Services.AddTransient<StationDetailView>();
             builder.Services.AddTransient<AdminPageView>();
+            builder.Services.AddTransient<AddUserView>();
             //
             builder.Services.AddTransient<StationListView>();
             builder.Services.AddTransient<UserListView>();

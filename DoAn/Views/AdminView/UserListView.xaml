@@ -3,13 +3,22 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DoAn.Views.AdminView.UserListView"
              xmlns:vm="clr-namespace:DoAn.ViewModels.AdminViewModel">
-    <Grid>
+    <Grid Background="#2c3e50">
         <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="50"/>
             <RowDefinition />
         </Grid.RowDefinitions>
-
-        <Grid Background="#2c3e50">
+        <Button Text="Thêm người dùng" 
+                HeightRequest="50" 
+                Background="#bdc3c7" 
+                TextColor="#2c3e50" 
+                BorderWidth="0" 
+                CornerRadius="10" 
+                Margin="0,10,0,10" 
+                Command="{Binding AddUserCommand}">
+        </Button>
+        <Grid Grid.Row="1" Background="#2c3e50">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="5*"/>
@@ -19,8 +28,7 @@
             <Label Grid.Column="1" VerticalOptions="Center" Text="Họ tên" TextColor="#EAECF5" FontSize="18" ></Label>
             <Label Grid.Column="2" VerticalOptions="Center" Text="Tên đăng nhập" TextColor="#EAECF5" FontSize="18"></Label>
         </Grid>
-
-        <Grid Grid.Row="1" Background="#bdc3c7">
+        <Grid Grid.Row="2" Background="#bdc3c7">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="6*"/>
@@ -46,9 +54,6 @@
                             <TextCell.ContextActions>
                                 <MenuItem Text="Chi tiết" 
                                   Command="{Binding Source={ RelativeSource AncestorType={x:Type vm:UserListViewModel}}, Path=OpenDetailCommand }"
-                                  CommandParameter="{Binding .}"/>
-                                <MenuItem Text="Thêm" 
-                                  Command="{Binding Source={ RelativeSource AncestorType={x:Type vm:UserListViewModel}}, Path=AddUserCommand }"
                                   CommandParameter="{Binding .}"/>
                                 <MenuItem Text="Xóa" 
                                   Command="{Binding Source={ RelativeSource AncestorType={x:Type vm:UserListViewModel}}, Path=RemoveUserCommand }"

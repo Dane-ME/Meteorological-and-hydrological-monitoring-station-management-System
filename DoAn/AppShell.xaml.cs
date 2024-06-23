@@ -1,5 +1,6 @@
 ﻿using DoAn.ViewModels;
 using DoAn.Views;
+using DoAn.Views.AdminView;
 
 namespace DoAn
 {
@@ -9,6 +10,10 @@ namespace DoAn
         {
             InitializeComponent();
             BindingContext = new AppShellViewModel();
+            Routing.RegisterRoute("HomeView", typeof(HomeView));
+            Routing.RegisterRoute("UserView", typeof(UserView));
+            Routing.RegisterRoute("AdminPageView", typeof(AdminPageView));
+            Routing.RegisterRoute("AddUserView", typeof(AddUserView));
         }
 
        
