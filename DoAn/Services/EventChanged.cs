@@ -30,8 +30,10 @@ namespace DoAn.Services
         public event EventHandler UserProfileChanged;
         public event EventHandler StationIDChanged;
         public event EventHandler UserIDChanged;
-
         public event EventHandler RoleChanged;
+
+        public event EventHandler PopupHandle;
+        public event EventHandler AnswerChanged;
 
         public virtual void OnLoaded()
         {
@@ -68,6 +70,14 @@ namespace DoAn.Services
         public virtual void OnRoleChanged()
         {
             RoleChanged?.Invoke(this, EventArgs.Empty);
+        }
+        public virtual void OnPopupHandleChanged() 
+        {
+            PopupHandle?.Invoke(this, EventArgs.Empty);
+        }
+        public virtual void OnAnswerChanged()
+        {
+            AnswerChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 
