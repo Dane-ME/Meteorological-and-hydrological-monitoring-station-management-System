@@ -23,7 +23,7 @@ namespace DoAn.Views.Loading
             }
             Broker.Instance.Connect();
             
-            await Shell.Current.GoToAsync("//AdminPageView");
+            await Shell.Current.GoToAsync("//LoginView");
         }
     }
 

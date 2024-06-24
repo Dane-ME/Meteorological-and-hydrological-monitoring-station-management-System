@@ -32,8 +32,10 @@ namespace DoAn.ViewModels.AdminViewModel
 
             EventChanged.Instance.AnswerChanged += (s, e) =>
             {
-                if(Answer) { }
-                else { }
+                if(Answer) 
+                {
+
+                }
             };
         }   
 
