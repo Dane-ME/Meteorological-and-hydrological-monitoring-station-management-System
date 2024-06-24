@@ -24,23 +24,31 @@
 
                 
                 <StackPanel Orientation="Horizontal">
+                    <Button Content="Trạng thái" x:Name="status" Width="60" Margin="5" Background="AliceBlue"></Button>
                     <Button Content="Tạo tài khoản" x:Name="CreateAccount" Margin="5" Background="AliceBlue"></Button>
                     <Button Content="Nhập dữ liệu" x:Name="ImportData" Margin="5" Background="AliceBlue"></Button>
                     <Button Content="Khởi tạo trạm" x:Name="InitStation" Width="85" Margin="5" Background="AliceBlue"></Button>
-                    <Button Width="60" Margin="5" Background="AliceBlue"></Button>
+                    
                     <Button Width="60" Margin="5" Background="AliceBlue"></Button>
                 </StackPanel>
                 <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
                     <Button Content="Connect" x:Name="connect" Margin="5" Background="AliceBlue"></Button>
-                    <Button Content="Listen" x:Name="listen" Margin="5" Background="AliceBlue"></Button>
-                    <TextBlock Width="30" Margin="5"></TextBlock>
+                    <Button Content="Disconnect" x:Name="disconnect" Margin="5" Background="AliceBlue"></Button>
+                    
+                    <Border Width="20" Height="20" Background="Red" Margin="0,0,20,0">
+                        <Border.Clip>
+                            <EllipseGeometry Center="10,10" RadiusX="10" RadiusY="10">
+                            </EllipseGeometry>
+                        </Border.Clip>
 
+                        <Border Background="Green" x:Name="Marklayer"></Border>
+                        
+                    </Border>
                 </StackPanel>
             </Grid> 
         </Border>
  
         <Border Grid.Row="2" x:Name="MainContent" Background="AliceBlue">
-            
         </Border>
         
 

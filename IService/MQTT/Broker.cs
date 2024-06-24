@@ -20,34 +20,61 @@ namespace MQTT
                 return instance;
             }
         }
-        public Broker() : base("broker.emqx.io") { } // mặc định dùng emqx.io
+
+        public Broker() : base("broker.emqx.io") { }
+
         public void Send(string topic, Document doc)
         {
-            Publish(topic, doc?.ToString() ?? "{}"); // khi ToString thì nó giống JSON
+            Publish(topic, doc?.ToString() ?? "{}");
         }
+
         protected override void RaiseDataRecieved(string topic, byte[] message)
         {
-
             var content = message.UTF8();
             var doc = Document.Parse(content);
-
-            process_received_data?.Invoke(doc);
-
+            if (topicCallbacks.TryGetValue(topic, out var callback))
+            {
+                callback?.Invoke(doc);
+            }
             base.RaiseDataRecieved(topic, message);
         }
 
-        Action<Document> process_received_data;
-        string last_topic;
+        public Dictionary<string, Action<Document>> topicCallbacks = new Dictionary<string, Action<Document>>();
 
-        public void Listen(string topic, Action<Document> received_callback) // Trong một thời điểm chỉ xử lý 1 topic
+        public void Listen(string topic, Action<Document> received_callback)
         {
-            process_received_data = received_callback;
-            if (last_topic != null)
+            if (!topicCallbacks.ContainsKey(topic))
             {
-                Unsubscribe(last_topic);
+                topicCallbacks[topic] = received_callback;
+                Subscribe(topic);
+                IService.Views.EventChanged.Instance.OnStatusChanged();
             }
-            last_topic = topic;
-            if (topic != null) Subscribe(topic);
+            else
+            {
+                topicCallbacks[topic] += received_callback;
+            }
+        }
+
+        public void StopListening(string topic, Action<Document>? received_callback = null)
+        {
+            if (topicCallbacks.ContainsKey(topic))
+            {
+                if (received_callback == null)
+                {
+                    topicCallbacks.Remove(topic);
+                    Unsubscribe(topic);
+                    IService.Views.EventChanged.Instance.OnStatusChanged();
+                }
+                else
+                {
+                    topicCallbacks[topic] -= received_callback;
+                    if (topicCallbacks[topic] == null)
+                    {
+                        topicCallbacks.Remove(topic);
+                        Unsubscribe(topic);
+                    }
+                }
+            }
         }
     }
 }
