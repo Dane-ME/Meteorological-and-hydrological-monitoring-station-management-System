@@ -85,11 +85,11 @@ namespace System
             };
             this.Header = Base64urlEncode(header);
         }
-        public void payload(string sub, string name, string role, string exp)
+        public void payload(string userid, string role, string exp)
         {
             Document payload = new Document()
             {
-                Name = name,
+                UserID = userid,
                 Role = role,
                 Exp = exp
             };

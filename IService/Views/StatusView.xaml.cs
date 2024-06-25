@@ -3,10 +3,11 @@ using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 
-namespace IService.Views
+namespace System
 {
-    public class EventChanged
+    public partial class EventChanged
     {
         public event EventHandler StatusChanged;
         public virtual void OnStatusChanged()
@@ -26,6 +27,10 @@ namespace IService.Views
             }
         }
     }
+}
+namespace IService.Views
+{
+    
     /// <summary>
     /// Interaction logic for StatusView.xaml
     /// </summary>
@@ -45,23 +50,29 @@ namespace IService.Views
         public StatusView()
         {
             InitializeComponent();
+            DataContext = this;
             TopicKeys = new ObservableCollection<string>(Broker.Instance.topicCallbacks.Keys);
+            
             EventChanged.Instance.StatusChanged += (s, e) =>
             {
-                if (TopicKeys == null)
+                Application.Current.Dispatcher.Invoke(() =>
                 {
-                    TopicKeys = new ObservableCollection<string>(Broker.Instance.topicCallbacks.Keys);
-                }
-                else
-                {
-                    TopicKeys.Clear();
-                    foreach (var key in Broker.Instance.topicCallbacks.Keys)
+                    if (TopicKeys == null)
                     {
-                        TopicKeys.Add(key);
+                        TopicKeys = new ObservableCollection<string>(Broker.Instance.topicCallbacks.Keys);
                     }
-                }
+                    else
+                    {
+                        TopicKeys.Clear();
+                        foreach (var key in Broker.Instance.topicCallbacks.Keys)
+                        {
+                            TopicKeys.Add(key);
+                        }
+                    }
+                });
+                
             };
-            DataContext = this;
+            
         }
         public event PropertyChangedEventHandler PropertyChanged;
 

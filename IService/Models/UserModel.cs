@@ -18,6 +18,7 @@ namespace System
         public string UserID { get => GetString(nameof(UserID)); set => Push(nameof(UserID), value); }
         public string EncodePass { get => GetString(nameof(EncodePass)); set => Push(nameof(EncodePass), value); }
         public string Role { get => GetString(nameof(Role)); set => Push(nameof(Role), value); }
+        public DocumentList UserList { get => GetArray<DocumentList>(nameof(UserList)); set => Push(nameof(UserList), value); }
 
         public List<string> StationManagement { get => GetArray<List<string>>(nameof(StationManagement)); set => Push(nameof(StationManagement), value); }
 

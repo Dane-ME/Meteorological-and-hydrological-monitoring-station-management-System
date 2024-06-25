@@ -94,6 +94,7 @@ namespace DoAn.ViewModels
                 case 2: MeteoData(DataResponse); break; //010
                 case 1: Console.WriteLine(); break; //001
                 case 0: Console.WriteLine("Ehe"); break; //000
+                default: break;
 
             }
         } 

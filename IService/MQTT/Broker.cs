@@ -47,7 +47,7 @@ namespace MQTT
             {
                 topicCallbacks[topic] = received_callback;
                 Subscribe(topic);
-                IService.Views.EventChanged.Instance.OnStatusChanged();
+                EventChanged.Instance.OnStatusChanged();
             }
             else
             {
@@ -63,7 +63,7 @@ namespace MQTT
                 {
                     topicCallbacks.Remove(topic);
                     Unsubscribe(topic);
-                    IService.Views.EventChanged.Instance.OnStatusChanged();
+                    EventChanged.Instance.OnStatusChanged();
                 }
                 else
                 {

@@ -34,21 +34,22 @@ namespace System
     
     class TokenModel : IService.Models.Time
     {
-        public string CreateToken(Document message, Document data)
+        public string CreateToken(Document doc, Document data)
         {
            
             var format = new Format();
             format.header("JWT","HS256");
-            format.payload("123","Dang", "Admin", $"{message.Exp}");
-            format.signature($"{data.Email}", $"{data.EncodePass}", $"{message.Exp}");
+            format.payload("Hhdangev02", "Admin", $"{doc.Exp}");
+            format.signature($"{data.Email}", $"{data.EncodePass}", $"{doc.Exp}");
             string token = format.CreateJWT();
-            string srkey = format.CreateSecretKey($"{data.Email}", $"{data.EncodePass}", $"{message.Exp}");
+            string srkey = format.CreateSecretKey($"{data.Email}", $"{data.EncodePass}", $"{doc.Exp}");
 
             Document newToken = new Document()
             {
-                ObjectId = format.Header + format.Payload + format.Signature,
+                ObjectId = doc.UserID,
+                Token = format.Header + format.Payload + format.Signature,
                 SecretKey = srkey,
-                Time = message.Exp,
+                Exp = doc.Exp,
             };
             DB.Token.Insert(newToken);
 
@@ -57,16 +58,16 @@ namespace System
     }
     public partial class Document
     {
-        public string Token { get => GetString(nameof(Token)); set => Push(nameof(Token), value); }
+        public string ?Token { get => GetString(nameof(Token)); set => Push(nameof(Token), value); }
         //public string DeviceInfo { get => GetString(nameof(DeviceInfo)); set => Push(nameof(DeviceInfo), value); }
-        public string Time { get => GetString(nameof(Time)); set => Push(nameof(Time), value); }
-        public string Exp { get => GetString(nameof(Exp)); set => Push(nameof(Exp), value); }
-        public string Type { get => GetString(nameof(Type)); set => Push(nameof(Type), value); }
+        public string ?Time { get => GetString(nameof(Time)); set => Push(nameof(Time), value); }
+        public string ?Exp { get => GetString(nameof(Exp)); set => Push(nameof(Exp), value); }
+        public string ?Type { get => GetString(nameof(Type)); set => Push(nameof(Type), value); }
 
     }
     public partial class DB
     {
-        static public BsonData.Collection? Token => MainManager.GetCollection(nameof(Token));
+        static public BsonData.Collection ?Token => MainManager.GetCollection(nameof(Token));
 
     }
 }
