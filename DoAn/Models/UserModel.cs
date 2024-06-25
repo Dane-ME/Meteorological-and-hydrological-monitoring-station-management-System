@@ -15,7 +15,7 @@ namespace System
         //public string? TokenID { get => ObjectId; set => ObjectId = (string?)value; }
         // ObjectID là Token,
         public string UserID { get => GetString(nameof(UserID)); set => Push(nameof(UserID), value); }
-        public string Pass { get => GetString(nameof(Pass)); set => Push(nameof(Pass), value); }
+        public string EncodePass { get => GetString(nameof(EncodePass)); set => Push(nameof(EncodePass), value); }
 
     }
 
@@ -50,7 +50,7 @@ namespace DoAn.Models
             {
                 Type = "id",
                 UserID = this.Account,
-                Pass = this.Password
+                EncodePass = this.Password
             });
             getToken(this.Account);
         }

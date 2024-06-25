@@ -41,7 +41,7 @@ namespace IService.ViewModels.Import
                     ObjectId = this.ID,
                     StationName = this.Name,
                     StationAddress = this.Local,
-                    StationType = typStation,
+                    StationTypeList = typStation,
                     Manager = manager
                 });
 

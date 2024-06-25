@@ -85,8 +85,8 @@ namespace DoAn.ViewModels
         {
             await Task.Delay(500);
 
-            Broker.Instance.Send($"dane/service/home/hhdangev02", new Document() { Token = "00000" });
-            Broker.Instance.Listen($"dane/service/home/hhdangev02", HandleReceivedData);
+            Broker.Instance.Send($"dane/service/home/{Service.Instance.UserID}", new Document() { Token = $"{Service.Instance.Token}" });
+            Broker.Instance.Listen($"dane/service/home/{Service.Instance.UserID}", HandleReceivedData);
 
         }
         private void HandleReceivedData(Document doc)

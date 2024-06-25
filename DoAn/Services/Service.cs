@@ -10,6 +10,7 @@ namespace DoAn.Services
     {
         private bool _loginState;
         private string? _token;
+        private string? _userid;
         private string? _role;
 
         public static Service? instance;
@@ -31,6 +32,11 @@ namespace DoAn.Services
         public string Token { 
             get => _token; 
             set => SetProperty(ref _token, value); 
+        }
+        public string UserID
+        {
+            get => _userid;
+            set => SetProperty(ref _userid, value);
         }
         public string Role
         {

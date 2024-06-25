@@ -25,7 +25,7 @@ namespace IService.Services
                 Broker.Instance.Listen($"dane/service/home/{e.UserID}", (doc) => 
                 {
                     bool check = JWTcheck(doc, e);
-                    if (check) { var repo = new ResponseSender(); repo.HomeResponse(e.UserID); };
+                    if (check) { var repo = new ResponseSender(e.UserID); repo.HomeResponse(); };
                 });
                 //await Task.Delay(100);
                 Broker.Instance.Listen($"dane/service/stationdetail/{e.UserID}", (doc) => { });

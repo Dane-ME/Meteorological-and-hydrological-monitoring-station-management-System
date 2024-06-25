@@ -118,7 +118,7 @@ public class LoginViewModel : ObservableObject
         {
             Type = "id",
             UserID = this.Account,
-            Pass = this.Password.ToMD5(),
+            EncodePass = this.Password.ToMD5(),
         });
         
     }
@@ -137,6 +137,8 @@ public class LoginViewModel : ObservableObject
                 {
                     Service.Instance.LoginState = true;
                     Service.Instance.Role = role;
+                    Service.Instance.Token = token; 
+                    Service.Instance.UserID = this.Account;
                     EventChanged.Instance.OnRoleChanged();
                 }
                 else { Service.Instance.LoginState = false; }

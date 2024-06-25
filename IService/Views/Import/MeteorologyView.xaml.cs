@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using IService.ViewModels.Import;
 
 namespace IService.Views.Import
 {
@@ -23,6 +24,7 @@ namespace IService.Views.Import
         public MeteorologyView()
         {
             InitializeComponent();
+            DataContext = new MeteorologicalViewModel();
         }
     }
 }
