@@ -51,11 +51,12 @@ namespace System
             Broker.Instance.Send(topic, CreateResponse(objectid));
             EventChanged.Instance.OnListenActivedEvent(objectid);
         }
+        #region HOME REQUEST
         public async void HomeResponse()
         {      
-            homedata = getHomeData();
+            this.homedata = getHomeData();
             await Task.Delay(100);
-            Broker.Instance.Send($"dane/service/home/{userID}", new Document() { HomeData = homedata });
+            Broker.Instance.Send($"dane/service/home/{this.userID}", new Document() { HomeData = this.homedata });
         }
         public List<string> getStationManagement()
         {
@@ -130,6 +131,28 @@ namespace System
                 WaveHeightMax = DataNewest.WaveHeightMax,
             };
         }
+        #endregion
+
+        #region STATIONDETAIL RESPONSE
+
+        public async void StationDetailReponse(string stationid, string time) 
+        {
+            Document ?stationProfile = DB.Station.Find(stationid);
+            Document ?stationData = MethodHandle.CallMethod(stationid, "Find", time) as Document;
+            Document response = new Document()
+            {
+                StationName = stationProfile.StationName,
+                StationID = stationProfile.StationID,
+                StationAddress = stationProfile.StationAddress,
+                StationTypeList = stationProfile.StationTypeList,
+                Time = time,
+                StationData = stationData.StationData
+            };
+            await Task.Delay(100);
+            Broker.Instance.Send($"dane/service/stationdetail/{this.userID}", response);
+        }
+
+        #endregion
 
     }
 }

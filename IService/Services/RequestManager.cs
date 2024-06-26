@@ -21,25 +21,55 @@ namespace IService.Services
             };
             EventChanged.Instance.ListenActivedEvent += async (s, e) =>
             {
-                //await Task.Delay(100);
-                Broker.Instance.Listen($"dane/service/home/{e.UserID}", (doc) => 
+                await Task.Delay(100);
+                string userid = e.UserID;
+                var repo = new ResponseSender(userid);
+                Broker.Instance.Listen($"dane/service/home/{userid}", (doc) => 
                 {
                     bool check = JWTcheck(doc, e);
-                    if (check) { var repo = new ResponseSender(e.UserID); repo.HomeResponse(); };
+                    if (check) { repo.HomeResponse(); };
                 });
                 //await Task.Delay(100);
-                Broker.Instance.Listen($"dane/service/stationdetail/{e.UserID}", (doc) => { });
+                Broker.Instance.Listen($"dane/service/stationdetail/{userid}", (doc) => 
+                {
+                    bool check = JWTcheck(doc, e);
+                    string time = TimeFormat.getTimeNow();
+                    if (check) { repo.StationDetailReponse(doc.StationID, time); };
+                });
                 //await Task.Delay(100);
-                Broker.Instance.Listen($"dane/service/stationlist/{e.UserID}", (doc) => { });
+                Broker.Instance.Listen($"dane/service/stationlist/{userid}", (doc) => 
+                { 
+                });
                 //await Task.Delay(100);
-                Broker.Instance.Listen($"dane/service/userlist/{e.UserID}", (doc) => { });
-                Broker.Instance.Listen($"dane/user/logout/{e.UserID}", (doc) => {
+                Broker.Instance.Listen($"dane/service/userlist/{userid}", (doc) => 
+                { 
+                });
+                Broker.Instance.Listen($"dane/service/stationprofile/{userid}", (doc) => 
+                {
+                });
+                //await Task.Delay(100);
+                Broker.Instance.Listen($"dane/service/userprofile/{userid}", (doc) => 
+                {
+                });
+                Broker.Instance.Listen($"dane/service/managerchange/{userid}", (doc) =>
+                {
+                });
+                //await Task.Delay(100);
+                Broker.Instance.Listen($"dane/service/stationchange/{userid}", (doc) =>
+                {
+                });
+                Broker.Instance.Listen($"dane/user/logout/{userid}", (doc) => {
                     //Check Token
-                    Broker.Instance.StopListening($"dane/service/home/{e.UserID}", null);
-                    Broker.Instance.StopListening($"dane/service/stationdetail/{e.UserID}", null);
-                    Broker.Instance.StopListening($"dane/service/stationlist/{e.UserID}", null);
-                    Broker.Instance.StopListening($"dane/service/userlist/{e.UserID}", null);
-                    EventChanged.Instance.OnLogOutEvent(e.UserID);
+                    DB.Token.Delete(userid);
+                    Broker.Instance.StopListening($"dane/service/home/{userid}", null);
+                    Broker.Instance.StopListening($"dane/service/stationdetail/{userid}", null);
+                    Broker.Instance.StopListening($"dane/service/stationlist/{userid}", null);
+                    Broker.Instance.StopListening($"dane/service/userlist/{userid}", null);
+                    Broker.Instance.StopListening($"dane/service/stationprofile/{userid}", null);
+                    Broker.Instance.StopListening($"dane/service/userprofile/{userid}", null);
+                    Broker.Instance.StopListening($"dane/service/managerchange/{userid}", null);
+                    Broker.Instance.StopListening($"dane/service/stationchange/{userid}", null);
+                    EventChanged.Instance.OnLogOutEvent(userid);
                 });
             };
         }

@@ -74,17 +74,18 @@ public class LoginViewModel : ObservableObject
                 if (string.IsNullOrEmpty(this.Account) || this.Account.Length < 6) return false;
                 else return true;
             };
-            Action Run = () => {
+            Action Run = async () => {
                 Send();
                 //if (Service.Instance.LoginState == false)
                 //{
                 //    Listen();
                 //}
-                Listen();
+                await Task.Delay(500);
+                await Listen();
                 //_userModel.Account = this.Account;
                 //_userModel.Password = this.Password;
                 //_userModel.LoginRequest();
-                Shell.Current.GoToAsync("//CheckingLoginView");
+                await Shell.Current.GoToAsync("//CheckingLoginView");
             };
             int res = (convert(checkAcc(this.Account)) << 1) | convert(!string.IsNullOrEmpty(this.Password));
             switch (res)
@@ -111,9 +112,8 @@ public class LoginViewModel : ObservableObject
             //}
         });
     }
-    public async Task Send()
+    public void Send()
     {
-        await Task.Delay(500);
         Broker.Instance.Send("dane/usercontroller/login", new Document()
         {
             Type = "id",
@@ -124,7 +124,7 @@ public class LoginViewModel : ObservableObject
     }
     public async Task Listen()
     {
-        await Task.Delay(1000);
+        await Task.Delay(500);
         Broker.Instance.Listen($"dane/login/{this.Account}", (doc) =>
         {
             if (doc.Token != null)

@@ -64,9 +64,9 @@ namespace DoAn.ViewModels
         }
         public async Task SendandListen()
         {
-            await Task.Delay(1000);
-            MQTT.Broker.Instance.Send($"dane/service/stationdetail/hhdangev02", new Document() { Token = "00000", StationID = $"{this.StationId}" });
-            MQTT.Broker.Instance.Listen($"dane/service/stationdetail/hhdangev02", HandleReceivedData);
+            await Task.Delay(500);
+            MQTT.Broker.Instance.Send($"dane/service/stationdetail/{Service.Instance.UserID}", new Document() { Token = $"{Service.Instance.Token}", StationID = $"{this.StationId}" });
+            MQTT.Broker.Instance.Listen($"dane/service/stationdetail/{Service.Instance.UserID}", HandleReceivedData);
         }
         private void HandleReceivedData(Document doc)
         {

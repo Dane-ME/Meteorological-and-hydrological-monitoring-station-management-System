@@ -53,7 +53,7 @@
                                 <Label Text="Biểu đồ hướng gió và tốc độ" VerticalOptions="Center" HorizontalOptions="Center" FontSize="20" FontAttributes="Bold"></Label>
                             </Border>
 
-                            <chart:SfCartesianChart HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                            <chart:SfCartesianChart HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" >
                                 <chart:SfCartesianChart.XAxes>
                                     <chart:CategoryAxis/>
                                 </chart:SfCartesianChart.XAxes>
