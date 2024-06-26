@@ -22,10 +22,10 @@ namespace DoAn.ViewModels
                 {
                     Token = Service.Instance.Token,
                 });
-                Service.Instance.Token = "";
+                Service.Instance.Token = null;
                 Service.Instance.LoginState = false;
-                Service.Instance.Role = "";
-                Service.Instance.UserID = "";
+                Service.Instance.Role = null;
+                Service.Instance.UserID = null;
             });
         }
     }

@@ -16,7 +16,7 @@ public partial class CheckingLoginView : ContentPage
         base.OnNavigatedTo(args);
         int count = 0;
         bool serverReady = await Service.Instance.IsLoginAsync();
-        while (!serverReady && count < 6)
+        while (!serverReady && count < 8)
         {
             serverReady = await Service.Instance.IsLoginAsync();
             count++;

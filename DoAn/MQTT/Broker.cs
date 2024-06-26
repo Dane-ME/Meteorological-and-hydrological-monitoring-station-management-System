@@ -37,8 +37,7 @@ namespace MQTT
         }
 
         Action<Document> process_received_data;
-        string last_topic;
-        //Queue<string> last_topic = new Queue<string>();
+        private string last_topic { get; set; }
 
         public void Listen(string topic, Action<Document> received_callback)
         {

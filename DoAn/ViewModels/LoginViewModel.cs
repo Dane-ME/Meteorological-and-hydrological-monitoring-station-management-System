@@ -61,7 +61,7 @@ public class LoginViewModel : ObservableObject
     public LoginViewModel(UserModel userModel)
     {
         _userModel = userModel;
-        LoginButtonCommand = new Command(() =>
+        LoginButtonCommand = new Command(async () =>
         {
 
             Func<bool, int> convert = (input) => 
@@ -73,19 +73,13 @@ public class LoginViewModel : ObservableObject
             {
                 if (string.IsNullOrEmpty(this.Account) || this.Account.Length < 6) return false;
                 else return true;
-            };
-            Action Run = async () => {
+            };          
+           
+            Action Run = () =>
+            { 
+                Listen();
                 Send();
-                //if (Service.Instance.LoginState == false)
-                //{
-                //    Listen();
-                //}
-                await Task.Delay(500);
-                await Listen();
-                //_userModel.Account = this.Account;
-                //_userModel.Password = this.Password;
-                //_userModel.LoginRequest();
-                await Shell.Current.GoToAsync("//CheckingLoginView");
+                Shell.Current.GoToAsync("//CheckingLoginView");
             };
             int res = (convert(checkAcc(this.Account)) << 1) | convert(!string.IsNullOrEmpty(this.Password));
             switch (res)
@@ -96,20 +90,6 @@ public class LoginViewModel : ObservableObject
                 case 0: IsValidAcc = true; IsValidPass = true; break;
                 default: break;
             }
-            
-            //if (!string.IsNullOrEmpty(this.Password) && !string.IsNullOrEmpty(this.Account))
-            //{
-            //    this.Password = this.Password.ToMD5();
-            //    Send();
-            //    if (Service.Instance.LoginState == false)
-            //    {
-            //        Listen();
-            //    }
-            //    _userModel.Account = this.Account;
-            //    _userModel.Password = this.Password;
-            //    _userModel.LoginRequest();
-            //    Shell.Current.GoToAsync("//CheckingLoginView");
-            //}
         });
     }
     public void Send()
@@ -122,9 +102,8 @@ public class LoginViewModel : ObservableObject
         });
         
     }
-    public async Task Listen()
+    public void Listen()
     {
-        await Task.Delay(500);
         Broker.Instance.Listen($"dane/login/{this.Account}", (doc) =>
         {
             if (doc.Token != null)
