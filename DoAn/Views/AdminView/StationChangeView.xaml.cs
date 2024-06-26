@@ -52,9 +52,9 @@ public partial class StationChangeView : ContentView
 
         switch (selectedColumn)
         {
-            case "UserName":
+            case "StationName":
                 return orderInfo.StationName.ToLower().Contains(filterTextLower);
-            case "UserID":
+            case "StationID":
                 return orderInfo.StationID.ToLower().Contains(filterTextLower);
             default:
                 return false;

@@ -51,6 +51,7 @@ namespace System
             Broker.Instance.Send(topic, CreateResponse(objectid));
             EventChanged.Instance.OnListenActivedEvent(objectid);
         }
+
         #region HOME REQUEST
         public async void HomeResponse()
         {      
@@ -150,6 +151,132 @@ namespace System
             };
             await Task.Delay(100);
             Broker.Instance.Send($"dane/service/stationdetail/{this.userID}", response);
+        }
+
+        #endregion
+
+        #region USER RESPONSE
+        #endregion
+
+        #region USERLIST RESPONSE
+
+        public void UserListReponse()
+        {
+            DocumentList repo = UserList(); 
+            Broker.Instance.Send($"dane/service/userlist/{this.userID}", new Document() { UserList = repo });
+        }
+
+        public DocumentList UserList()
+        {
+            DocumentList repo = new DocumentList();
+            DocumentList? doclist = DB.User.SelectAll();
+            foreach (var item in doclist)
+            {
+                repo.Add(new Document()
+                {
+                    ObjectId = item.ObjectId,
+                    UserName = item.UserName
+                });
+            }
+            return repo;
+        }
+
+        #endregion
+
+        #region USERPROFILE RESPONSE
+
+        public void UserProfileResponse(string userid)
+        {
+            Document ?doc = DB.User.Find(userid);
+            Document repo = new Document();
+            if(doc != null)
+            {
+                repo.UserName = doc.UserName;
+                repo.Role = doc.Role;
+                repo.Email = doc.Email;
+                repo.WorkingUnit = doc.WorkingUnit;
+                repo.Position = doc.Position;
+                repo.RegisDate = doc.RegisDate;
+                repo.StationManagement = doc.StationManagement;
+            }
+            Broker.Instance.Send($"dane/service/userprofile/{this.userID}", repo);
+        }
+
+        #endregion
+
+        #region MANAGERCHANGE RESPONSE
+
+        public void ManagerChangeResponse(string stationid)
+        {
+            DocumentList userlist = UserList();
+            Document ?manager = DB.Station.Find(stationid);
+
+            Document repo = new Document() 
+            {
+                UserList = userlist,
+                Manager = manager.Manager
+            };
+            Broker.Instance.Send($"dane/service/managerchange/{this.userID}", repo );
+        }
+
+        #endregion
+
+        #region STATIONLIST RESPONSE
+
+        public void StationListResponse()
+        {
+            DocumentList repo = StationList();
+            Broker.Instance.Send($"dane/service/stationlist/{this.userID}", new Document() { StationList = repo });
+        }
+
+        public DocumentList StationList()
+        {
+            DocumentList repo = new DocumentList();
+            DocumentList? doclist = DB.Station.SelectAll();
+            foreach (var item in doclist)
+            {
+                repo.Add(new Document()
+                {
+                    ObjectId = item.ObjectId,
+                    StationName = item.StationName
+                });
+            }
+            return repo;
+        }
+
+        #endregion
+
+        #region STATIONPROFILE RESPONSE
+
+        public void StationProfileResponse(string stationid)
+        {
+            Document? doc = DB.Station.Find(stationid);
+            Document repo = new Document();
+            if (doc != null)
+            {
+                repo.StationName = doc.StationName;
+                repo.StationAddress = doc.StationAddress;
+                repo.StationTypeList = doc.StationTypeList;
+                repo.Manager = doc.Manager;
+            }
+            Broker.Instance.Send($"dane/service/stationprofile/{this.userID}", repo);
+        }
+
+        #endregion
+
+        #region STATIONCHANGE RESPONSE
+
+        public void StationChangeResponse(string userid)
+        {
+            DocumentList stationlist = StationList();
+            Document? stationManagement = DB.User.Find(userid);
+
+            Document repo = new Document()
+            {
+                StationList = stationlist,
+                StationManagement = stationManagement.StationManagement
+            };
+            Broker.Instance.Send($"dane/service/stationchange/{this.userID}", repo);
         }
 
         #endregion

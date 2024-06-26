@@ -102,11 +102,11 @@ namespace DoAn.ViewModels.AdminViewModel
         }
         public void SendRequest()
         {
-            Broker.Instance.Send($"dane/service/userprofile/hhdangev02", new Document() { ObjectId = $"{ID}", Token = "00000" });
+            Broker.Instance.Send($"dane/service/userprofile/{Service.Instance.UserID}", new Document() { ObjectId = $"{ID}", Token = $"{Service.Instance.Token}" });
         }
         public void ListenResponse()
         {
-            Broker.Instance.Listen($"dane/service/userprofile/hhdangev02", (doc) =>
+            Broker.Instance.Listen($"dane/service/userprofile/{Service.Instance.UserID}", (doc) =>
             {
                 if (doc != null)
                 {
@@ -117,7 +117,7 @@ namespace DoAn.ViewModels.AdminViewModel
                     this.WorkingUnit = doc.WorkingUnit;
                     this.Position = doc.Position;
                     this.RegisDate = doc.RegisDate;
-                    foreach (var i in doc.Station)
+                    foreach (var i in doc.StationManagement)
                     {
                         list.Add(new UserProfileModel() { Station = i });
                     }

@@ -23,14 +23,14 @@ namespace System
 {
     public partial class Document
     {
-        public string UserName { get => GetString(nameof(UserName)); set => Push(nameof(UserName), value); }
+        public string ?UserName { get => GetString(nameof(UserName)); set => Push(nameof(UserName), value); }
 
         //role in format.cs
         //userID in UserModel.cs
-        public string Email { get => GetString(nameof(Email)); set => Push(nameof(Email), value); }
-        public string RegisDate { get => GetString(nameof(RegisDate)); set => Push(nameof(RegisDate), value); }
-        public string WorkingUnit { get => GetString(nameof(WorkingUnit)); set => Push(nameof(WorkingUnit), value); }
-        public string Position { get => GetString(nameof(Position)); set => Push(nameof(Position), value); }
-        public List<string> Station { get => GetArray<List<string>>(nameof(Station)); set => Push(nameof(Station), value); }
+        public string ?Email { get => GetString(nameof(Email)); set => Push(nameof(Email), value); }
+        public string ?RegisDate { get => GetString(nameof(RegisDate)); set => Push(nameof(RegisDate), value); }
+        public string ?WorkingUnit { get => GetString(nameof(WorkingUnit)); set => Push(nameof(WorkingUnit), value); }
+        public string ?Position { get => GetString(nameof(Position)); set => Push(nameof(Position), value); }
+        public List<string> ?StationManagement { get => GetArray<List<string>>(nameof(StationManagement)); set => Push(nameof(StationManagement), value); }
     }
 }

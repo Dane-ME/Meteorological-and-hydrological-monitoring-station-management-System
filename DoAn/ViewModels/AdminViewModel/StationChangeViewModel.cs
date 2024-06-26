@@ -31,8 +31,8 @@ namespace DoAn.ViewModels.AdminViewModel
         public async Task SendandListen()
         {
             await Task.Delay(1000);
-            MQTT.Broker.Instance.Send($"dane/service/stationchange/hhdangev02", new Document() { Token = "00000", StationID = $"{this.UserID}" });
-            MQTT.Broker.Instance.Listen($"dane/service/stationchange/hhdangev02", HandleReceivedData);
+            MQTT.Broker.Instance.Send($"dane/service/stationchange/{Service.Instance.UserID}", new Document() { Token = $"{Service.Instance.Token}", UserID = this.UserID });
+            MQTT.Broker.Instance.Listen($"dane/service/stationchange/{Service.Instance.UserID}", HandleReceivedData);
         }
         private void HandleReceivedData(Document doc)
         {
@@ -45,8 +45,8 @@ namespace DoAn.ViewModels.AdminViewModel
         private void OnResponseHandle()
         {
             ObservableCollection<StationChangeModel> refdoc = new ObservableCollection<StationChangeModel>();
-            DocumentList userlist = this.DataResponse.UserList;
-            List<string> manager = this.DataResponse.Manager;
+            DocumentList userlist = this.DataResponse.StationList;
+            List<string> ?manager = this.DataResponse.StationManagement;
             if (userlist != null && manager != null)
             {
                 foreach (var item in userlist)

@@ -112,11 +112,11 @@ namespace DoAn.ViewModels.AdminViewModel
 
         public void SendRequest() 
         {
-            Broker.Instance.Send($"dane/service/stationprofile/hhdangev02", new Document() { ObjectId = $"{ID}", Token = "00000" });
+            Broker.Instance.Send($"dane/service/stationprofile/{Service.Instance.UserID}", new Document() { ObjectId = $"{ID}", Token = $"{Service.Instance.Token}" });
         }
         public void ListenResponse() 
         {
-            Broker.Instance.Listen($"dane/service/stationprofile/hhdangev02", (doc) =>
+            Broker.Instance.Listen($"dane/service/stationprofile/{Service.Instance.UserID}", (doc) =>
             {
                 if (doc != null)
                 {

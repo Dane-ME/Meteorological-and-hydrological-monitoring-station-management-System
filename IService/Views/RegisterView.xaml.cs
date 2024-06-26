@@ -38,7 +38,6 @@ namespace IService.Views
                     EncodePass = encode,
                     Role = role.Text,
                     StationManagement = dsm
-
                 };
                 DB.User.Insert(user);
             };

@@ -43,9 +43,9 @@ namespace DoAn.ViewModels.AdminViewModel
 
         public UserListViewModel() 
         {
-            EventChanged.Instance.UserList += (s, e) =>
+            EventChanged.Instance.UserList += async (s, e) =>
             {
-                SendandListen();
+                await SendandListen();
             };
             Name = new List<string>();
             ID = new List<string>();
@@ -67,10 +67,6 @@ namespace DoAn.ViewModels.AdminViewModel
                 }
             };
 
-            AddUserCommand = new Command<UserListModel>(async (e) =>
-            {
-                await Shell.Current.GoToAsync("AddUserView"); 
-            });
             OpenDetailCommand = new Command<UserListModel>((e) =>
             {
                 OnNavigateToUserDetail?.Invoke(e);
@@ -87,9 +83,9 @@ namespace DoAn.ViewModels.AdminViewModel
         }
         private async Task SendandListen()
         {
-            await Task.Delay(1000);
-            MQTT.Broker.Instance.Send("dane/service/userlist/hhdangev02", new Document() { Token = "00000" });
-            MQTT.Broker.Instance.Listen("dane/service/userlist/hhdangev02", (doc) =>
+            await Task.Delay(500);
+            MQTT.Broker.Instance.Send($"dane/service/userlist/{Service.Instance.UserID}", new Document() { Token = $"{Service.Instance.Token}" });
+            MQTT.Broker.Instance.Listen($"dane/service/userlist/{Service.Instance.UserID}", (doc) =>
             {
                 if (doc != null)
                 {

@@ -29,34 +29,41 @@ namespace IService.Services
                     bool check = JWTcheck(doc, e);
                     if (check) { repo.HomeResponse(); };
                 });
-                //await Task.Delay(100);
                 Broker.Instance.Listen($"dane/service/stationdetail/{userid}", (doc) => 
                 {
                     bool check = JWTcheck(doc, e);
                     string time = TimeFormat.getTimeNow();
                     if (check) { repo.StationDetailReponse(doc.StationID, time); };
                 });
-                //await Task.Delay(100);
                 Broker.Instance.Listen($"dane/service/stationlist/{userid}", (doc) => 
-                { 
+                {
+                    bool check = JWTcheck(doc, e);
+                    if (check) { repo.StationListResponse(); };
                 });
-                //await Task.Delay(100);
                 Broker.Instance.Listen($"dane/service/userlist/{userid}", (doc) => 
-                { 
+                {
+                    bool check = JWTcheck(doc, e);
+                    if (check) { repo.UserListReponse(); };
                 });
                 Broker.Instance.Listen($"dane/service/stationprofile/{userid}", (doc) => 
                 {
+                    bool check = JWTcheck(doc, e);
+                    if (check) { repo.StationProfileResponse(doc.ObjectId); };
                 });
-                //await Task.Delay(100);
                 Broker.Instance.Listen($"dane/service/userprofile/{userid}", (doc) => 
                 {
+                    bool check = JWTcheck(doc, e);
+                    if (check) { repo.UserProfileResponse(doc.ObjectId); };
                 });
                 Broker.Instance.Listen($"dane/service/managerchange/{userid}", (doc) =>
                 {
+                    bool check = JWTcheck(doc, e);
+                    if (check) { repo.ManagerChangeResponse(doc.StationID); };
                 });
-                //await Task.Delay(100);
                 Broker.Instance.Listen($"dane/service/stationchange/{userid}", (doc) =>
                 {
+                    bool check = JWTcheck(doc, e);
+                    if (check) { repo.StationChangeResponse(doc.UserID); };
                 });
                 Broker.Instance.Listen($"dane/user/logout/{userid}", (doc) => {
                     //Check Token

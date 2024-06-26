@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IService.Services;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -34,22 +35,22 @@ namespace System
     
     class TokenModel : IService.Models.Time
     {
-        public string CreateToken(Document doc, Document data)
+        public string CreateToken(Document mess, Document data)
         {
            
             var format = new Format();
             format.header("JWT","HS256");
-            format.payload($"{doc.UserID}", "Admin", $"{doc.Exp}");
-            format.signature($"{data.Email}", $"{data.EncodePass}", $"{doc.Exp}");
+            format.payload($"{mess.UserID}", $"{data.Role}", $"{TimeFormat.getTimeNow()}");
+            format.signature($"{data.Email}", $"{data.EncodePass}", $"{TimeFormat.getTimeNow()}");
             string token = format.CreateJWT();
-            string srkey = format.CreateSecretKey($"{data.Email}", $"{data.EncodePass}", $"{doc.Exp}");
+            string srkey = format.CreateSecretKey($"{data.Email}", $"{data.EncodePass}", $"{TimeFormat.getTimeNow()}");
 
             Document newToken = new Document()
             {
-                ObjectId = doc.UserID,
+                ObjectId = mess.UserID,
                 Token = format.Header + format.Payload + format.Signature,
                 SecretKey = srkey,
-                Exp = doc.Exp,
+                Exp = $"{TimeFormat.getTimeNow()}",
             };
             DB.Token.Insert(newToken);
 
