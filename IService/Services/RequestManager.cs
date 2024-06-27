@@ -35,6 +35,11 @@ namespace IService.Services
                     string time = TimeFormat.getTimeNow();
                     if (check) { repo.StationDetailReponse(doc.StationID, time); };
                 });
+                Broker.Instance.Listen($"dane/service/user/{userid}", (doc) =>
+                {
+                    bool check = JWTcheck(doc, e);
+                    if (check) { repo.UserResponse(); };
+                });
                 Broker.Instance.Listen($"dane/service/stationlist/{userid}", (doc) => 
                 {
                     bool check = JWTcheck(doc, e);
@@ -66,17 +71,21 @@ namespace IService.Services
                     if (check) { repo.StationChangeResponse(doc.UserID); };
                 });
                 Broker.Instance.Listen($"dane/user/logout/{userid}", (doc) => {
-                    //Check Token
-                    DB.Token.Delete(userid);
-                    Broker.Instance.StopListening($"dane/service/home/{userid}", null);
-                    Broker.Instance.StopListening($"dane/service/stationdetail/{userid}", null);
-                    Broker.Instance.StopListening($"dane/service/stationlist/{userid}", null);
-                    Broker.Instance.StopListening($"dane/service/userlist/{userid}", null);
-                    Broker.Instance.StopListening($"dane/service/stationprofile/{userid}", null);
-                    Broker.Instance.StopListening($"dane/service/userprofile/{userid}", null);
-                    Broker.Instance.StopListening($"dane/service/managerchange/{userid}", null);
-                    Broker.Instance.StopListening($"dane/service/stationchange/{userid}", null);
-                    EventChanged.Instance.OnLogOutEvent(userid);
+                    bool check = JWTcheck(doc, e);
+                    if (check) 
+                    {
+                        DB.Token.Delete(userid);
+                        Broker.Instance.StopListening($"dane/service/home/{userid}", null);
+                        Broker.Instance.StopListening($"dane/service/stationdetail/{userid}", null);
+                        Broker.Instance.StopListening($"dane/service/user/{userid}", null);
+                        Broker.Instance.StopListening($"dane/service/stationlist/{userid}", null);
+                        Broker.Instance.StopListening($"dane/service/userlist/{userid}", null);
+                        Broker.Instance.StopListening($"dane/service/stationprofile/{userid}", null);
+                        Broker.Instance.StopListening($"dane/service/userprofile/{userid}", null);
+                        Broker.Instance.StopListening($"dane/service/managerchange/{userid}", null);
+                        Broker.Instance.StopListening($"dane/service/stationchange/{userid}", null);
+                        EventChanged.Instance.OnLogOutEvent(userid);
+                    };
                 });
             };
         }

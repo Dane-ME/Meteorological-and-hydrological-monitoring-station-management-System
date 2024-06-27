@@ -87,12 +87,14 @@ namespace DoAn.ViewModels.AdminViewModel
             {
                 editManagerView = new ManagerChangeView(ID);
             });
-            EventChanged.Instance.StationIDChanged += (s, e) =>
+            EventChanged.Instance.StationIDChanged += async (s, e) =>
             {
                 if(manager.Count == 0 && type.Count == 0)
                 {
-                    SendRequest();
+                    //await Task.Delay(50);
                     ListenResponse();
+                    await Task.Delay(50);
+                    SendRequest();
                 }
                 else
                 {

@@ -157,6 +157,38 @@ namespace System
         #endregion
 
         #region USER RESPONSE
+
+        public void UserResponse()
+        {
+            Document ?doc = DB.User.Find(this.userID);
+            List<string> stationmanagement = doc.StationManagement;
+            DocumentList dl = new DocumentList();
+            
+            foreach(var item in stationmanagement)
+            {
+                foreach (var item2 in StationList())
+                {
+                    if(item2.ObjectId == item)
+                    {
+                        dl.Add(item2);
+                    }
+                }
+            }
+
+            Document repo = new Document()
+            {
+                ObjectId = doc.ObjectId,
+                UserName = doc.UserName,
+                Role = doc.Role,
+                Email = doc.Email,
+                WorkingUnit = doc.WorkingUnit,
+                Position = doc.Position,
+                RegisDate = doc.RegisDate,
+                StationList = dl
+            };
+            Broker.Instance.Send($"dane/service/user/{this.userID}", repo);
+        }
+
         #endregion
 
         #region USERLIST RESPONSE

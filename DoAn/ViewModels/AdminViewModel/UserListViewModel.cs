@@ -43,9 +43,20 @@ namespace DoAn.ViewModels.AdminViewModel
 
         public UserListViewModel() 
         {
+            int count = 0;
             EventChanged.Instance.UserList += (s, e) =>
             {
-                SendandListen();
+                if (count == 0)
+                {
+                    SendandListen();
+                    count = 1;
+                }
+                else
+                {
+                    Numbers = new ObservableCollection<int>();
+                    MQTT.Broker.Instance.Send($"dane/service/userlist/{Service.Instance.UserID}", new Document() { Token = $"{Service.Instance.Token}" });
+                }
+                
             };
             
             Name = new List<string>();
@@ -67,7 +78,10 @@ namespace DoAn.ViewModels.AdminViewModel
                     this.ID.Add(i.ID);
                 }
             };
-
+            AddUserCommand = new Command(() =>
+            {
+                Shell.Current.GoToAsync("AddUserView");
+            });
             OpenDetailCommand = new Command<UserListModel>((e) =>
             {
                 OnNavigateToUserDetail?.Invoke(e);
@@ -80,14 +94,13 @@ namespace DoAn.ViewModels.AdminViewModel
         }
         private async void SendandListen()
         {
-            await Task.Delay(500);
-            MQTT.Broker.Instance.Send($"dane/service/userlist/{Service.Instance.UserID}", new Document() { Token = $"{Service.Instance.Token}" });
+            // Task.Delay(500);
             MQTT.Broker.Instance.Listen($"dane/service/userlist/{Service.Instance.UserID}", (doc) =>
             {
                 if (doc != null)
                 {
                     DocumentList list = doc.UserList;
-                    if(list != null)
+                    if (list != null)
                     {
                         ObservableCollection<UserListModel> list2 = new ObservableCollection<UserListModel>();
                         foreach (Document item in list)
@@ -99,6 +112,9 @@ namespace DoAn.ViewModels.AdminViewModel
                     }
                 }
             });
+            await Task.Delay(50);
+            MQTT.Broker.Instance.Send($"dane/service/userlist/{Service.Instance.UserID}", new Document() { Token = $"{Service.Instance.Token}" });
+            
         }
     }
 }

@@ -21,10 +21,20 @@
                         </Border.Clip>
                     </Border>
 
-                    <Label Text="Hoàng Hồng Đăng" FontSize="20" FontAttributes="Bold" Margin="10,0,0,0" TextColor="#2c3e50"></Label>
-                    <Label Text="UserID: Hhdangev02" FontSize="14" FontAttributes="Bold" Margin="10,0,0,0" TextColor="#2c3e50"></Label>
-                    <Label Text="Role: User" FontSize="14" FontAttributes="Bold" Margin="10,0,0,0" TextColor="#2c3e50"></Label>
-                    <Label Text="Địa chỉ: Hhdangev02@gmail.com" FontSize="14" FontAttributes="Bold" Margin="10,20,0,0" TextColor="#2c3e50"></Label>
+                    <Label Text="{Binding UserName}" FontSize="20" FontAttributes="Bold" Margin="10,0,0,0" TextColor="#2c3e50"></Label>
+                    <HorizontalStackLayout Margin="10,0,0,10">
+                        <Label Text="UserID:" FontSize="14" FontAttributes="Bold" TextColor="#2c3e50"></Label>
+                        <Label Text="{Binding UserID}" FontSize="14" FontAttributes="Bold" TextColor="#2c3e50"></Label>
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout Margin="10,0,0,0">
+                        <Label Text="Role:" FontSize="14" FontAttributes="Bold" TextColor="#2c3e50"></Label>
+                        <Label Text="{Binding Role}" FontSize="14" FontAttributes="Bold" TextColor="#2c3e50"></Label>
+                    </HorizontalStackLayout>
+                    <Button HeightRequest="40" Text="Reload" Command="{Binding Reload}"></Button>
+                    <HorizontalStackLayout Margin="10,20,0,0">
+                        <Label Text="Địa chỉ:" FontSize="14" FontAttributes="Bold" TextColor="#2c3e50"></Label>
+                        <Label Text="{Binding Email}" FontSize="14" FontAttributes="Bold" TextColor="#2c3e50"></Label>
+                    </HorizontalStackLayout>
                 </StackLayout>
             </Border>
 
@@ -33,9 +43,18 @@
                     <RoundRectangle CornerRadius="10"/>
                 </Border.StrokeShape>
                 <StackLayout>
-                    <Label Text="Đại học Bách Khoa Hà Nội" FontSize="20" FontAttributes="Bold" Margin="10,10,0,0" TextColor="#2c3e50"></Label>
-                    <Label Text="Đơn vị: Trường điện - điện tử" FontSize="14" FontAttributes="Bold" Margin="10,0,0,0" TextColor="#2c3e50"></Label>
-                    <Label Text="Chức vụ: Sinh viên" FontSize="14" FontAttributes="Bold" Margin="10,0,0,10" TextColor="#2c3e50"></Label>
+                    <HorizontalStackLayout Margin="10,0,0,10">
+                        <Label Text="Đơn vị:" FontSize="14" FontAttributes="Bold"  TextColor="#2c3e50"></Label>
+                        <Label Text="{Binding WorkingUnit}" FontSize="14" FontAttributes="Bold"  TextColor="#2c3e50"></Label>
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout Margin="10,0,0,10">
+                        <Label Text="Chức vụ:" FontSize="14" FontAttributes="Bold"  TextColor="#2c3e50"></Label>
+                        <Label Text="{Binding Position}" FontSize="14" FontAttributes="Bold"  TextColor="#2c3e50"></Label>
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout Margin="10,0,0,10">
+                        <Label Text="Ngày đăng ký:" FontSize="14" FontAttributes="Bold" TextColor="#2c3e50"></Label>
+                        <Label Text="{Binding RegisDate}" FontSize="14" FontAttributes="Bold" TextColor="#2c3e50"></Label>
+                    </HorizontalStackLayout>
                 </StackLayout>
             </Border>
 
@@ -54,14 +73,52 @@
                         <Label Grid.Column="1" VerticalOptions="Center" Text="Tên trạm" TextColor="#EAECF5" FontSize="18" ></Label>
                         <Label Grid.Column="2" VerticalOptions="Center" Text="Mã trạm" TextColor="#EAECF5" FontSize="18"></Label>
                     </Grid>
-                    <ListView>
-
-                    </ListView>
+                    <Grid Grid.Row="1" Background="#bdc3c7">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="6*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <ListView ItemsSource="{Binding Numbers}" SelectionMode="None" CachingStrategy="RecycleElement">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <ViewCell.View>
+                                            <StackLayout VerticalOptions="Center">
+                                                <Label Text="{Binding}"  FontSize="15" TextColor="#2c3e50" Margin="25, 0, 0, 0"></Label>
+                                            </StackLayout>
+                                        </ViewCell.View>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <ListView Grid.Column="1" ItemsSource="{Binding StationDetail}" SelectionMode="None" Background="Transparent">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <TextCell Text="{Binding Name}" TextColor="#2c3e50">
+                                    </TextCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <ListView Grid.Column="2" ItemsSource="{Binding StationDetail}" SelectionMode="None">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <ViewCell.View>
+                                            <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                                                <Label Text="{Binding ID}" FontSize="15" TextColor="#2c3e50"></Label>
+                                            </StackLayout>
+                                        </ViewCell.View>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
                 </StackLayout>
             </Border>
 
-            <Button Text="Đổi mật khẩu" Command="{Binding LogOutButonCommand}" BackgroundColor="#bdc3c7" Margin="10,10,10,0"/>
-            <Button Text="Đăng xuất" Command="{Binding LogOutButonCommand}" BackgroundColor="#bdc3c7" Margin="10,10,10,0"/>
+            <Button Text="Đổi mật khẩu" Command="{Binding LogOutButonCommand}" Margin="10,10,10,0"/>
+            <Button Text="Đăng xuất" Command="{Binding LogOutButonCommand}" Margin="10,10,10,0"/>
         </VerticalStackLayout>
     </ScrollView>
     

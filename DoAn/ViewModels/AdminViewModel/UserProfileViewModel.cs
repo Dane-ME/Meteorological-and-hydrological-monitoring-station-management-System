@@ -102,8 +102,9 @@ namespace DoAn.ViewModels.AdminViewModel
             {
                 if (Station.Count == 0)
                 {
-                    SendRequest();
                     ListenResponse();
+                    await Task.Delay(50);
+                    SendRequest();
                 }
                 else
                 {
@@ -115,14 +116,12 @@ namespace DoAn.ViewModels.AdminViewModel
             //    Id = ID;
             //};
         }
-        public async void SendRequest()
+        public void SendRequest()
         {
-            await Task.Delay(50);
             Broker.Instance.Send($"dane/service/userprofile/{Service.Instance.UserID}", new Document() { UserID = $"{ID}", Token = $"{Service.Instance.Token}" });
         }
-        public async void ListenResponse()
+        public void ListenResponse()
         {
-            await Task.Delay(50);
             Broker.Instance.Listen($"dane/service/userprofile/{Service.Instance.UserID}", (doc) =>
             {
                 if (doc != null)

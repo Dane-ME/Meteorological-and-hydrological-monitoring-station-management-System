@@ -11,11 +11,17 @@ using MQTT;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 using Syncfusion.Maui.Core.Hosting;
 using System;
+using Microsoft.Maui.LifecycleEvents;
+using System.Timers;
+
 
 namespace DoAn
 {
     public static class MauiProgram
     {
+        private static System.Timers.Timer backgroundTimer;
+        private static DateTime backgroundStartTime;
+
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
@@ -28,10 +34,34 @@ namespace DoAn
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                })
+                .ConfigureLifecycleEvents(events =>
+                {
+#if ANDROID
+                    events.AddAndroid(android => android
+                        .OnStart((activity) => {
+                            StopBackgroundTimer();
+                        })
+                        .OnStop((activity) => {
+                            StartBackgroundTimer();
+                        })
+                        .OnDestroy((activity) => {
+                            PerformCleanupCode();
+                        })
+                        //.OnBackPressed((activity) => {
+                        //    PerformCleanupCode();
+                        //    return false;  // Để cho phép đóng ứng dụng
+                        //})
+                        );
+#endif
                 });
 
+
+
+
+
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NCaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXlfeHVUQ2dcVEZxXEQ=");
 
@@ -81,6 +111,38 @@ namespace DoAn
 
 
             return builder.Build();
+        }
+
+        private static void StartBackgroundTimer()
+        {
+            backgroundStartTime = DateTime.Now;
+            backgroundTimer = new System.Timers.Timer(1000);  // Kiểm tra mỗi giây
+            backgroundTimer.Elapsed += CheckBackgroundTime;
+            backgroundTimer.Start();
+        }
+
+        private static void StopBackgroundTimer()
+        {
+            backgroundTimer?.Stop();
+            backgroundTimer?.Dispose();
+        }
+
+        private static void CheckBackgroundTime(object sender, ElapsedEventArgs e)
+        {
+            if ((DateTime.Now - backgroundStartTime).TotalSeconds > 30)
+            {
+                PerformCleanupCode();
+                StopBackgroundTimer();
+            }
+        }
+
+        private static void PerformCleanupCode()
+        {
+            Broker.Instance.StopListeningAll();
+            Broker.Instance.Send($"dane/user/logout/{Service.Instance.UserID}", new Document()
+            {
+                Token = Service.Instance.Token,
+            });
         }
     }
 }

@@ -54,6 +54,7 @@ namespace DoAn.ViewModels.AdminViewModel
                 }
                 else
                 {
+                    Numbers = new ObservableCollection<int>();
                     Broker.Instance.Send($"dane/service/stationlist/{Service.Instance.UserID}", new Document() { Token = $"{Service.Instance.Token}" });
                 }
             };
@@ -82,10 +83,13 @@ namespace DoAn.ViewModels.AdminViewModel
                 }
             };
         }
-        public void SendAndListen()
+        public async void SendAndListen()
         {
-            Broker.Instance.Send($"dane/service/stationlist/{Service.Instance.UserID}", new Document() { Token = $"{Service.Instance.Token}" });
+            //await Task.Delay(500);
             Broker.Instance.Listen($"dane/service/stationlist/{Service.Instance.UserID}", HandleReceivedData);
+            await Task.Delay(50);
+            Broker.Instance.Send($"dane/service/stationlist/{Service.Instance.UserID}", new Document() { Token = $"{Service.Instance.Token}" });
+
 
         }
         private void HandleReceivedData(Document doc)

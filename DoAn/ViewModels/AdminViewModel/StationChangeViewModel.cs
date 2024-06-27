@@ -28,10 +28,14 @@ namespace DoAn.ViewModels.AdminViewModel
             ResponseHandle += OnResponseHandle;
             SendandListen();
         }
-        public void SendandListen()
+        public async void SendandListen()
         {
-            MQTT.Broker.Instance.Send($"dane/service/stationchange/{Service.Instance.UserID}", new Document() { Token = $"{Service.Instance.Token}", UserID = this.UserID });
+            //await Task.Delay(500);
             MQTT.Broker.Instance.Listen($"dane/service/stationchange/{Service.Instance.UserID}", HandleReceivedData);
+            await Task.Delay(50);
+            MQTT.Broker.Instance.Send($"dane/service/stationchange/{Service.Instance.UserID}", new Document() { Token = $"{Service.Instance.Token}", UserID = this.UserID });
+
+
         }
         private void HandleReceivedData(Document doc)
         {
