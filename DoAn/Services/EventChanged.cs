@@ -22,7 +22,7 @@ namespace DoAn.Services
                 return _instance;
             }
         }
-        public event EventHandler Loaded;
+        public event EventHandler StationList;
         public event EventHandler StationListChanged;
         public event EventHandler UserListChanged;
         public event EventHandler UserList;
@@ -35,9 +35,11 @@ namespace DoAn.Services
         public event EventHandler PopupHandle;
         public event EventHandler AnswerChanged;
 
-        public virtual void OnLoaded()
+        public event EventHandler UserProfile;
+
+        public virtual void OnStationList()
         {
-            Loaded?.Invoke(this, EventArgs.Empty);
+            StationList?.Invoke(this, EventArgs.Empty);
         }
         public virtual void OnStationListChanged()
         {
@@ -78,6 +80,10 @@ namespace DoAn.Services
         public virtual void OnAnswerChanged()
         {
             AnswerChanged?.Invoke(this, EventArgs.Empty);
+        }
+        public virtual void OnListenUserProfile()
+        {
+            UserProfile?.Invoke(this, EventArgs.Empty);
         }
     }
 

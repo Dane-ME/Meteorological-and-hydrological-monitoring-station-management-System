@@ -43,10 +43,11 @@ namespace DoAn.ViewModels.AdminViewModel
 
         public UserListViewModel() 
         {
-            EventChanged.Instance.UserList += async (s, e) =>
+            EventChanged.Instance.UserList += (s, e) =>
             {
-                await SendandListen();
+                SendandListen();
             };
+            
             Name = new List<string>();
             ID = new List<string>();
             UserDetail = new ObservableCollection<UserListModel>();
@@ -77,11 +78,7 @@ namespace DoAn.ViewModels.AdminViewModel
             });
 
         }
-        public void NavigatedToAddUser()
-        {
-
-        }
-        private async Task SendandListen()
+        private async void SendandListen()
         {
             await Task.Delay(500);
             MQTT.Broker.Instance.Send($"dane/service/userlist/{Service.Instance.UserID}", new Document() { Token = $"{Service.Instance.Token}" });

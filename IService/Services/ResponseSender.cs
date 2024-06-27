@@ -120,6 +120,7 @@ namespace System
         {
             Document? stationprofile = DB.Station.Find(stationid);
             Document? stationData = MethodHandle.CallMethod(stationid, "Find", $"{TimeFormat.getTimeNow()}") as Document;
+            
             Document? DataNewest = stationData.StationData.Last();
             return new Document()
             {

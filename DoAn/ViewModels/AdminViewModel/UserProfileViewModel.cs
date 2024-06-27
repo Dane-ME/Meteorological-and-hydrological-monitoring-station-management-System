@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using DoAn.Models.AdminModel;
 using System.Collections.ObjectModel;
 using DoAn.Services;
+using System.Windows.Input;
+using DoAn.Views.AdminView;
 
 namespace DoAn.ViewModels.AdminViewModel
 {
@@ -21,8 +23,8 @@ namespace DoAn.ViewModels.AdminViewModel
                 {
                     if (value != null)
                     {
-                        EventChanged.Instance.OnUserIDChanged();
                         _idd = value;
+                        EventChanged.Instance.OnUserIDChanged();
                     }
                 }
             }
@@ -78,13 +80,27 @@ namespace DoAn.ViewModels.AdminViewModel
             get => _position;
             set => SetProperty(ref _position, value);
         }
-
+        private View _editmanagerView;
+        public View editManagerView
+        {
+            get => _editmanagerView;
+            set
+            {
+                _editmanagerView = value;
+                OnPropertyChanged();
+            }
+        }
+        public ICommand EditCommand { get; set; }
         public UserProfileViewModel() 
         {
             Station = new List<string>();
-            EventChanged.Instance.UserIDChanged += (s, e) =>
+            EditCommand = new Command(() =>
             {
-                if (station.Count == 0)
+                editManagerView = new StationChangeView(ID);
+            });
+            EventChanged.Instance.UserIDChanged += async (s, e) =>
+            {
+                if (Station.Count == 0)
                 {
                     SendRequest();
                     ListenResponse();
@@ -94,18 +110,19 @@ namespace DoAn.ViewModels.AdminViewModel
                     SendRequest();
                 }
             };
-            EventChanged.Instance.UserProfileChanged += (s, e) => 
-            {
-                Id = ID;
-
-            };
+            //EventChanged.Instance.UserProfileChanged += (s, e) => 
+            //{
+            //    Id = ID;
+            //};
         }
-        public void SendRequest()
+        public async void SendRequest()
         {
-            Broker.Instance.Send($"dane/service/userprofile/{Service.Instance.UserID}", new Document() { ObjectId = $"{ID}", Token = $"{Service.Instance.Token}" });
+            await Task.Delay(50);
+            Broker.Instance.Send($"dane/service/userprofile/{Service.Instance.UserID}", new Document() { UserID = $"{ID}", Token = $"{Service.Instance.Token}" });
         }
-        public void ListenResponse()
+        public async void ListenResponse()
         {
+            await Task.Delay(50);
             Broker.Instance.Listen($"dane/service/userprofile/{Service.Instance.UserID}", (doc) =>
             {
                 if (doc != null)
@@ -117,11 +134,15 @@ namespace DoAn.ViewModels.AdminViewModel
                     this.WorkingUnit = doc.WorkingUnit;
                     this.Position = doc.Position;
                     this.RegisDate = doc.RegisDate;
-                    foreach (var i in doc.StationManagement)
+                    if(doc.StationManagement!= null)
                     {
-                        list.Add(new UserProfileModel() { Station = i });
+                        foreach (var i in doc.StationManagement)
+                        {
+                            list.Add(new UserProfileModel() { Station = i });
+                        }
                     }
                     station = list;
+                    Id = ID;
                     EventChanged.Instance.OnUserProfileChanged();
                     //EventChanged.Instance.OnStationListChanged();
                 }

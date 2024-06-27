@@ -28,9 +28,8 @@ namespace DoAn.ViewModels.AdminViewModel
             ResponseHandle += OnResponseHandle;
             SendandListen();
         }
-        public async Task SendandListen()
+        public void SendandListen()
         {
-            await Task.Delay(1000);
             MQTT.Broker.Instance.Send($"dane/service/stationchange/{Service.Instance.UserID}", new Document() { Token = $"{Service.Instance.Token}", UserID = this.UserID });
             MQTT.Broker.Instance.Listen($"dane/service/stationchange/{Service.Instance.UserID}", HandleReceivedData);
         }
@@ -44,24 +43,43 @@ namespace DoAn.ViewModels.AdminViewModel
         }
         private void OnResponseHandle()
         {
-            ObservableCollection<StationChangeModel> refdoc = new ObservableCollection<StationChangeModel>();
-            DocumentList userlist = this.DataResponse.StationList;
-            List<string> ?manager = this.DataResponse.StationManagement;
-            if (userlist != null && manager != null)
+            ObservableCollection<StationChangeModel> refdoc = [];
+            DocumentList stationlist = this.DataResponse.StationList;
+            List<string> list = new List<string>();
+            List<string> ?sattionmanagement = this.DataResponse.StationManagement;
+
+            if (stationlist != null && sattionmanagement != null)
             {
-                foreach (var item in userlist)
+                foreach (Document doc in stationlist)
                 {
-                    foreach (var item2 in manager)
+                    if (doc != null)
                     {
-                        if (item.ObjectId == item2)
-                        {
-                            refdoc.Add(new StationChangeModel(item.StationName, item.ObjectId, true));
-                        }
-                        else refdoc.Add(new StationChangeModel(item.StationName, item.ObjectId, false));
+                        list.Add(doc.ObjectId);
                     }
+                }
+                List<string> common = list.Except(sattionmanagement).ToList();
+                foreach (string element in sattionmanagement)
+                {
+                    refdoc.Add(new StationChangeModel(Find(element, stationlist).StationName, element, true));
+                }
+                foreach (string i in common)
+                {
+                    refdoc.Add(new StationChangeModel(Find(i, stationlist).StationName, i, false));
                 }
                 this.DataGrid = refdoc;
             }
+        }
+        public Document Find(string id, DocumentList dl)
+        {
+            Document res = [];
+            foreach (Document doc in dl)
+            {
+                if (doc.ObjectId == id)
+                {
+                    res = doc; break;
+                }
+            }
+            return res;
         }
     }
 }

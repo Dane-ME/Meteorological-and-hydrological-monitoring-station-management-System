@@ -112,7 +112,7 @@ namespace DoAn.ViewModels.AdminViewModel
 
         public void SendRequest() 
         {
-            Broker.Instance.Send($"dane/service/stationprofile/{Service.Instance.UserID}", new Document() { ObjectId = $"{ID}", Token = $"{Service.Instance.Token}" });
+            Broker.Instance.Send($"dane/service/stationprofile/{Service.Instance.UserID}", new Document() { StationID = $"{ID}", Token = $"{Service.Instance.Token}" });
         }
         public void ListenResponse() 
         {
@@ -124,13 +124,16 @@ namespace DoAn.ViewModels.AdminViewModel
                     ObservableCollection<StationProfileModel> list2 = new ObservableCollection<StationProfileModel>();
                     this.Name = doc.StationName;
                     this.Address = doc.StationAddress;
-                    foreach (var i in doc.StationTypeList)
+                    if (doc.StationTypeList != null && doc.Manager != null)
                     {
-                        list.Add(new StationProfileModel() { Type = i });
-                    }
-                    foreach (var i in doc.Manager)
-                    {
-                        list2.Add(new StationProfileModel() { Manager = i });
+                        foreach (var i in doc.StationTypeList)
+                        {
+                            list.Add(new StationProfileModel() { Type = i });
+                        }
+                        foreach (var i in doc.Manager)
+                        {
+                            list2.Add(new StationProfileModel() { Manager = i });
+                        }
                     }
                     type = list;
                     manager = list2;

@@ -77,6 +77,13 @@ namespace IService
                 {
                     handle.IsItStoredandSendResponse(doc);
                 });
+                Broker.instance.Listen("dane/user/regis", (doc) =>
+                {
+                    if (doc != null)
+                    {
+                        DB.Station.Insert(doc);
+                    }
+                });
             };
 
             disconnect.Click += async (s, e) =>

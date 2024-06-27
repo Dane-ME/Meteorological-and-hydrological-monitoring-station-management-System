@@ -79,6 +79,7 @@ namespace DoAn.ViewModels
                 Grid.Children.Clear();
                 Grid.Children.Add(_stationListView);
             }
+            EventChanged.Instance.OnStationList();
             ScrollView.Content = Grid;
             view = ScrollView;
         }
@@ -122,6 +123,7 @@ namespace DoAn.ViewModels
 
         public void NavigatedToUserDetail(UserListModel userListModel)
         {
+            EventChanged.Instance.OnListenUserProfile();
             if (!isUserProfileViewInitialized)
             {
                 _userprofileViewModel.ID = userListModel.ID;

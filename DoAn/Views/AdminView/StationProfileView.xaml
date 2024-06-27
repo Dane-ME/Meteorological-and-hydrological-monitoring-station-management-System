@@ -72,7 +72,7 @@
                         Grid.Row="2"
                         Text="{Binding Address}"
                         FontSize="15"
-                        TextColor="White"
+                        TextColor="#2c3e50"
                         Margin="8,0,0,0"
                         VerticalOptions="Center"/>      
 

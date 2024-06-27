@@ -27,7 +27,7 @@ namespace IService.Services
                 Broker.Instance.Listen($"dane/service/home/{userid}", (doc) => 
                 {
                     bool check = JWTcheck(doc, e);
-                    if (check) { repo.HomeResponse(); };
+                    //if (check) { repo.HomeResponse(); };
                 });
                 Broker.Instance.Listen($"dane/service/stationdetail/{userid}", (doc) => 
                 {
@@ -48,12 +48,12 @@ namespace IService.Services
                 Broker.Instance.Listen($"dane/service/stationprofile/{userid}", (doc) => 
                 {
                     bool check = JWTcheck(doc, e);
-                    if (check) { repo.StationProfileResponse(doc.ObjectId); };
+                    if (check) { repo.StationProfileResponse(doc.StationID); };
                 });
                 Broker.Instance.Listen($"dane/service/userprofile/{userid}", (doc) => 
                 {
                     bool check = JWTcheck(doc, e);
-                    if (check) { repo.UserProfileResponse(doc.ObjectId); };
+                    if (check) { repo.UserProfileResponse(doc.UserID); };
                 });
                 Broker.Instance.Listen($"dane/service/managerchange/{userid}", (doc) =>
                 {

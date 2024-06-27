@@ -36,7 +36,7 @@
                                 Margin="0,0,0,5"
                                 Text="{Binding Email}"
                                 FontSize="15"
-                                TextColor="White"
+                                TextColor="#2c3e50"
                                 VerticalOptions="Center"/>
                             <Button
                                 HorizontalOptions="Start"
@@ -47,13 +47,14 @@
                                 CornerRadius="10" 
                                 BackgroundColor="#2c3e50"
                                 Text="Thay đổi trạm quản lý" 
+                                Command="{Binding EditCommand}"
                                 TextColor="White"
                                 FontSize="15">
                             </Button>
                         </VerticalStackLayout>
                     </Grid>
 
-                    <Label HorizontalOptions="End" VerticalOptions="Start" Margin="0,8,8,0" Grid.Row="0" Grid.Column="1" Text="{Binding Role}" FontSize="20" TextColor="White"></Label>
+                    <Label HorizontalOptions="End" VerticalOptions="Start" Margin="0,8,8,0" Grid.Row="0" Grid.Column="1" Text="{Binding Role}" FontSize="20" TextColor="#2c3e50"></Label>
 
                     <Button
                         Grid.Row="1"
@@ -79,16 +80,16 @@
 
                 <VerticalStackLayout HorizontalOptions="Start" VerticalOptions="Center" Margin="8,0,0,0">
                     <HorizontalStackLayout>
-                        <Label Text="Ngày đăng ký: " TextColor="White" FontSize="15"></Label>
-                        <Label Text="{Binding RegisDate}" TextColor="White" FontSize="15"></Label>
+                        <Label Text="Ngày đăng ký: " TextColor="#2c3e50" FontSize="15"></Label>
+                        <Label Text="{Binding RegisDate}" TextColor="#2c3e50" FontSize="15"></Label>
                     </HorizontalStackLayout>
                     <HorizontalStackLayout>
-                        <Label Text="Chức vụ: " TextColor="White" FontSize="15"></Label>
-                        <Label Text="{Binding Position}" TextColor="White" FontSize="15"></Label>
+                        <Label Text="Chức vụ: " TextColor="#2c3e50" FontSize="15"></Label>
+                        <Label Text="{Binding Position}" TextColor="#2c3e50" FontSize="15"></Label>
                     </HorizontalStackLayout>
                     <HorizontalStackLayout>
-                        <Label Text="Đơn vị công tác: " TextColor="White" FontSize="15"></Label>
-                        <Label Text="{Binding WorkingUnit}" TextColor="White" FontSize="15"></Label>
+                        <Label Text="Đơn vị công tác: " TextColor="#2c3e50" FontSize="15"></Label>
+                        <Label Text="{Binding WorkingUnit}" TextColor="#2c3e50" FontSize="15"></Label>
                     </HorizontalStackLayout>
                 </VerticalStackLayout>
             </Border>
@@ -121,8 +122,15 @@
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
-
                 </Grid>
+            </Border>
+            <Border BackgroundColor="#bdc3c7" WidthRequest="390" Margin="0, 10, 0, 0" StrokeThickness="0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10"></RoundRectangle>
+                </Border.StrokeShape>
+                <ContentView Content="{Binding editManagerView}">
+
+                </ContentView>
             </Border>
         </VerticalStackLayout>
     </ScrollView>

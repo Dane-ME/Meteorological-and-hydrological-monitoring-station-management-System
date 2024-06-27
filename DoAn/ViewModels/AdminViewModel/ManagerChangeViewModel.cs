@@ -15,24 +15,23 @@ namespace DoAn.ViewModels.AdminViewModel
         public Document DataResponse { get; set; }
         public event Action ResponseHandle;
         private ObservableCollection<ManagerChangeModel> _datagrid;
-        public ObservableCollection<ManagerChangeModel> DataGrid 
+        public ObservableCollection<ManagerChangeModel> DataGrid
         { get => _datagrid; set => SetProperty(ref _datagrid, value); }
         protected virtual void OnResponseHandleEvent()
         {
             ResponseHandle?.Invoke();
         }
         public ManagerChangeViewModel(string ID)
-        { 
+        {
             DataGrid = new ObservableCollection<ManagerChangeModel>();
             StationID = ID;
             ResponseHandle += OnResponseHandle;
             SendandListen();
 
         }
-        public async Task SendandListen()
+        public void SendandListen()
         {
-            await Task.Delay(1000);
-            MQTT.Broker.Instance.Send($"dane/service/managerchange/{Service.Instance.UserID}", new Document() { Token = $"{Service.Instance.Token}", StationID = this.StationID});
+            MQTT.Broker.Instance.Send($"dane/service/managerchange/{Service.Instance.UserID}", new Document() { Token = $"{Service.Instance.Token}", StationID = this.StationID });
             MQTT.Broker.Instance.Listen($"dane/service/managerchange/{Service.Instance.UserID}", HandleReceivedData);
         }
         private void HandleReceivedData(Document doc)
@@ -47,22 +46,42 @@ namespace DoAn.ViewModels.AdminViewModel
         {
             ObservableCollection<ManagerChangeModel> refdoc = [];
             DocumentList userlist = this.DataResponse.UserList;
+            List<string> list = new List<string>();
             List<string> manager = this.DataResponse.Manager;
+
             if (userlist != null && manager != null)
             {
-                foreach(var item in userlist) 
+                foreach (Document doc in userlist)
                 {
-                    foreach(var item2 in manager)
+                    if (doc != null)
                     {
-                        if(item.ObjectId == item2)
-                        {
-                            refdoc.Add(new ManagerChangeModel(item.UserName, item.ObjectId, true));
-                        }
-                        else refdoc.Add(new ManagerChangeModel(item.UserName, item.ObjectId, false));
+                        list.Add(doc.ObjectId);
                     }
                 }
-                this.DataGrid = refdoc;
+                List<string> common = list.Except(manager).ToList();
+                foreach (string element in manager)
+                {
+                    refdoc.Add(new ManagerChangeModel(Find(element, userlist).UserName, element, true));
+                }
+                foreach (string i in common)
+                {
+                    refdoc.Add(new ManagerChangeModel(Find(i, userlist).UserName, i, false));
+                }
             }
+            DataGrid = refdoc;
+
+        }
+        public Document Find(string id, DocumentList dl)
+        {
+            Document res = [];
+            foreach(Document doc in dl)
+            {
+                if(doc.ObjectId == id)
+                {
+                    res = doc; break;
+                }
+            }
+            return res;
         }
     }
 }

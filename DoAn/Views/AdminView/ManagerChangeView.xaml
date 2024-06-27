@@ -29,11 +29,10 @@
                     <Label Text="Filter Options:  " VerticalOptions="Center" Margin="3" TextColor="#bdc3c7"/>
                     <Picker x:Name="columns" Margin="3" WidthRequest="100" TextColor="#bdc3c7">
                         <Picker.Items>
-                            <x:String>UserName</x:String>
                             <x:String>UserID</x:String>
                         </Picker.Items>
                         <Picker.SelectedItem>
-                            <x:String>UserName</x:String>
+                            <x:String>UserID</x:String>
                         </Picker.SelectedItem>
                     </Picker>
                     

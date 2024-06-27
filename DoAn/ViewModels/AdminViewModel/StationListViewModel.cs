@@ -44,8 +44,20 @@ namespace DoAn.ViewModels.AdminViewModel
         public ICommand OpenDetailCommand { get; private set ; }
         public StationListViewModel() 
         {
-            SendAndListen();
-            
+            int count = 0;
+            EventChanged.Instance.StationList += (s, e) =>
+            {
+                if (count == 0)
+                {
+                    SendAndListen();
+                    count = 1;
+                }
+                else
+                {
+                    Broker.Instance.Send($"dane/service/stationlist/{Service.Instance.UserID}", new Document() { Token = $"{Service.Instance.Token}" });
+                }
+            };
+
             Name = new List<string>();
             ID = new List<string>();
             NameofStation = new ObservableCollection<StationListModel>();
@@ -70,10 +82,8 @@ namespace DoAn.ViewModels.AdminViewModel
                 }
             };
         }
-        public async Task SendAndListen()
+        public void SendAndListen()
         {
-            await Task.Delay(1000);
-
             Broker.Instance.Send($"dane/service/stationlist/{Service.Instance.UserID}", new Document() { Token = $"{Service.Instance.Token}" });
             Broker.Instance.Listen($"dane/service/stationlist/{Service.Instance.UserID}", HandleReceivedData);
 

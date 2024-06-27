@@ -63,8 +63,6 @@ public partial class ManagerChangeView : ContentView, INotifyPropertyChanged
 
         switch (selectedColumn)
         {
-            case "UserName":
-                return orderInfo.UserName.ToLower().Contains(filterTextLower);
             case "UserID":
                 return orderInfo.UserID.ToLower().Contains(filterTextLower);
             default:
