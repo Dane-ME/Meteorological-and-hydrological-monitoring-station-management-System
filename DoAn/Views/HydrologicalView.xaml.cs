@@ -26,12 +26,12 @@ public partial class HydrologicalView : ContentView
     }
     private async void OnGridTapped(object sender, EventArgs e)
     {
-        Document doc = BindingContext as Document;
+        Document ?doc = BindingContext as Document;
 
         var navigationParameter = new ShellNavigationQueryParameters
         {
             { "test", doc }
         };
-        await Shell.Current.GoToAsync($"//StationDetailView", navigationParameter);
+        await Shell.Current.GoToAsync($"StationDetailView", navigationParameter);
     }
 }

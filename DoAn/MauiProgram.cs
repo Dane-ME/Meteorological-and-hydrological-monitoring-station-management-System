@@ -107,9 +107,6 @@ namespace DoAn
             builder.Services.AddTransient<Views.ListView>();
 
 
-            
-
-
             return builder.Build();
         }
 

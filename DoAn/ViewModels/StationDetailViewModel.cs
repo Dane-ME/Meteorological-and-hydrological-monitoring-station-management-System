@@ -50,7 +50,6 @@ namespace DoAn.ViewModels
         {
             ResponseHandle?.Invoke();
         }
-        public StationDetailViewModel() { }
         public StationDetailViewModel(string station) 
         {
             SendandListen();
@@ -60,13 +59,16 @@ namespace DoAn.ViewModels
 
             WindDataGrid = new ObservableCollection<StationDetailModel>();
             WindChart = new ObservableCollection<StationDetailModel>();
+            SeaChart = new ObservableCollection<StationDetailModel>();
+            SeaDataGrid = new ObservableCollection<StationDetailModel>();
 
         }
-        public async Task SendandListen()
+        public async void SendandListen()
         {
-            await Task.Delay(500);
-            MQTT.Broker.Instance.Send($"dane/service/stationdetail/{Service.Instance.UserID}", new Document() { Token = $"{Service.Instance.Token}", StationID = $"{this.StationId}" });
+            MQTT.Broker.Instance.Send($"dane/service/stationdetail/{Service.Instance.UserID}", new Document() { Token = $"{Service.Instance.Token}", StationID = $"6868" });
+            await Task.Delay(50);
             MQTT.Broker.Instance.Listen($"dane/service/stationdetail/{Service.Instance.UserID}", HandleReceivedData);
+            
         }
         private void HandleReceivedData(Document doc)
         {
@@ -83,19 +85,21 @@ namespace DoAn.ViewModels
                 if (dl.Contains($"{input}")) { return 1; }
                 else return 0;
             };
-            int act = (convert("Hydrological") << 2) | (convert("Meteorological") << 1) | convert("RainFall");
-            switch (act)
+            if (dl != null)
             {
-                case 7: HydroData(DataResponse); MeteoData(DataResponse); break;  // 111
-                case 6: HydroData(DataResponse); MeteoData(DataResponse); break; //110
-                case 5: MeteoData(DataResponse); break; //101
-                case 4: MeteoData(DataResponse); break; //100
-                case 3: MeteoData(DataResponse); break; //011
-                case 2: MeteoData(DataResponse); break; //010
-                case 1: Console.WriteLine(); break; //001
-                case 0: Console.WriteLine("Ehe"); break; //000
-                default: break;
-
+                int act = (convert("Hydrological") << 2) | (convert("Meteorological") << 1) | convert("RainFall");
+                switch (act)
+                {
+                    case 7: HydroData(DataResponse); MeteoData(DataResponse); break;  // 111
+                    case 6: HydroData(DataResponse); MeteoData(DataResponse); break; //110
+                    case 5: MeteoData(DataResponse); break; //101
+                    case 4: MeteoData(DataResponse); break; //100
+                    case 3: MeteoData(DataResponse); break; //011
+                    case 2: MeteoData(DataResponse); break; //010
+                    case 1: Console.WriteLine(); break; //001
+                    case 0: Console.WriteLine("Ehe"); break; //000
+                    default: break;
+                }
             }
         } 
         private void MeteoData(Document doc)
@@ -133,12 +137,12 @@ namespace DoAn.ViewModels
                 datagrid.Add(
                     new StationDetailModel(
                     item.ObjectId,
-                    item.WaterLevel,
+                    item.SeaLevel,
                     item.WaveHeight,
                     item.WaveLength,
                     item.WaveHeightMax)
                     );
-                double yvalue = ConvertStringToDouble(item.WaterLevel);
+                double yvalue = ConvertStringToDouble(item.SeaLevel);
                 chart.Add(new StationDetailModel(item.ObjectId, yvalue));
             }
             this.SeaDataGrid = datagrid;

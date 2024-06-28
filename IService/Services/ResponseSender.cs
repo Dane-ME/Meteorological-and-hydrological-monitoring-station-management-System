@@ -100,38 +100,44 @@ namespace System
         }
         public Document getMeteoData(string stationid)
         {
+            Document repo = new Document();
             Document ?stationprofile = DB.Station.Find(stationid);
-            Document ?stationData = MethodHandle.CallMethod(stationid, "Find", $"{TimeFormat.getTimeNow()}") as Document;
-            Document ?DataNewest = stationData.StationData.Last();
-            return new Document()
+            Document ?stationData = MethodHandle.CallMethod(stationid, "Find", $"28062024") as Document;
+            if(stationData != null)
             {
-                StationName = stationprofile.StationName,
-                StationAddress = stationprofile.StationAddress,
-                StationType = "Meteorological",
-                WindSpeed = DataNewest.WindSpeed,
-                WindSpeedAt2mHeight = DataNewest.WindSpeedAt2mHeight,
-                AverageWindSpeedIn2s = DataNewest.AverageWindSpeedIn2s,
-                WindDirection = DataNewest.WindDirection,
-                WindDirectionAt2mHeight = DataNewest.WindDirectionAt2mHeight,
-                AverageWindDirectionIn2s = DataNewest.AverageWindDirectionIn2s
-            };
+                Document? DataNewest = stationData.StationData.Last();
+                repo.StationName = stationprofile.StationName;
+                repo.StationAddress = stationprofile.StationAddress;
+                repo.StationType = "Meteorological";
+                repo.WindSpeed = DataNewest.WindSpeed;
+                repo.WindSpeedAt2mHeight = DataNewest.WindSpeedAt2mHeight;
+                repo.TimeOfOccurrenceOffxfx2m = DataNewest.TimeOfOccurrenceOffxfx2m;
+                repo.AverageWindSpeedIn2s = DataNewest.AverageWindSpeedIn2s;
+                repo.WindDirection = DataNewest.WindDirection;
+                repo.WindDirectionAt2mHeight = DataNewest.WindDirectionAt2mHeight;
+                repo.AverageWindDirectionIn2s = DataNewest.AverageWindDirectionIn2s;
+                repo.TimeOfOccurrenceOffxfx2s = DataNewest.TimeOfOccurrenceOffxfx2s;
+            }
+            return repo;
         }
         public Document getHydroData(string stationid)
         {
+            Document repo = new Document();
             Document? stationprofile = DB.Station.Find(stationid);
-            Document? stationData = MethodHandle.CallMethod(stationid, "Find", $"{TimeFormat.getTimeNow()}") as Document;
-            
-            Document? DataNewest = stationData.StationData.Last();
-            return new Document()
+            Document? stationData = MethodHandle.CallMethod(stationid, "Find", $"28062024") as Document;
+            if( stationData != null ) 
             {
-                StationName = stationprofile.StationName,
-                StationAddress = stationprofile.StationAddress,
-                StationType = "Hydrological",
-                SeaLevel = DataNewest.SeaLevel,
-                WaveHeight = DataNewest.WaveHeight,
-                WaveLength = DataNewest.WaveLength,
-                WaveHeightMax = DataNewest.WaveHeightMax,
-            };
+                Document? DataNewest = stationData.StationData.Last();
+                repo.StationName = stationprofile.StationName;
+                repo.StationAddress = stationprofile.StationAddress;
+                repo.StationType = "Hydrological";
+                repo.SeaLevel = DataNewest.SeaLevel;
+                repo.WaveHeight = DataNewest.WaveHeight;
+                repo.WaveLength = DataNewest.WaveLength;
+                repo.WaveHeightMax = DataNewest.WaveHeightMax;
+            }
+            
+            return repo;
         }
         #endregion
 
@@ -140,7 +146,7 @@ namespace System
         public async void StationDetailReponse(string stationid, string time) 
         {
             Document ?stationProfile = DB.Station.Find(stationid);
-            Document ?stationData = MethodHandle.CallMethod(stationid, "Find", time) as Document;
+            Document ?stationData = MethodHandle.CallMethod(stationid, "Find", "28062024") as Document;
             Document response = new Document()
             {
                 StationName = stationProfile.StationName,

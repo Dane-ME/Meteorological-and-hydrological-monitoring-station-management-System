@@ -25,7 +25,6 @@
   <ItemGroup>
     <Folder Include="DataBase\ManagerDatabase\Collections\Station\" />
     <Folder Include="DataBase\ManagerDatabase\Collections\Token\" />
-    <Folder Include="DataBase\MonitoringDatabase\Collections\_6868\" />
   </ItemGroup>
 
 </Project>

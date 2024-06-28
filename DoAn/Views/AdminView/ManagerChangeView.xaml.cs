@@ -69,12 +69,10 @@ public partial class ManagerChangeView : ContentView, INotifyPropertyChanged
                 return false;
         }
     }
-
     private void SearchButton_Pressed(object sender, EventArgs e)
     {
         OnFilterChanged();
     }
-
     private void ClearFilter_Clicked(object sender, EventArgs e)
     {
         FilterText = string.Empty;

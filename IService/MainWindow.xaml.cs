@@ -81,7 +81,7 @@ namespace IService
                 {
                     if (doc != null)
                     {
-                        DB.Station.Insert(doc);
+                        DB.User.Insert(doc);
                     }
                 });
             };
