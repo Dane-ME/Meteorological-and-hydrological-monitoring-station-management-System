@@ -84,7 +84,20 @@ namespace IService.Services
                         Broker.Instance.StopListening($"dane/service/userprofile/{userid}", null);
                         Broker.Instance.StopListening($"dane/service/managerchange/{userid}", null);
                         Broker.Instance.StopListening($"dane/service/stationchange/{userid}", null);
+                        Broker.Instance.StopListening($"dane/user/regis/{userid}", null);
                         EventChanged.Instance.OnLogOutEvent(userid);
+                    };
+                });
+                Broker.Instance.Listen($"dane/user/regis/{userid}", (doc) =>
+                {
+                    bool check = JWTcheck(doc, e);
+                    if (check) {
+                        if (!IsIDStored(doc.UserID))
+                        {
+                            Document savedoc = doc;
+                            savedoc.ObjectId = doc.UserID;
+                            DB.User.Insert(savedoc);
+                        }
                     };
                 });
             };
@@ -104,6 +117,7 @@ namespace IService.Services
                             if(doc.VerificationCode == ver.VerificationCode)
                             {
                                 repo.CreateNewPasswordsResponse();
+                                Broker.Instance.StopListening($"dane/user/createnewpassword/{useridrequest}", null);
                             }
                         }
                     }

@@ -79,6 +79,15 @@ namespace System
 
         #endregion
 
+        #region ADD USER RESPONSE
+
+        public void AddUserResponse(Document doc)
+        {
+            
+        }
+
+        #endregion
+
         #region HOME REQUEST
         public async void HomeResponse()
         {      
