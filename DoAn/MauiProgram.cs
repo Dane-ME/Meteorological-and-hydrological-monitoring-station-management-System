@@ -85,7 +85,8 @@ namespace DoAn
             builder.Services.AddTransient<AdminPageViewModel>();
             builder.Services.AddTransient<AppShellViewModel>();
             //
-            builder.Services.AddTransient<LoginView>();
+            builder.Services.AddTransient<LoginView>(); 
+            builder.Services.AddTransient<ForgotPasswordView>();
             builder.Services.AddTransient<UserView>();
             builder.Services.AddSingleton<HomeView>();
             builder.Services.AddTransient<StationDetailView>();
@@ -95,7 +96,7 @@ namespace DoAn
             builder.Services.AddTransient<StationListView>();
             builder.Services.AddTransient<UserListView>();
             builder.Services.AddTransient<StationProfileView>();
-            builder.Services.AddTransient<UserProfileView>();
+            builder.Services.AddTransient<UserProfileView>(); 
             //
             builder.Services.AddTransient<CheckingNetworkView>();
             builder.Services.AddTransient<CheckingLoginView>();

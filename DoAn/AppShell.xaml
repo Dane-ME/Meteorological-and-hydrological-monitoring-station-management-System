@@ -23,8 +23,12 @@
             <Label FontAttributes="Bold" FontSize="16" TextColor="#bdc3c7" Margin="10,10,10,0">Hệ thống quản lý Trạm quan trắc Khí tượng Thủy Văn</Label>
         </Border>
     </Shell.FlyoutHeader>
-    
-    
+    <Shell.TitleColor>
+        <Color>#eaecf5</Color>
+    </Shell.TitleColor>
+    <Shell.BackgroundColor>
+        <Color>#2c3e50</Color>
+    </Shell.BackgroundColor>
     
     <ShellContent
         ContentTemplate="{DataTemplate loading:CheckingNetworkView}"
@@ -38,19 +42,6 @@
         Shell.FlyoutBehavior="Disabled"
         Shell.FlyoutItemIsVisible="False"/>
     
-    
-    
-    <!--<ShellContent
-        ContentTemplate="{DataTemplate loading:LoadingServerView}"
-        Route="LoadingServerView"
-        Shell.FlyoutBehavior="Disabled"
-        Shell.FlyoutItemIsVisible="False"/>-->
-
-    <!--<ShellContent   
-                    ContentTemplate="{DataTemplate loading:LoadingView}"
-                    Route="LoadingView"
-                    Shell.FlyoutBehavior="Disabled"
-                    Shell.FlyoutItemIsVisible="False"/>-->
     <ShellContent
         ContentTemplate="{DataTemplate views:LoginView}"
         Route="LoginView"
@@ -59,8 +50,19 @@
     <ShellContent
         ContentTemplate="{DataTemplate adminviews:AddUserView}"
         Route="AddUserView"
+        Shell.BackgroundColor="#2c3e50"
+        Shell.TitleColor="#eaecf5"
         Shell.FlyoutBehavior="Disabled"
         Shell.FlyoutItemIsVisible="False"/>
+        
+    <ShellContent
+        ContentTemplate="{DataTemplate views:ForgotPasswordView}"
+        Route="ForgotPasswordView"
+        Shell.BackgroundColor="#2c3e50"
+        Shell.TitleColor="#eaecf5"
+        Shell.FlyoutBehavior="Disabled"
+        Shell.FlyoutItemIsVisible="False"
+        />
 
 
     <!--FlyoutDisplayOptions="AsMultipleItems"-->

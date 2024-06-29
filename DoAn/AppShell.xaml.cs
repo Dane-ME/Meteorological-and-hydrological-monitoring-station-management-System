@@ -15,6 +15,7 @@ namespace DoAn
             Routing.RegisterRoute("AdminPageView", typeof(AdminPageView));
             Routing.RegisterRoute("AddUserView", typeof(AddUserView));
             Routing.RegisterRoute("StationDetailView", typeof(StationDetailView));
+            Routing.RegisterRoute("ForgotPasswordView", typeof(ForgotPasswordView)); 
         }
 
        

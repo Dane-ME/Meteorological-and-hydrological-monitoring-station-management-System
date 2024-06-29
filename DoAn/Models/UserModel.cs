@@ -16,6 +16,8 @@ namespace System
         // ObjectID là Token,
         public string UserID { get => GetString(nameof(UserID)); set => Push(nameof(UserID), value); }
         public string EncodePass { get => GetString(nameof(EncodePass)); set => Push(nameof(EncodePass), value); }
+        public string VerificationCode { get => GetString(nameof(VerificationCode)); set => Push(nameof(VerificationCode), value); }
+
 
     }
 

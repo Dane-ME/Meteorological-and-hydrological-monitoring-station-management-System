@@ -58,6 +58,7 @@ public class LoginViewModel : ObservableObject
     }
 
     public ICommand LoginButtonCommand { get; private set; }
+    public ICommand ForgotPasswordCommand { get; private set; }
     public LoginViewModel(UserModel userModel)
     {
         _userModel = userModel;
@@ -90,6 +91,10 @@ public class LoginViewModel : ObservableObject
                 case 0: IsValidAcc = true; IsValidPass = true; break;
                 default: break;
             }
+        });
+        ForgotPasswordCommand = new Command(() =>
+        {
+            Shell.Current.GoToAsync("ForgotPasswordView");
         });
     }
     public void Send()
