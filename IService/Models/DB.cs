@@ -21,7 +21,7 @@ namespace System
     }
     public partial class DB
     {
-        public static BsonData.Collection? List => MainManager.GetCollection(nameof(List));
+        public static BsonData.Collection Verification => MainManager.GetCollection(nameof(Verification));
     }
     public partial class DB
     {

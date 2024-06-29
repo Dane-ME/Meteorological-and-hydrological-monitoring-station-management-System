@@ -28,6 +28,8 @@ namespace IService
             InitializeComponent();
             uIElement = new StatusView();
             MainContent.Child = uIElement;
+            
+            
             //Task.Run(async () => {
             //    while(true)
             //    {
@@ -76,6 +78,10 @@ namespace IService
                 Broker.Instance.Listen("dane/usercontroller/login", (doc) =>
                 {
                     handle.IsItStoredandSendResponse(doc);
+                });
+                Broker.Instance.Listen("dane/usercontroller/forgotpassword", (doc) =>
+                {
+                    handle.ForgotPasswordRequest(doc);
                 });
                 Broker.instance.Listen("dane/user/regis", (doc) =>
                 {

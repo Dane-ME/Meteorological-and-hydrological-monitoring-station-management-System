@@ -19,6 +19,7 @@ namespace System
     {
         public event EventHandler<ListenActivedEventArgs> ?ListenActivedEvent;
         public event EventHandler<ListenActivedEventArgs> ?LogOutEvent;
+        public event EventHandler<ListenActivedEventArgs>? ForgotPasswordEvent;
         public virtual void OnListenActivedEvent(string UserID)
         {
             ListenActivedEvent?.Invoke(this, new ListenActivedEventArgs(UserID));
@@ -26,6 +27,10 @@ namespace System
         public virtual void OnLogOutEvent(string UserID)
         {
             LogOutEvent?.Invoke(this, new ListenActivedEventArgs(UserID));
+        }
+        public virtual void OnForgotPasswordEvent(string UserID)
+        {
+            ForgotPasswordEvent?.Invoke(this, new ListenActivedEventArgs(UserID));
         }
     }
 }

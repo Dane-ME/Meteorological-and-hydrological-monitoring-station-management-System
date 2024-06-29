@@ -88,6 +88,27 @@ namespace IService.Services
                     };
                 });
             };
+            EventChanged.Instance.ForgotPasswordEvent += async (s, e) =>
+            {
+                string useridrequest = e.UserID;
+                var repo = new ResponseSender(useridrequest);
+                repo.ForgotPasswordResponse();
+                await Task.Delay(1000);
+                Broker.Instance.Listen($"dane/user/createnewpassword/{useridrequest}", (doc) =>
+                {
+                    if (doc != null)
+                    {
+                        Document ?ver = DB.Verification.Find(useridrequest);
+                        if ( ver != null)
+                        {
+                            if(doc.VerificationCode == ver.VerificationCode)
+                            {
+                                repo.CreateNewPasswordsResponse();
+                            }
+                        }
+                    }
+                });
+            };
         }
         public bool JWTcheck(Document doc, ListenActivedEventArgs e)
         {
@@ -137,6 +158,15 @@ namespace IService.Services
         {
             if (DB.User.Find(objectId) != null) { return true; }
             else { return false; }
+        }
+        public void ForgotPasswordRequest(Document doc)
+        {
+            string useridrequest = doc.UserID;
+            if (IsIDStored(useridrequest))
+            {
+                EventChanged.Instance.OnForgotPasswordEvent(useridrequest);                
+            }
+            else { Broker.Instance.Send($"dane/user/forgotpassword/{useridrequest}", new Document() { ContentResponse = "User is not exist!" });  } 
         }
     }
 

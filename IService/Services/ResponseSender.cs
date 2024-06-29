@@ -17,13 +17,13 @@ namespace System
     public class ResponseSender
     {
         #region Token
-        public string Type { get; set; }
-        public string Status { get; set; }
-        public string Token { get; set; }
+        public string ?Type { get; set; }
+        public string ?Status { get; set; }
+        public string ?Token { get; set; }
         #endregion
-        public string userID { get; set; }
+        public string ?userID { get; set; }
         public Document ?profileuser { get; set; }
-        public DocumentList homedata { get; set; } 
+        public DocumentList ?homedata { get; set; } 
         public ResponseSender(string userid) 
         { 
             userID = userid;
@@ -34,10 +34,13 @@ namespace System
             }
         }
         public ResponseSender(string type, string status) { this.Type = type; this.Status = status; }
-        public ResponseSender(string type, string status, string token) { this.Type = type; this.Status = status; this.Token = token; }  
-        public Document CreateResponse( string objectid ) 
+        public ResponseSender(string type, string status, string token) { this.Type = type; this.Status = status; this.Token = token; }
+       
+        #region LOGIN RESPONSE
+
+        public Document CreateResponse(string objectid)
         {
-            Document content = new Document() 
+            Document content = new Document()
             {
                 Type = this.Type,
                 Status = this.Status,
@@ -51,6 +54,30 @@ namespace System
             Broker.Instance.Send(topic, CreateResponse(objectid));
             EventChanged.Instance.OnListenActivedEvent(objectid);
         }
+
+        #endregion
+
+        #region FORGOT PASSWORD RESPONSE
+
+        public void ForgotPasswordResponse()
+        {
+            string email = DB.User.Find(this.userID).Email;
+            if(email != null)
+            {
+                new MailService(email, this.userID, "Verification").SendMessage();
+            }
+        }
+        public void CreateNewPasswordsResponse()
+        {
+            string email = DB.User.Find(this.userID).Email;
+            if( email != null)
+            {
+                var mailService = new MailService(email, this.userID, "newPassword");
+                mailService.SendMessage();
+            }
+        }
+
+        #endregion
 
         #region HOME REQUEST
         public async void HomeResponse()
@@ -320,5 +347,12 @@ namespace System
 
         #endregion
 
+    }
+}
+namespace System
+{
+    public partial class Document
+    {
+        public string ContentResponse { get => GetString(nameof(ContentResponse)); set => Push(nameof(ContentResponse), value); }
     }
 }

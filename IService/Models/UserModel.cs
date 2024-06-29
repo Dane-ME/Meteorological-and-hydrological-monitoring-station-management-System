@@ -28,6 +28,8 @@ namespace System
         public string WorkingUnit { get => GetString(nameof(WorkingUnit)); set => Push(nameof(WorkingUnit), value); }
         public string Position { get => GetString(nameof(Position)); set => Push(nameof(Position), value); }
         public List<string> Station { get => GetArray<List<string>>(nameof(Station)); set => Push(nameof(Station), value); }
+        public string VerificationCode { get => GetString(nameof(VerificationCode)); set => Push(nameof(VerificationCode), value); }
+
 
     }
     public partial class DB
