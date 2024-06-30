@@ -5,17 +5,17 @@
     <ScrollView>
         <VerticalStackLayout>
             <VerticalStackLayout.Background>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                     <GradientStop Color="#2c3e50" Offset="0.5" />
                     <GradientStop Color="#bdc3c7" Offset="1.0" />
                 </LinearGradientBrush>
             </VerticalStackLayout.Background>
-            <Border Background="White" Margin="10">
+            <Border Background="WhiteSmoke" Margin="10" StrokeThickness="0">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="10"/>
                 </Border.StrokeShape>
                 <StackLayout>
-                    <Border WidthRequest="100" HeightRequest="100" Background="#2c3e50">
+                    <Border WidthRequest="100" HeightRequest="100" Background="#2c3e50" StrokeThickness="0">
                         <Border.Clip>
                             <EllipseGeometry Center="50,50" RadiusX="50" RadiusY="50"></EllipseGeometry>
                         </Border.Clip>
@@ -38,7 +38,7 @@
                 </StackLayout>
             </Border>
 
-            <Border Background="White" Margin="10">
+            <Border Background="White" StrokeThickness="0" Margin="10">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="10"/>
                 </Border.StrokeShape>
@@ -58,7 +58,7 @@
                 </StackLayout>
             </Border>
 
-            <Border Background="White" Margin="10">
+            <Border Background="White" Margin="10" StrokeThickness="0">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="10"/>
                 </Border.StrokeShape>
