@@ -24,8 +24,8 @@ namespace DoAn.ViewModels.AdminViewModel
                 {
                     if(value != null)
                     {
-                        EventChanged.Instance.OnStationIDChanged();
                         _idd = value;
+                        EventChanged.Instance.OnStationIDChanged();
                     }
                 }
             } 
@@ -103,7 +103,7 @@ namespace DoAn.ViewModels.AdminViewModel
             };
             EventChanged.Instance.StationProfileChanged += (s, e) => 
             {
-                Id = ID;
+                
                 foreach (var i in type)
                 {
                     this.Type.Add(i.Type);
@@ -139,7 +139,8 @@ namespace DoAn.ViewModels.AdminViewModel
                     }
                     type = list;
                     manager = list2;
-                    EventChanged.Instance.OnStationProfileChanged();
+                    Id = ID;
+                    //EventChanged.Instance.OnStationProfileChanged();
                     //EventChanged.Instance.OnStationListChanged();
                 }
             });

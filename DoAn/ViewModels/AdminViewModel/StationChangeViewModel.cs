@@ -30,19 +30,19 @@ namespace DoAn.ViewModels.AdminViewModel
         }
         public async void SendandListen()
         {
-            //await Task.Delay(500);
             MQTT.Broker.Instance.Listen($"dane/service/stationchange/{Service.Instance.UserID}", HandleReceivedData);
             await Task.Delay(50);
             MQTT.Broker.Instance.Send($"dane/service/stationchange/{Service.Instance.UserID}", new Document() { Token = $"{Service.Instance.Token}", UserID = this.UserID });
-
-
         }
         private void HandleReceivedData(Document doc)
         {
             if (doc != null)
             {
-                this.DataResponse = doc;
-                OnResponseHandleEvent();
+                if(doc.StationList != null)
+                {
+                    this.DataResponse = doc;
+                    OnResponseHandleEvent();
+                }
             }
         }
         private void OnResponseHandle()
@@ -50,9 +50,9 @@ namespace DoAn.ViewModels.AdminViewModel
             ObservableCollection<StationChangeModel> refdoc = [];
             DocumentList stationlist = this.DataResponse.StationList;
             List<string> list = new List<string>();
-            List<string> ?sattionmanagement = this.DataResponse.StationManagement;
+            List<string> ?stationmanagement = this.DataResponse.StationManagement;
 
-            if (stationlist != null && sattionmanagement != null)
+            if (stationlist != null)
             {
                 foreach (Document doc in stationlist)
                 {
@@ -61,11 +61,17 @@ namespace DoAn.ViewModels.AdminViewModel
                         list.Add(doc.ObjectId);
                     }
                 }
-                List<string> common = list.Except(sattionmanagement).ToList();
-                foreach (string element in sattionmanagement)
+                List<string> common = new List<string>();
+                if (stationmanagement != null)
                 {
-                    refdoc.Add(new StationChangeModel(Find(element, stationlist).StationName, element, true));
+                    common = list.Except(stationmanagement).ToList();
+                    foreach (string element in stationmanagement)
+                    {
+                        refdoc.Add(new StationChangeModel(Find(element, stationlist).StationName, element, true));
+                    }
+
                 }
+                else common = list;
                 foreach (string i in common)
                 {
                     refdoc.Add(new StationChangeModel(Find(i, stationlist).StationName, i, false));

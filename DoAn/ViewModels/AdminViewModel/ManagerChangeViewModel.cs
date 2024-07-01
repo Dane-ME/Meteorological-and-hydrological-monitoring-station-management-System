@@ -1,5 +1,6 @@
 ﻿using DoAn.Models.AdminModel;
 using DoAn.Services;
+using Microsoft.Maui.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -31,18 +32,19 @@ namespace DoAn.ViewModels.AdminViewModel
         }
         public async void SendandListen()
         {
-            //await Task.Delay(500);
             MQTT.Broker.Instance.Listen($"dane/service/managerchange/{Service.Instance.UserID}", HandleReceivedData);
             await Task.Delay(50);
             MQTT.Broker.Instance.Send($"dane/service/managerchange/{Service.Instance.UserID}", new Document() { Token = $"{Service.Instance.Token}", StationID = this.StationID });
-
         }
         private void HandleReceivedData(Document doc)
         {
             if (doc != null)
             {
-                this.DataResponse = doc;
-                OnResponseHandleEvent();
+                if(doc.UserList != null)
+                {
+                    this.DataResponse = doc;
+                    OnResponseHandleEvent();
+                }
             }
         }
         private void OnResponseHandle()
@@ -52,7 +54,7 @@ namespace DoAn.ViewModels.AdminViewModel
             List<string> list = new List<string>();
             List<string> manager = this.DataResponse.Manager;
 
-            if (userlist != null && manager != null)
+            if (userlist != null)
             {
                 foreach (Document doc in userlist)
                 {
@@ -61,11 +63,16 @@ namespace DoAn.ViewModels.AdminViewModel
                         list.Add(doc.ObjectId);
                     }
                 }
-                List<string> common = list.Except(manager).ToList();
-                foreach (string element in manager)
+                List<string> common = new List<string>();
+                if (manager != null)
                 {
-                    refdoc.Add(new ManagerChangeModel(Find(element, userlist).UserName, element, true));
+                    common = list.Except(manager).ToList();
+                    foreach (string element in manager)
+                    {
+                        refdoc.Add(new ManagerChangeModel(Find(element, userlist).UserName, element, true));
+                    }
                 }
+                else common = list;
                 foreach (string i in common)
                 {
                     refdoc.Add(new ManagerChangeModel(Find(i, userlist).UserName, i, false));

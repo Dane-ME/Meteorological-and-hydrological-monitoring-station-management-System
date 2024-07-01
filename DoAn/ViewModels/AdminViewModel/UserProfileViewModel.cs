@@ -111,10 +111,6 @@ namespace DoAn.ViewModels.AdminViewModel
                     SendRequest();
                 }
             };
-            //EventChanged.Instance.UserProfileChanged += (s, e) => 
-            //{
-            //    Id = ID;
-            //};
         }
         public void SendRequest()
         {
@@ -142,8 +138,6 @@ namespace DoAn.ViewModels.AdminViewModel
                     }
                     station = list;
                     Id = ID;
-                    EventChanged.Instance.OnUserProfileChanged();
-                    //EventChanged.Instance.OnStationListChanged();
                 }
             });
         }
