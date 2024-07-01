@@ -16,7 +16,7 @@
         </Grid.RowDefinitions>
 
         <Grid.GestureRecognizers>
-            <TapGestureRecognizer />
+            <TapGestureRecognizer Tapped="OnGridTapped" />
         </Grid.GestureRecognizers>
 
         <Border StrokeThickness="0">

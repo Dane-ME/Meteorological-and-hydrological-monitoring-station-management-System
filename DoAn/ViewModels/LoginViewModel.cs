@@ -15,7 +15,7 @@ public class LoginViewModel : ObservableObject
     private bool _ischeckBox = false;
     private bool _isvisiblePass = true;
     private string _account = "hhdangev02";
-    private string _password = "1";
+    private string _password = "123";
     public string Token { get; set; }
     private readonly UserModel _userModel;
     public bool IsValidAcc

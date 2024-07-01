@@ -22,4 +22,14 @@ public partial class MeteorologyView : ContentView
 
         Content.WidthRequest = widthInDp;
     }
+    private async void OnGridTapped(object sender, EventArgs e)
+    {
+        Document? doc = BindingContext as Document;
+
+        var navigationParameter = new ShellNavigationQueryParameters
+        {
+            { "test", doc }
+        };
+        await Shell.Current.GoToAsync($"StationDetailView", navigationParameter);
+    }
 }

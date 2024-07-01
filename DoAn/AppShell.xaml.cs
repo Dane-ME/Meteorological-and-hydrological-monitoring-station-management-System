@@ -10,9 +10,6 @@ namespace DoAn
         {
             InitializeComponent();
             BindingContext = new AppShellViewModel();
-            Routing.RegisterRoute("HomeView", typeof(HomeView));
-            Routing.RegisterRoute("UserView", typeof(UserView));
-            Routing.RegisterRoute("AdminPageView", typeof(AdminPageView));
             Routing.RegisterRoute("AddUserView", typeof(AddUserView));
             Routing.RegisterRoute("StationDetailView", typeof(StationDetailView));
             Routing.RegisterRoute("ForgotPasswordView", typeof(ForgotPasswordView));

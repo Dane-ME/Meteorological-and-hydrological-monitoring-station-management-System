@@ -13,6 +13,10 @@ namespace DoAn.ViewModels
     public class StationDetailViewModel : ObservableObject
     {
         public string _stationId;
+        private string _stationName;
+        private string _stationAddress;
+        public string StationName { get => _stationName; set => SetProperty(ref _stationName, value); }
+        public string StationAddress { get => _stationAddress; set => SetProperty(ref _stationAddress, value); }
         public string StationId 
         { 
             get => _stationId; 
@@ -52,20 +56,17 @@ namespace DoAn.ViewModels
         }
         public StationDetailViewModel(string station) 
         {
-            SendandListen();
-
             StationId = station;
             ResponseHandle += OnResponseHandle;
-
-            WindDataGrid = new ObservableCollection<StationDetailModel>();
-            WindChart = new ObservableCollection<StationDetailModel>();
-            SeaChart = new ObservableCollection<StationDetailModel>();
-            SeaDataGrid = new ObservableCollection<StationDetailModel>();
-
+            WindDataGrid = [];
+            WindChart = [];
+            SeaChart = [];
+            SeaDataGrid = []; 
+            SendandListen();
         }
         public async void SendandListen()
         {
-            MQTT.Broker.Instance.Send($"dane/service/stationdetail/{Service.Instance.UserID}", new Document() { Token = $"{Service.Instance.Token}", StationID = $"6868" });
+            MQTT.Broker.Instance.Send($"dane/service/stationdetail/{Service.Instance.UserID}", new Document() { Token = $"{Service.Instance.Token}", StationID = $"{this.StationId}" });
             await Task.Delay(50);
             MQTT.Broker.Instance.Listen($"dane/service/stationdetail/{Service.Instance.UserID}", HandleReceivedData);
             
@@ -75,6 +76,8 @@ namespace DoAn.ViewModels
             if (doc != null)
             {
                 this.DataResponse = doc;
+                this.StationName = this.DataResponse.StationName;
+                this.StationAddress = this.DataResponse.StationAddress;
                 OnResponseHandleEvent();
             }
         }

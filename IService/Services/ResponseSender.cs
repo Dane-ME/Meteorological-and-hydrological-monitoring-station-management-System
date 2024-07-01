@@ -144,15 +144,19 @@ namespace System
                 Document? DataNewest = stationData.StationData.Last();
                 repo.StationName = stationprofile.StationName;
                 repo.StationAddress = stationprofile.StationAddress;
+                repo.StationID = stationprofile.ObjectId;
                 repo.StationType = "Meteorological";
-                repo.WindSpeed = DataNewest.WindSpeed;
-                repo.WindSpeedAt2mHeight = DataNewest.WindSpeedAt2mHeight;
-                repo.TimeOfOccurrenceOffxfx2m = DataNewest.TimeOfOccurrenceOffxfx2m;
-                repo.AverageWindSpeedIn2s = DataNewest.AverageWindSpeedIn2s;
-                repo.WindDirection = DataNewest.WindDirection;
-                repo.WindDirectionAt2mHeight = DataNewest.WindDirectionAt2mHeight;
-                repo.AverageWindDirectionIn2s = DataNewest.AverageWindDirectionIn2s;
-                repo.TimeOfOccurrenceOffxfx2s = DataNewest.TimeOfOccurrenceOffxfx2s;
+                if(DataNewest != null)
+                {
+                    repo.WindSpeed = DataNewest.WindSpeed;
+                    repo.WindSpeedAt2mHeight = DataNewest.WindSpeedAt2mHeight;
+                    repo.TimeOfOccurrenceOffxfx2m = DataNewest.TimeOfOccurrenceOffxfx2m;
+                    repo.AverageWindSpeedIn2s = DataNewest.AverageWindSpeedIn2s;
+                    repo.WindDirection = DataNewest.WindDirection;
+                    repo.WindDirectionAt2mHeight = DataNewest.WindDirectionAt2mHeight;
+                    repo.AverageWindDirectionIn2s = DataNewest.AverageWindDirectionIn2s;
+                    repo.TimeOfOccurrenceOffxfx2s = DataNewest.TimeOfOccurrenceOffxfx2s;
+                }
             }
             return repo;
         }
@@ -166,13 +170,16 @@ namespace System
                 Document? DataNewest = stationData.StationData.Last();
                 repo.StationName = stationprofile.StationName;
                 repo.StationAddress = stationprofile.StationAddress;
+                repo.StationID = stationprofile.ObjectId;
                 repo.StationType = "Hydrological";
-                repo.SeaLevel = DataNewest.SeaLevel;
-                repo.WaveHeight = DataNewest.WaveHeight;
-                repo.WaveLength = DataNewest.WaveLength;
-                repo.WaveHeightMax = DataNewest.WaveHeightMax;
+                if ( DataNewest != null )
+                {
+                    repo.SeaLevel = DataNewest.SeaLevel;
+                    repo.WaveHeight = DataNewest.WaveHeight;
+                    repo.WaveLength = DataNewest.WaveLength;
+                    repo.WaveHeightMax = DataNewest.WaveHeightMax;
+                }
             }
-            
             return repo;
         }
         #endregion
@@ -182,16 +189,17 @@ namespace System
         public async void StationDetailReponse(string stationid, string time) 
         {
             Document ?stationProfile = DB.Station.Find(stationid);
-            Document ?stationData = MethodHandle.CallMethod(stationid, "Find", "28062024") as Document;
-            Document response = new Document()
+            Document ?stationData = MethodHandle.CallMethod(stationid, "Find", $"{time}") as Document;
+            Document response = new Document();
+            if ( stationData != null )
             {
-                StationName = stationProfile.StationName,
-                StationID = stationProfile.StationID,
-                StationAddress = stationProfile.StationAddress,
-                StationTypeList = stationProfile.StationTypeList,
-                Time = time,
-                StationData = stationData.StationData
-            };
+                response.StationName = stationProfile.StationName;
+                response.StationID = stationProfile.StationID;
+                response.StationAddress = stationProfile.StationAddress;
+                response.StationTypeList = stationProfile.StationTypeList;
+                response.Time = time;
+                response.StationData = stationData.StationData;
+            }
             await Task.Delay(100);
             Broker.Instance.Send($"dane/service/stationdetail/{this.userID}", response);
         }

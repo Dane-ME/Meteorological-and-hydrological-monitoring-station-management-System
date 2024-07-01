@@ -15,19 +15,18 @@ public partial class StationDetailView : ContentPage
     {
         set
         {
-            //ShowMessage(value);
+            ShowMessage(value);
         }
     }
     public StationDetailView() 
     {
         InitializeComponent();
-        BindingContext = new StationDetailViewModel("6868");
+        //BindingContext = new StationDetailViewModel("6868");
 
     }
 
-    public async void ShowMessage(Document doc)
+    public void ShowMessage(Document doc)
     {
-        await Task.Delay(100);
         string stationid = doc.StationID;
         BindingContext = new StationDetailViewModel(stationid);
     }

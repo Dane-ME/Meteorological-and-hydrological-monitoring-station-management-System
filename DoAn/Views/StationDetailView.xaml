@@ -38,9 +38,9 @@
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="10"/>
                         </Border.StrokeShape>
-                        <StackLayout BackgroundColor="White">
-                            <Label Text="Cảng xăng dầu B12" FontSize="20" FontAttributes="Bold" Margin="5"></Label>
-                            <Label Text="6868" FontSize="16" Margin="5"></Label>
+                        <StackLayout BackgroundColor="WhiteSmoke">
+                            <Label Text="{Binding StationName}" TextColor="#2c3e50" FontSize="20" FontAttributes="Bold" Margin="5"></Label>
+                            <Label Text="{Binding StationAddress}" FontSize="16" TextColor="#2c3e50" Margin="5"></Label>
                         </StackLayout>
                     </Border>
 
