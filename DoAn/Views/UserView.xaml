@@ -117,7 +117,7 @@
                 </StackLayout>
             </Border>
 
-            <Button Text="Đổi mật khẩu" Command="{Binding LogOutButonCommand}" Margin="10,10,10,0"/>
+            <Button Text="Đổi mật khẩu" Command="{Binding ChangePasswordCommand}" Margin="10,10,10,0"/>
             <Button Text="Đăng xuất" Command="{Binding LogOutButonCommand}" Margin="10,10,10,0"/>
         </VerticalStackLayout>
     </ScrollView>

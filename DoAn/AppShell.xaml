@@ -63,6 +63,14 @@
         Shell.FlyoutBehavior="Disabled"
         Shell.FlyoutItemIsVisible="False"
         />
+    <ShellContent
+        ContentTemplate="{DataTemplate views:ChangePasswordView}"
+        Route="ChangePasswordView"
+        Shell.BackgroundColor="#2c3e50"
+        Shell.TitleColor="#eaecf5"
+        Shell.FlyoutBehavior="Disabled"
+        Shell.FlyoutItemIsVisible="False"
+    />
 
 
     <!--FlyoutDisplayOptions="AsMultipleItems"-->

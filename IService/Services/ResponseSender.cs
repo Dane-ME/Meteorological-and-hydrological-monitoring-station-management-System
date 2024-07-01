@@ -356,6 +356,15 @@ namespace System
 
         #endregion
 
+        #region CHANGE PASSWORD RESPONSE
+
+        public void ChangePasswordResponse()
+        {
+
+        }
+
+        #endregion
+
     }
 }
 namespace System

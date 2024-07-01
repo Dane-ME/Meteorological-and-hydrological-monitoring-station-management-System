@@ -24,6 +24,7 @@ namespace IService.Services
                 await Task.Delay(100);
                 string userid = e.UserID;
                 var repo = new ResponseSender(userid);
+                Document ?u = DB.User.Find(userid);
                 Broker.Instance.Listen($"dane/service/home/{userid}", (doc) => 
                 {
                     bool check = JWTcheck(doc, e);
@@ -40,35 +41,71 @@ namespace IService.Services
                     bool check = JWTcheck(doc, e);
                     if (check) { repo.UserResponse(); };
                 });
-                Broker.Instance.Listen($"dane/service/stationlist/{userid}", (doc) => 
+                if(u != null)
+                {
+                    if(u.Role == "Admin")
+                    {
+                        Broker.Instance.Listen($"dane/service/stationlist/{userid}", (doc) =>
+                        {
+                            bool check = JWTcheck(doc, e);
+                            if (check) { repo.StationListResponse(); };
+                        });
+                        Broker.Instance.Listen($"dane/service/userlist/{userid}", (doc) =>
+                        {
+                            bool check = JWTcheck(doc, e);
+                            if (check) { repo.UserListReponse(); };
+                        });
+                        Broker.Instance.Listen($"dane/service/stationprofile/{userid}", (doc) =>
+                        {
+                            bool check = JWTcheck(doc, e);
+                            if (check) { repo.StationProfileResponse(doc.StationID); };
+                        });
+                        Broker.Instance.Listen($"dane/service/userprofile/{userid}", (doc) =>
+                        {
+                            bool check = JWTcheck(doc, e);
+                            if (check) { repo.UserProfileResponse(doc.UserID); };
+                        });
+                        Broker.Instance.Listen($"dane/service/managerchange/{userid}", (doc) =>
+                        {
+                            bool check = JWTcheck(doc, e);
+                            if (check) { repo.ManagerChangeResponse(doc.StationID); };
+                        });
+                        Broker.Instance.Listen($"dane/service/stationchange/{userid}", (doc) =>
+                        {
+                            bool check = JWTcheck(doc, e);
+                            if (check) { repo.StationChangeResponse(doc.UserID); };
+                        });
+                        Broker.Instance.Listen($"dane/user/regis/{userid}", (doc) =>
+                        {
+                            bool check = JWTcheck(doc, e);
+                            if (check)
+                            {
+                                if (!IsIDStored(doc.UserID))
+                                {
+                                    Document savedoc = doc;
+                                    savedoc.ObjectId = doc.UserID;
+                                    DB.User.Insert(savedoc);
+                                }
+                            };
+                        });
+
+                    }
+                }
+                Broker.Instance.Listen($"dane/service/changepassword/{userid}", (doc) =>
                 {
                     bool check = JWTcheck(doc, e);
-                    if (check) { repo.StationListResponse(); };
-                });
-                Broker.Instance.Listen($"dane/service/userlist/{userid}", (doc) => 
-                {
-                    bool check = JWTcheck(doc, e);
-                    if (check) { repo.UserListReponse(); };
-                });
-                Broker.Instance.Listen($"dane/service/stationprofile/{userid}", (doc) => 
-                {
-                    bool check = JWTcheck(doc, e);
-                    if (check) { repo.StationProfileResponse(doc.StationID); };
-                });
-                Broker.Instance.Listen($"dane/service/userprofile/{userid}", (doc) => 
-                {
-                    bool check = JWTcheck(doc, e);
-                    if (check) { repo.UserProfileResponse(doc.UserID); };
-                });
-                Broker.Instance.Listen($"dane/service/managerchange/{userid}", (doc) =>
-                {
-                    bool check = JWTcheck(doc, e);
-                    if (check) { repo.ManagerChangeResponse(doc.StationID); };
-                });
-                Broker.Instance.Listen($"dane/service/stationchange/{userid}", (doc) =>
-                {
-                    bool check = JWTcheck(doc, e);
-                    if (check) { repo.StationChangeResponse(doc.UserID); };
+                    if(check) { 
+                        Document ?user = DB.User.Find(userid);
+                        if(user != null)
+                        {
+                            if(doc.OldPass == user.EncodePass)
+                            {
+                                user.EncodePass = doc.EncodePass;
+                                DB.User.Update(user);
+                                repo.ChangePasswordResponse();
+                            }
+                        }
+                    }
                 });
                 Broker.Instance.Listen($"dane/user/logout/{userid}", (doc) => {
                     bool check = JWTcheck(doc, e);
@@ -78,26 +115,21 @@ namespace IService.Services
                         Broker.Instance.StopListening($"dane/service/home/{userid}", null);
                         Broker.Instance.StopListening($"dane/service/stationdetail/{userid}", null);
                         Broker.Instance.StopListening($"dane/service/user/{userid}", null);
-                        Broker.Instance.StopListening($"dane/service/stationlist/{userid}", null);
-                        Broker.Instance.StopListening($"dane/service/userlist/{userid}", null);
-                        Broker.Instance.StopListening($"dane/service/stationprofile/{userid}", null);
-                        Broker.Instance.StopListening($"dane/service/userprofile/{userid}", null);
-                        Broker.Instance.StopListening($"dane/service/managerchange/{userid}", null);
-                        Broker.Instance.StopListening($"dane/service/stationchange/{userid}", null);
-                        Broker.Instance.StopListening($"dane/user/regis/{userid}", null);
-                        EventChanged.Instance.OnLogOutEvent(userid);
-                    };
-                });
-                Broker.Instance.Listen($"dane/user/regis/{userid}", (doc) =>
-                {
-                    bool check = JWTcheck(doc, e);
-                    if (check) {
-                        if (!IsIDStored(doc.UserID))
+                        if(u != null)
                         {
-                            Document savedoc = doc;
-                            savedoc.ObjectId = doc.UserID;
-                            DB.User.Insert(savedoc);
+                            if(u.Role == "Admin")
+                            {
+                                Broker.Instance.StopListening($"dane/service/stationlist/{userid}", null);
+                                Broker.Instance.StopListening($"dane/service/userlist/{userid}", null);
+                                Broker.Instance.StopListening($"dane/service/stationprofile/{userid}", null);
+                                Broker.Instance.StopListening($"dane/service/userprofile/{userid}", null);
+                                Broker.Instance.StopListening($"dane/service/managerchange/{userid}", null);
+                                Broker.Instance.StopListening($"dane/service/stationchange/{userid}", null);
+                                Broker.Instance.StopListening($"dane/user/regis/{userid}", null);
+                            }
                         }
+                        Broker.Instance.StopListening($"dane/service/changepassword/{userid}", null);
+                        EventChanged.Instance.OnLogOutEvent(userid);
                     };
                 });
             };

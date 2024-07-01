@@ -79,6 +79,7 @@ namespace DoAn.ViewModels
             set => SetProperty(ref _regisDate, value);
         }
         public ICommand Reload {  get; set; }
+        public ICommand ChangePasswordCommand { get; set; }
         public ICommand LogOutButonCommand { get; private set; }
         public UserViewModel()
         {
@@ -102,6 +103,10 @@ namespace DoAn.ViewModels
                     this.ID.Add(i.ID);
                 }
             };
+            ChangePasswordCommand = new Command( async () =>
+            {
+                await Shell.Current.GoToAsync("ChangePasswordView");
+            });
             LogOutButonCommand = new Command(() => 
             {
                 Shell.Current.GoToAsync("//LoginView");
