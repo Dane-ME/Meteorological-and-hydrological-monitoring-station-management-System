@@ -198,7 +198,17 @@ namespace IService.Services
                                 }
                             };
                         });
-
+                        Broker.Instance.Listen($"dane/user/removeuser/{userid}", (doc) =>
+                        {
+                            bool check = JWTcheck(doc, e);
+                            if (check)
+                            {
+                                if (IsIDStored(doc.UserID))
+                                {
+                                    DB.User.Delete(doc.UserID);
+                                }
+                            };
+                        });
                         Broker.Instance.Listen($"dane/user/regis/{userid}", (doc) =>
                         {
                             bool check = JWTcheck(doc, e);
@@ -250,6 +260,8 @@ namespace IService.Services
                                 Broker.Instance.StopListening($"dane/service/stationchange/{userid}", null);
                                 Broker.Instance.StopListening($"dane/user/regis/{userid}", null);
                                 Broker.Instance.StopListening($"dane/decentralization/managerchange/{userid}", null);
+                                Broker.Instance.StopListening($"dane/decentralization/stationchange/{userid}", null);
+                                Broker.Instance.StopListening($"dane/user/removeuser/{userid}", null);
                             }
                         }
                         Broker.Instance.StopListening($"dane/service/changepassword/{userid}", null);

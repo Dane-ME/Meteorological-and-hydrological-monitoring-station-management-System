@@ -75,7 +75,8 @@ namespace DoAn.ViewModels.AdminViewModel
                 OnPropertyChanged();
             }
         }
-        public ICommand EditCommand { get; set; }
+        public ICommand EditCommand { get; private set; }
+        public ICommand RemoveUserCommand { get; private set; }
         public UserProfileViewModel(string userid) 
         {
             this.ID = userid;
@@ -83,6 +84,14 @@ namespace DoAn.ViewModels.AdminViewModel
             EditCommand = new Command(() =>
             {
                 editManagerView = new StationChangeView(ID);
+            });
+            RemoveUserCommand = new Command(() => 
+            {
+                Broker.Instance.Send($"dane/user/removeuser/{Service.Instance.UserID}", new Document()
+                {
+                    Token = Service.Instance.Token,
+                    UserID = this.ID
+                });
             });
             List<string> list = Broker.Instance.topicCallbacks.Keys.ToList();
             if (!list.Contains($"dane/service/userprofile/{Service.Instance.UserID}"))

@@ -1,6 +1,7 @@
 ﻿using DoAn.Models.AdminModel;
 using DoAn.Services;
 using DoAn.Views.AdminView;
+using MQTT;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -86,8 +87,15 @@ namespace DoAn.ViewModels.AdminViewModel
             {
                 OnNavigateToUserDetail?.Invoke(e);
             });
-            RemoveUserCommand = new Command((e) =>
+            RemoveUserCommand = new Command<UserListModel>(async (e) =>
             {
+                Broker.Instance.Send($"dane/user/removeuser/{Service.Instance.UserID}", new Document()
+                {
+                    Token = Service.Instance.Token,
+                    UserID = e.ID
+                });
+                await Task.Delay(100);
+                MQTT.Broker.Instance.Send($"dane/service/userlist/{Service.Instance.UserID}", new Document() { Token = $"{Service.Instance.Token}" });
 
             });
 
