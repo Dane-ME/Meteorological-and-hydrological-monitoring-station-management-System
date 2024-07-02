@@ -14,22 +14,7 @@ namespace DoAn.ViewModels.AdminViewModel
 {
     public class StationProfileViewModel : ObservableObject
     {
-        public string _idd;
-        public string ID 
-        {
-            get => _idd; 
-            set
-            {
-                if(_idd != value)
-                {
-                    if(value != null)
-                    {
-                        _idd = value;
-                        EventChanged.Instance.OnStationIDChanged();
-                    }
-                }
-            } 
-        }
+        public string IDpara { get; set; }
         #region INIT ObservableCollection
         public ObservableCollection<StationProfileModel> _manager = new ObservableCollection<StationProfileModel>();
         public ObservableCollection<StationProfileModel> manager
@@ -78,32 +63,27 @@ namespace DoAn.ViewModels.AdminViewModel
             } 
         }
         public ICommand EditCommand {  get; set; }
-        public StationProfileViewModel() 
+        private EventHandler _stationIDChangedHandler;
+        public StationProfileViewModel(string stationid) 
         {
+            this.IDpara = stationid;
             Type = new List<string>();
             Manager = new List<string>();
-
+            List<string> list = Broker.Instance.topicCallbacks.Keys.ToList();
+            if (!list.Contains($"dane/service/stationprofile/{Service.Instance.UserID}"))
+            {
+                Broker.Instance.StopListening($"dane/service/stationprofile/{Service.Instance.UserID}", null);
+            }
+            ListenResponse();
+            SendRequest();
             EditCommand = new Command(() =>
             {
-                editManagerView = new ManagerChangeView(ID);
+                editManagerView = new ManagerChangeView(IDpara);
             });
-            EventChanged.Instance.StationIDChanged += async (s, e) =>
-            {
-                if(manager.Count == 0 && type.Count == 0)
-                {
-                    //await Task.Delay(50);
-                    ListenResponse();
-                    await Task.Delay(50);
-                    SendRequest();
-                }
-                else
-                {
-                    SendRequest();
-                }
-            };
+            
+
             EventChanged.Instance.StationProfileChanged += (s, e) => 
             {
-                
                 foreach (var i in type)
                 {
                     this.Type.Add(i.Type);
@@ -111,10 +91,10 @@ namespace DoAn.ViewModels.AdminViewModel
             };
 
         }
-
+        
         public void SendRequest() 
         {
-            Broker.Instance.Send($"dane/service/stationprofile/{Service.Instance.UserID}", new Document() { StationID = $"{ID}", Token = $"{Service.Instance.Token}" });
+            Broker.Instance.Send($"dane/service/stationprofile/{Service.Instance.UserID}", new Document() { StationID = $"{IDpara}", Token = $"{Service.Instance.Token}" });
         }
         public void ListenResponse() 
         {
@@ -122,26 +102,27 @@ namespace DoAn.ViewModels.AdminViewModel
             {
                 if (doc != null)
                 {
-                    ObservableCollection<StationProfileModel> list = new ObservableCollection<StationProfileModel>();
-                    ObservableCollection<StationProfileModel> list2 = new ObservableCollection<StationProfileModel>();
-                    this.Name = doc.StationName;
-                    this.Address = doc.StationAddress;
-                    if (doc.StationTypeList != null && doc.Manager != null)
+                    if(doc.StationName != null)
                     {
-                        foreach (var i in doc.StationTypeList)
+                        ObservableCollection<StationProfileModel> list = new ObservableCollection<StationProfileModel>();
+                        ObservableCollection<StationProfileModel> list2 = new ObservableCollection<StationProfileModel>();
+                        this.Name = doc.StationName;
+                        this.Address = doc.StationAddress;
+                        if (doc.StationTypeList != null && doc.Manager != null)
                         {
-                            list.Add(new StationProfileModel() { Type = i });
+                            foreach (var i in doc.StationTypeList)
+                            {
+                                list.Add(new StationProfileModel() { Type = i });
+                            }
+                            foreach (var i in doc.Manager)
+                            {
+                                list2.Add(new StationProfileModel() { Manager = i });
+                            }
                         }
-                        foreach (var i in doc.Manager)
-                        {
-                            list2.Add(new StationProfileModel() { Manager = i });
-                        }
+                        type = list;
+                        manager = list2;
+                        Id = IDpara;
                     }
-                    type = list;
-                    manager = list2;
-                    Id = ID;
-                    //EventChanged.Instance.OnStationProfileChanged();
-                    //EventChanged.Instance.OnStationListChanged();
                 }
             });
         }

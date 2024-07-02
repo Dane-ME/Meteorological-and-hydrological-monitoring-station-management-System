@@ -13,22 +13,7 @@ namespace DoAn.ViewModels.AdminViewModel
 {
     public class UserProfileViewModel : ObservableObject
     {
-        public string _idd;
-        public string ID
-        {
-            get => _idd;
-            set
-            {
-                if (_idd != value)
-                {
-                    if (value != null)
-                    {
-                        _idd = value;
-                        EventChanged.Instance.OnUserIDChanged();
-                    }
-                }
-            }
-        }
+        public string ID {  get; set; }
 
         public ObservableCollection<UserProfileModel> _station = new ObservableCollection<UserProfileModel>();
         public ObservableCollection<UserProfileModel> station
@@ -91,26 +76,21 @@ namespace DoAn.ViewModels.AdminViewModel
             }
         }
         public ICommand EditCommand { get; set; }
-        public UserProfileViewModel() 
+        public UserProfileViewModel(string userid) 
         {
+            this.ID = userid;
             Station = new List<string>();
             EditCommand = new Command(() =>
             {
                 editManagerView = new StationChangeView(ID);
             });
-            EventChanged.Instance.UserIDChanged += async (s, e) =>
+            List<string> list = Broker.Instance.topicCallbacks.Keys.ToList();
+            if (!list.Contains($"dane/service/userprofile/{Service.Instance.UserID}"))
             {
-                if (Station.Count == 0)
-                {
-                    ListenResponse();
-                    await Task.Delay(50);
-                    SendRequest();
-                }
-                else
-                {
-                    SendRequest();
-                }
-            };
+                Broker.Instance.StopListening($"dane/service/userprofile/{Service.Instance.UserID}", null);
+            }
+            SendRequest();
+            ListenResponse();
         }
         public void SendRequest()
         {

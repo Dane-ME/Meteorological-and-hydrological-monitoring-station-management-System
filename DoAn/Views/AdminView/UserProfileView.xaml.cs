@@ -4,11 +4,9 @@ namespace DoAn.Views.AdminView;
 
 public partial class UserProfileView : ContentView
 {
-	private readonly UserProfileViewModel _viewModel;
-	public UserProfileView(UserProfileViewModel userProfileViewModel)
+	public UserProfileView(string userid)
 	{
 		InitializeComponent();
-		_viewModel = userProfileViewModel;
-		BindingContext = _viewModel;
+		BindingContext = new UserProfileViewModel(userid);
 	}
 }

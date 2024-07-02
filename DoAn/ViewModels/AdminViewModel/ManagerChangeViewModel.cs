@@ -1,12 +1,14 @@
 ﻿using DoAn.Models.AdminModel;
 using DoAn.Services;
 using Microsoft.Maui.Controls;
+using MQTT;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace DoAn.ViewModels.AdminViewModel
 {
@@ -22,12 +24,29 @@ namespace DoAn.ViewModels.AdminViewModel
         {
             ResponseHandle?.Invoke();
         }
+        public ICommand SaveCommand { get; private set; }
         public ManagerChangeViewModel(string ID)
         {
             DataGrid = new ObservableCollection<ManagerChangeModel>();
             StationID = ID;
             ResponseHandle += OnResponseHandle;
             SendandListen();
+            SaveCommand = new Command( () =>
+            {
+                DocumentList d = new DocumentList();
+                foreach(var item in DataGrid)
+                {
+                    if(item.IsValid == true)
+                    {
+                        d.Add(new Document()
+                        {
+                            UserName = item.UserName,
+                            UserID = item.UserID,
+                        });
+                    }
+                }
+                Broker.Instance.Send("dane/service/stationchange/hhdangev02", new Document() { HomeData = d });
+            });
 
         }
         public async void SendandListen()
