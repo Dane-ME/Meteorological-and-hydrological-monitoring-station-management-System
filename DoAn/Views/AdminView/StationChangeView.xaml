@@ -38,8 +38,9 @@
                     </Picker>
 
                     <Button Text="Save" 
-                        BackgroundColor="#bdc3c7"
-                        TextColor="#2c3e50" Margin="100,5,0,0"
+                            BackgroundColor="#bdc3c7"
+                            Command="{Binding SaveCommand}"
+                            TextColor="#2c3e50" Margin="100,5,0,0"
                         />
                 </StackLayout>
 

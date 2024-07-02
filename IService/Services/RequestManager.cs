@@ -76,6 +76,129 @@ namespace IService.Services
                             bool check = JWTcheck(doc, e);
                             if (check) { repo.StationChangeResponse(doc.UserID); };
                         });
+                        Broker.Instance.Listen($"dane/decentralization/managerchange/{userid}", (doc) => 
+                        {
+                            bool check = JWTcheck(doc, e);
+                            if (check) 
+                            {
+                                string stationid = doc.StationID;
+                                Document station = DB.Station.Find(stationid);
+                                if (doc.Add != null)
+                                {
+                                    foreach (var item in doc.Add)
+                                    {
+                                        Document? stationclone = station;
+                                        Document? userclone = DB.User.Find(item);
+                                        List<string>? managerclone = stationclone.Manager;
+                                        List<string> stationmanagementclone = [];
+                                        if (stationclone != null && userclone != null && managerclone != null)
+                                        {
+                                            managerclone.Add(item);
+                                            stationclone.Manager = managerclone;
+
+                                            if (userclone.StationManagement is null)
+                                            {
+                                                stationmanagementclone = userclone.StationManagement;
+                                            }
+
+                                            stationmanagementclone.Add(stationid);
+                                            userclone.StationManagement = stationmanagementclone;
+
+                                            DB.Station.Update(stationid, stationclone);
+                                            DB.User.Update(item, userclone);
+                                        }
+                                    }
+                                }
+                                if(doc.Remove != null)
+                                {
+                                    foreach (var item in doc.Remove)
+                                    {
+                                        Document ?stationclone = station;
+                                        Document ?userclone = DB.User.Find(item);
+                                        List<string> ?managerclone = stationclone.Manager;
+                                        List<string> stationmanagementclone = [];
+                                        if(stationclone != null && userclone != null && managerclone != null)
+                                        {
+                                            managerclone.Remove(item);
+                                            stationclone.Manager = managerclone;
+
+                                            if (userclone.StationManagement is null)
+                                            {
+                                                stationmanagementclone = userclone.StationManagement;
+                                            }
+
+                                            stationmanagementclone.Remove(stationid);
+                                            userclone.StationManagement = stationmanagementclone;
+
+                                            DB.Station.Update(stationid, stationclone);
+                                            DB.User.Update(item, userclone);
+                                        }
+                                    }
+                                }
+                            };
+                        });
+                        Broker.Instance.Listen($"dane/decentralization/stationchange/{userid}", (doc) =>
+                        {
+                            bool check = JWTcheck(doc, e);
+                            if (check)
+                            {
+                                string userid = doc.UserID;
+                                Document user = DB.User.Find(userid);
+                                if (doc.Add != null)
+                                {
+                                    foreach (var item in doc.Add)
+                                    {
+                                        Document? userclone = user;
+                                        Document? stationclone = DB.Station.Find(item);
+                                        List<string>? stationmanagementclone = userclone.StationManagement;
+                                        List<string> managerclone = [];
+                                        if (stationclone != null && userclone != null && stationmanagementclone != null)
+                                        {
+                                            stationmanagementclone.Add(item);
+                                            userclone.StationManagement = stationmanagementclone;
+
+                                            if (stationclone.Manager is null)
+                                            {
+                                                managerclone = stationclone.Manager;
+                                            }
+
+                                            managerclone.Add(userid);
+                                            stationclone.Manager = managerclone;
+
+                                            DB.Station.Update(item, stationclone);
+                                            DB.User.Update(userid, userclone);
+                                        }
+                                    }
+                                }
+                                if (doc.Remove != null)
+                                {
+                                    foreach (var item in doc.Remove)
+                                    {
+                                        Document? userclone = user;
+                                        Document? stationclone = DB.Station.Find(item);
+                                        List<string>? stationmanagementclone = userclone.StationManagement;
+                                        List<string> managerclone = [];
+                                        if (stationclone != null && userclone != null && stationmanagementclone != null)
+                                        {
+                                            stationmanagementclone.Remove(item);
+                                            userclone.StationManagement = stationmanagementclone;
+
+                                            if (stationclone.Manager is null)
+                                            {
+                                                managerclone = stationclone.Manager;
+                                            }
+
+                                            managerclone.Remove(userid);
+                                            stationclone.Manager = managerclone;
+
+                                            DB.Station.Update(item, stationclone);
+                                            DB.User.Update(userid, userclone);
+                                        }
+                                    }
+                                }
+                            };
+                        });
+
                         Broker.Instance.Listen($"dane/user/regis/{userid}", (doc) =>
                         {
                             bool check = JWTcheck(doc, e);
@@ -89,7 +212,6 @@ namespace IService.Services
                                 }
                             };
                         });
-
                     }
                 }
                 Broker.Instance.Listen($"dane/service/changepassword/{userid}", (doc) =>
@@ -127,6 +249,7 @@ namespace IService.Services
                                 Broker.Instance.StopListening($"dane/service/managerchange/{userid}", null);
                                 Broker.Instance.StopListening($"dane/service/stationchange/{userid}", null);
                                 Broker.Instance.StopListening($"dane/user/regis/{userid}", null);
+                                Broker.Instance.StopListening($"dane/decentralization/managerchange/{userid}", null);
                             }
                         }
                         Broker.Instance.StopListening($"dane/service/changepassword/{userid}", null);

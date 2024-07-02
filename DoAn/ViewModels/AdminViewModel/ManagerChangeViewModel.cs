@@ -33,27 +33,37 @@ namespace DoAn.ViewModels.AdminViewModel
             SendandListen();
             SaveCommand = new Command( () =>
             {
-                DocumentList d = new DocumentList();
-                foreach(var item in DataGrid)
+                if(DataGrid != null)
                 {
-                    if(item.IsValid == true)
-                    {
-                        d.Add(new Document()
-                        {
-                            UserName = item.UserName,
-                            UserID = item.UserID,
-                        });
-                    }
+                    Document doc = Changed();
+                    doc.StationID = StationID;
+                    doc.Token = Service.Instance.Token;
+                    Broker.Instance.Send($"dane/decentralization/managerchange/{Service.Instance.UserID}", doc);
                 }
-                Broker.Instance.Send("dane/service/stationchange/hhdangev02", new Document() { HomeData = d });
             });
 
         }
+        private Document Changed()
+        {
+            List<string> listchanged = [];
+            List<string> listnotchanged = DataResponse.Manager;
+            foreach (var item in DataGrid)
+            {
+                if (item.IsValid == true)
+                {
+                    listchanged.Add(item.UserID);
+                }
+            }
+            List<string> add = listchanged.Except(listnotchanged).ToList();
+            List<string> remove = listnotchanged.Except(listchanged).ToList();
+
+            return new Document() { Add = add, Remove = remove };
+        }
         public async void SendandListen()
         {
-            MQTT.Broker.Instance.Listen($"dane/service/managerchange/{Service.Instance.UserID}", HandleReceivedData);
+            Broker.Instance.Listen($"dane/service/managerchange/{Service.Instance.UserID}", HandleReceivedData);
             await Task.Delay(50);
-            MQTT.Broker.Instance.Send($"dane/service/managerchange/{Service.Instance.UserID}", new Document() { Token = $"{Service.Instance.Token}", StationID = this.StationID });
+            Broker.Instance.Send($"dane/service/managerchange/{Service.Instance.UserID}", new Document() { Token = $"{Service.Instance.Token}", StationID = this.StationID });
         }
         private void HandleReceivedData(Document doc)
         {
@@ -100,7 +110,7 @@ namespace DoAn.ViewModels.AdminViewModel
             DataGrid = refdoc;
 
         }
-        public Document Find(string id, DocumentList dl)
+        private Document Find(string id, DocumentList dl)
         {
             Document res = [];
             foreach(Document doc in dl)

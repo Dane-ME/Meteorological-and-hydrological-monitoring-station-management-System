@@ -2,6 +2,11 @@
 
 namespace System
 {
+    public partial class Document
+    {
+        public List<string> Add { get => GetArray<List<string>>(nameof(Add)); set => Push(nameof(Add), value); }
+        public List<string> Remove { get => GetArray<List<string>>(nameof(Remove)); set => Push(nameof(Remove), value); }
+    }
     public partial class DB
     {
         public static BsonData.MainDatabase? MainMonitoring { get; private set; }

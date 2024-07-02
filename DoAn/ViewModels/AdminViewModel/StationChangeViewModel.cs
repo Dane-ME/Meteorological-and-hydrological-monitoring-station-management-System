@@ -1,11 +1,13 @@
 ﻿using DoAn.Models.AdminModel;
 using DoAn.Services;
+using MQTT;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace DoAn.ViewModels.AdminViewModel
 {
@@ -21,12 +23,40 @@ namespace DoAn.ViewModels.AdminViewModel
         {
             ResponseHandle?.Invoke();
         }
+        public ICommand SaveCommand { get; private set; }
+
         public StationChangeViewModel(string userid)
         {
             DataGrid = new ObservableCollection<StationChangeModel>();
             UserID = userid;
             ResponseHandle += OnResponseHandle;
             SendandListen();
+            SaveCommand = new Command(() =>
+            {
+                if (DataGrid != null)
+                {
+                    Document doc = Changed();
+                    doc.UserID = UserID;
+                    doc.Token = Service.Instance.Token;
+                    Broker.Instance.Send($"dane/decentralization/stationchange/{Service.Instance.UserID}", doc);
+                }
+            });
+        }
+        private Document Changed()
+        {
+            List<string> listchanged = [];
+            List<string> listnotchanged = DataResponse.StationManagement;
+            foreach (var item in DataGrid)
+            {
+                if (item.IsValid == true)
+                {
+                    listchanged.Add(item.StationID);
+                }
+            }
+            List<string> add = listchanged.Except(listnotchanged).ToList();
+            List<string> remove = listnotchanged.Except(listchanged).ToList();
+
+            return new Document() { Add = add, Remove = remove };
         }
         public async void SendandListen()
         {
