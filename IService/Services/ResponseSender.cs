@@ -88,7 +88,7 @@ namespace System
 
         #endregion
 
-        #region HOME REQUEST
+        #region HOME RESPONSE
         public async void HomeResponse()
         {      
             this.homedata = getHomeData();

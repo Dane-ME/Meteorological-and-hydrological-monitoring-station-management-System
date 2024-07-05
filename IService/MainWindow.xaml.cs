@@ -68,7 +68,8 @@ namespace IService
             
             var handle = new RequestManager();
 
-            connect.Click += async (s, e) => {
+            connect.Click += async (s, e) => 
+            {
                 Broker.Instance.Connect();
                 await Task.Delay(1000);
                 if (Broker.Instance.IsConnected)

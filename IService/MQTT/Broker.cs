@@ -21,7 +21,7 @@ namespace MQTT
             }
         }
 
-        public Broker() : base("broker.emqx.io") { }
+        public Broker() : base(null, "broker.emqx.io", 1883, "hhdangev02", "dangevil4") { }
 
         public void Send(string topic, Document doc)
         {

@@ -342,16 +342,19 @@ namespace MQTT
             Host = host;
             Port = port;
         }
+
         public Client(string id, string host, int port, string username, string password)
             : this(id, host, port)
         {
             UserName = username;
             Password = password;
         }
+
         public Client(string host, int port)
             : this(null, host, port)
         {
         }
+
         public Client(string host) : this(host, 1883)
         {
         }

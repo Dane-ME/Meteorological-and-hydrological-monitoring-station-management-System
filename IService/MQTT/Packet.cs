@@ -96,7 +96,14 @@ namespace MQTT
         {
             var p = new Packet(1, 0);
             p.Push("MQTT");
-            p.Push(0x0402);
+            //p.Push(0x0402);
+
+            byte connectFlags = 0x02; // Clean session
+            if (un != null) connectFlags |= 0x80; // Username flag
+            if (pw != null) connectFlags |= 0x40; // Password flag
+
+            p.Push((ushort)((4 << 8) | connectFlags));
+
             p.Push(keep);
             p.Push(id);
             if (un != null)

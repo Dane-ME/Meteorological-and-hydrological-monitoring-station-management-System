@@ -51,7 +51,7 @@ namespace System
             return decoded;
         }
 
-        public static string EncodeHS256(string data, string secretKey)
+        public static string EncodeSHA256(string data, string secretKey)
         {
             var encoding = new ASCIIEncoding();
             byte[] keyByte = encoding.GetBytes(secretKey);
@@ -103,7 +103,7 @@ namespace System
 
                 string secretkey = CreateSecretKey(accname, encodedpass, time);
                 string data = this.Header + this.Payload;
-                this.Signature = EncodeHS256(data, secretkey);
+                this.Signature = EncodeSHA256(data, secretkey);
             }
         }
 

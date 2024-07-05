@@ -32,7 +32,7 @@ namespace IService.Services
                 if (getHeader().Alg == "HS256")
                 {
                     string data = Base64urlEncode(getHeader()) + Base64urlEncode(getPayload());
-                    string sigcheck = EncodeHS256(data, secretket);
+                    string sigcheck = EncodeSHA256(data, secretket);
                     if (sigcheck == getSig()) // jwt toàn vẹn
                     {
                         if(getPayload().UserID == userid) { return true; }
