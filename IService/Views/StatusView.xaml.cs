@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Linq;
 
 namespace System
 {
@@ -28,54 +29,34 @@ namespace System
         }
     }
 }
+
 namespace IService.Views
 {
-    
-    /// <summary>
-    /// Interaction logic for StatusView.xaml
-    /// </summary>
-    public partial class StatusView : UserControl
+    public partial class StatusView : UserControl, INotifyPropertyChanged
     {
-        public ObservableCollection<string> _topickey;
-        public ObservableCollection<string> TopicKeys 
-        { 
-            get => _topickey;
+        private ObservableCollection<string> _topicKeys;
+        public ObservableCollection<string> TopicKeys
+        {
+            get => _topicKeys;
             set
             {
-                _topickey = value;
-                SetProperty(ref _topickey, value);
-            } 
+                SetProperty(ref _topicKeys, value);
+            }
         }
 
         public StatusView()
         {
             InitializeComponent();
             DataContext = this;
-            TopicKeys = new ObservableCollection<string>(Broker.Instance.topicCallbacks.Keys);
-            
+            UpdateTopicKeys();
+
             EventChanged.Instance.StatusChanged += (s, e) =>
             {
-                Application.Current.Dispatcher.Invoke(() =>
-                {
-                    if (TopicKeys == null)
-                    {
-                        TopicKeys = new ObservableCollection<string>(Broker.Instance.topicCallbacks.Keys);
-                    }
-                    else
-                    {
-                        TopicKeys.Clear();
-                        foreach (var key in Broker.Instance.topicCallbacks.Keys)
-                        {
-                            TopicKeys.Add(key);
-                        }
-                    }
-                });
-                
+                Application.Current.Dispatcher.Invoke(UpdateTopicKeys);
             };
-            
         }
-        public event PropertyChangedEventHandler PropertyChanged;
 
+        public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -88,20 +69,11 @@ namespace IService.Views
             OnPropertyChanged(propertyName);
             return true;
         }
+
         public void UpdateTopicKeys()
         {
-            if (TopicKeys == null)
-            {
-                TopicKeys = new ObservableCollection<string>(Broker.Instance.topicCallbacks.Keys);
-            }
-            else
-            {
-                TopicKeys.Clear();
-                foreach (var key in Broker.Instance.topicCallbacks.Keys)
-                {
-                    TopicKeys.Add(key);
-                }
-            }
+            var newKeys = new ObservableCollection<string>(Broker.Instance.topicCallbacks.Keys.ToList());
+            TopicKeys = newKeys;
         }
     }
 }
