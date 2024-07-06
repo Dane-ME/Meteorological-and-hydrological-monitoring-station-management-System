@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:IService"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
@@ -12,6 +11,7 @@
             <RowDefinition Height="30"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
+        
         <Border Background="#578fc8">
             <Label Content="Trung tâm Quan trắc KTTV" Foreground="White" FontSize="20"></Label>
         </Border>
@@ -32,6 +32,7 @@
                     <Button Width="60" Margin="5" Background="AliceBlue"></Button>
                 </StackPanel>
                 <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Label Content="{Binding Ping}"></Label>
                     <Button Content="Connect" x:Name="connect" Margin="5" Background="AliceBlue"></Button>
                     <Button Content="Disconnect" x:Name="disconnect" Margin="5" Background="AliceBlue"></Button>
                     

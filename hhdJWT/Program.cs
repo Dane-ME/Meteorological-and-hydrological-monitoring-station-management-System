@@ -1,63 +1,38 @@
 ﻿using System;
-using System.Security.Cryptography;
-using System.Text;
+using System.Net;
+using System.Net.WebSockets;
+using System.Threading.Tasks;
 
-namespace MyNamespace
+public class WebSocketTest
 {
-    class Text
+    public static async Task Main(string[] args)
     {
-        public string? Value { get; set; }
-        public void getValue()
+        // Lấy địa chỉ IP và cổng
+        IPHostEntry hostEntry = Dns.GetHostEntry("broker.hivemq.com");
+        IPAddress ipAddress = hostEntry.AddressList[0]; // Lấy địa chỉ IP đầu tiên
+        int port = 8000; // Cổng
+
+        // Tạo URI WebSocket
+        Uri uri = new Uri($"ws://{ipAddress}:{port}");
+
+        // Tạo kết nối WebSocket
+        using (ClientWebSocket webSocket = new ClientWebSocket())
         {
-            Value = "123";
+            try
+            {
+                await webSocket.ConnectAsync(uri, CancellationToken.None);
+
+                Console.WriteLine("Kết nối thành công!");
+
+                // ... (Thực hiện các thao tác khác)
+
+                // Đóng kết nối
+                await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Lỗi kết nối: {ex.Message}");
+            }
         }
-    }
-    class Number
-    {
-        private readonly Text _text;
-        public Number(Text text) { _text = text; }
-        public int Value { get; set; }
-        public void getValue() 
-        {
-            _text.getValue();
-            this.Value = _text.Value.Length;
-        }
-    }
-    class Core
-    {
-        private readonly Number _number;
-        public Core(Number number) { _number = number; }
-        public int Test() { _number.getValue(); return _number.Value; }
-    }
-    class MainDB
-    {
-        private static Core _core;
-        public MainDB(Core core) { _core = core;}
-        static void Main(string[] args)
-        {
-            Create();
-            Write();
-            Create2();
-            Write();
-        }
-        public static void Create()
-        {
-            Text text = new Text();
-            Number number = new Number(text);
-            Core core = new Core(number);
-            MainDB mainDB = new MainDB(core);
-        }
-        public static void Create2()
-        {
-            Text text = new Text();
-            Number number = new Number(text);
-            Core core = new Core(number);
-            MainDB mainDB = new MainDB(core);
-        }
-        public static void Write()
-        {
-            Console.WriteLine(_core.Test());
-        }
-        
     }
 }

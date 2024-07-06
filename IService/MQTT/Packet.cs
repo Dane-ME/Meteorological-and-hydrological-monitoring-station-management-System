@@ -6,42 +6,103 @@ using System.Threading.Tasks;
 
 namespace MQTT
 {
-    class RemainingLength : List<byte>
+    //class RemainingLength : List<byte>
+    //{
+    //    public RemainingLength() { }
+    //    public RemainingLength(int value)
+    //    {
+    //        SetValue(value);
+    //    }
+    //    public int GetValue()
+    //    {
+    //        int v = 0;
+    //        foreach (byte e in this)
+    //        {
+    //            v = (v << 7) | e;
+    //        }
+    //        return v;
+    //    }
+    //    public void SetValue(int x)
+    //    {
+    //        while (true)
+    //        {
+    //            int e = x & 127;
+    //            x >>= 7;
+
+    //            if (x == 0)
+    //            {
+    //                Add((byte)e);
+    //                break;
+    //            }
+
+    //            Add((byte)(e | 128));
+    //        }
+    //    }
+    //    public bool Read(byte e)
+    //    {
+    //        this.Insert(0, (byte)(e & 0x7F));
+    //        return (e & 0x80) != 0;
+    //    }
+    //}
+    public class RemainingLength
     {
-        public RemainingLength() { }
-        public RemainingLength(int value)
+        private const int MAX_LENGTH = 4; // MQTT cho phép tối đa 4 byte cho remaining length
+        private byte[] buffer;
+        private int position;
+
+        public RemainingLength()
+        {
+            buffer = new byte[MAX_LENGTH];
+            position = 0;
+        }
+
+        public RemainingLength(int value) : this()
         {
             SetValue(value);
         }
+
         public int GetValue()
         {
-            int v = 0;
-            foreach (byte e in this)
+            int value = 0;
+            int multiplier = 1;
+            for (int i = 0; i < position; i++)
             {
-                v = (v << 7) | e;
+                value += (buffer[i] & 127) * multiplier;
+                multiplier *= 128;
             }
-            return v;
+            return value;
         }
+
         public void SetValue(int x)
         {
-            while (true)
+            position = 0;
+            do
             {
-                int e = x & 127;
-                x >>= 7;
-
-                if (x == 0)
+                byte encodedByte = (byte)(x % 128);
+                x /= 128;
+                if (x > 0)
                 {
-                    Add((byte)e);
-                    break;
+                    encodedByte |= 128;
                 }
-
-                Add((byte)(e | 128));
-            }
+                buffer[position++] = encodedByte;
+            } while (x > 0 && position < MAX_LENGTH);
         }
+
         public bool Read(byte e)
         {
-            this.Insert(0, (byte)(e & 0x7F));
+            if (position >= MAX_LENGTH)
+            {
+                throw new OverflowException("Remaining length exceeds maximum allowed size.");
+            }
+            buffer[position++] = e;
             return (e & 0x80) != 0;
+        }
+
+        public byte[] ToArray()
+        {
+            byte[] result = new byte[position];
+            Array.Copy(buffer, result, position);
+            return result;
         }
     }
     public class Packet : List<byte[]>

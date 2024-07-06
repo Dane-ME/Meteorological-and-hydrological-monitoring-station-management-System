@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.ObjectModel" Version="4.3.0" />
     <PackageReference Include="System.Security.Cryptography.Algorithms" Version="4.3.1" />
     <PackageReference Include="System.Security.Permissions" Version="8.0.0" />
   </ItemGroup>
@@ -26,6 +27,7 @@
     <Folder Include="DataBase\ManagerDatabase\Collections\Station\" />
     <Folder Include="DataBase\ManagerDatabase\Collections\Token\" />
     <Folder Include="DataBase\ManagerDatabase\Collections\Verification\" />
+    <Folder Include="DataBase\MonitoringDatabase\Collections\_60001\" />
   </ItemGroup>
 
 </Project>

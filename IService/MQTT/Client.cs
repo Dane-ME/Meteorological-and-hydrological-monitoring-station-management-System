@@ -38,6 +38,7 @@ namespace MQTT
     };
     public class Client
     {
+
         #region SERVER
         Socket _socket;
         private AsyncEvent _async = new AsyncEvent();
@@ -58,6 +59,8 @@ namespace MQTT
                 }
             }
         }
+
+
         public bool IsConnected
         {
             get => _state == ConnectionState.Connected;

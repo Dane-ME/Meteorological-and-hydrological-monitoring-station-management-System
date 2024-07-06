@@ -34,7 +34,7 @@ namespace IService.Services
                 {
                     bool check = JWTcheck(doc, e);
                     //string time = TimeFormat.getTimeNow();
-                    string time = "28062024";
+                    string time = "04072024";
                     if (check) { repo.StationDetailReponse(doc.StationID, time); };
                 });
                 Broker.Instance.Listen($"dane/service/user/{userid}", (doc) =>
